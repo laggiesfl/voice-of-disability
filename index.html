@@ -599,7 +599,10 @@ const SUPABASE_URL = "https://uuvxqyrqhqktkeovkivx.supabase.co";
 const SUPABASE_KEY = "sb_publishable_B9aFyfK496rI7gw2reMdLg_E44OksPK";
 /* Paste your PayPal.me or Stripe donate link here to enable real payments.
    Until then, donors' intent is saved and they see a thank-you + instructions. */
-const PAYPAL_URL = ""; // e.g. "https://www.paypal.com/donate/?hosted_button_id=XXXX"
+/* PayFast live credentials */
+const PAYFAST_MERCHANT_ID = "36108925";
+const PAYFAST_MERCHANT_KEY = "zgguzygqtmpjl";
+const PAYFAST_URL = "https://www.payfast.co.za/eng/process";
 
 const sb = window.supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
 const $ = (s,root=document)=>root.querySelector(s);
@@ -722,13 +725,32 @@ $('#donate-form').addEventListener('submit', async e=>{
     full_name:d.full_name||null, email:d.email||null, amount, currency:'ZAR',
     frequency:d.frequency||'once', status:'intent'
   }]);
-  if(PAYPAL_URL){
-    setStatus(s,'info','Redirecting you to secure payment…');
-    window.location.href = PAYPAL_URL;
-  } else {
-    setStatus(s,'ok','Thank you! We’ve recorded your pledge of R'+amount+
-      '. Our team will email you secure payment details, or connect a PayPal/Stripe link to enable instant payment.');
-  }
+  // Redirect to PayFast live payment
+  setStatus(s,'info','Redirecting you to secure payment…');
+  const pf = document.createElement('form');
+  pf.method = 'post';
+  pf.action = PAYFAST_URL;
+  const fields = {
+    merchant_id: PAYFAST_MERCHANT_ID,
+    merchant_key: PAYFAST_MERCHANT_KEY,
+    return_url: window.location.origin + '/?donation=success',
+    cancel_url: window.location.origin + '/#donate',
+    item_name: 'Donation to Voice of Disability NPC',
+    amount: amount.toFixed(2),
+    item_description: (d.frequency==='monthly' ? 'Monthly donation' : 'Once-off donation') + ' – Voice of Disability NPC',
+    name_first: (d.full_name||'').split(' ')[0] || '',
+    name_last: (d.full_name||'').split(' ').slice(1).join(' ') || '',
+    email_address: d.email || '',
+    email_confirmation: '1',
+    confirmation_address: d.email || ''
+  };
+  Object.entries(fields).forEach(([k,v])=>{
+    const i=document.createElement('input');
+    i.type='hidden'; i.name=k; i.value=v;
+    pf.appendChild(i);
+  });
+  document.body.appendChild(pf);
+  pf.submit();
 });
 
 /* ---------- Member portal (magic link) ---------- */
