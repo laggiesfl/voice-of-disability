@@ -603,11 +603,8 @@
 /* ---------- CONFIG (safe to expose: protected by Row Level Security) ---------- */
 const SUPABASE_URL = "https://uuvxqyrqhqktkeovkivx.supabase.co";
 const SUPABASE_KEY = "sb_publishable_B9aFyfK496rI7gw2reMdLg_E44OksPK";
-/* Paste your PayPal.me or Stripe donate link here to enable real payments.
-   Until then, donors' intent is saved and they see a thank-you + instructions. */
-/* PayFast live credentials */
-const PAYFAST_MERCHANT_ID = "36108925";
-const PAYFAST_MERCHANT_KEY = "zgguzygqtmpjl";
+/* PayFast: merchant ID/key + secure signature are generated server-side
+   in /api/payfast-signature.js, which keeps the account passphrase private. */
 const PAYFAST_URL = "https://www.payfast.co.za/eng/process";
 
 const sb = window.supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
@@ -731,32 +728,34 @@ $('#donate-form').addEventListener('submit', async e=>{
     full_name:d.full_name||null, email:d.email||null, amount, currency:'ZAR',
     frequency:d.frequency||'once', status:'intent'
   }]);
-  // Redirect to PayFast live payment
   setStatus(s,'info','Redirecting you to secure payment…');
-  const pf = document.createElement('form');
-  pf.method = 'post';
-  pf.action = PAYFAST_URL;
-  const fields = {
-    merchant_id: PAYFAST_MERCHANT_ID,
-    merchant_key: PAYFAST_MERCHANT_KEY,
-    return_url: window.location.origin + '/?donation=success',
-    cancel_url: window.location.origin + '/#donate',
-    item_name: 'Donation to Voice of Disability NPC',
-    amount: amount.toFixed(2),
-    item_description: (d.frequency==='monthly' ? 'Monthly donation' : 'Once-off donation') + ' – Voice of Disability NPC',
-    name_first: (d.full_name||'').split(' ')[0] || '',
-    name_last: (d.full_name||'').split(' ').slice(1).join(' ') || '',
-    email_address: d.email || '',
-    email_confirmation: '1',
-    confirmation_address: d.email || ''
-  };
-  Object.entries(fields).forEach(([k,v])=>{
-    const i=document.createElement('input');
-    i.type='hidden'; i.name=k; i.value=v;
-    pf.appendChild(i);
-  });
-  document.body.appendChild(pf);
-  pf.submit();
+  try{
+    const resp = await fetch('/api/payfast-signature', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        amount, full_name: d.full_name || '', email: d.email || '',
+        frequency: d.frequency || 'once', origin: window.location.origin
+      })
+    });
+    if(!resp.ok){ throw new Error('signature request failed'); }
+    const { fields, signature } = await resp.json();
+    const pf = document.createElement('form');
+    pf.method = 'post';
+    pf.action = PAYFAST_URL;
+    Object.entries(fields).forEach(([k,v])=>{
+      const i=document.createElement('input');
+      i.type='hidden'; i.name=k; i.value=v;
+      pf.appendChild(i);
+    });
+    const sig=document.createElement('input');
+    sig.type='hidden'; sig.name='signature'; sig.value=signature;
+    pf.appendChild(sig);
+    document.body.appendChild(pf);
+    pf.submit();
+  }catch(err){
+    setStatus(s,'err','We could not start the secure payment right now. Please try again shortly or email us.');
+  }
 });
 
 /* ---------- Member portal (magic link) ---------- */
