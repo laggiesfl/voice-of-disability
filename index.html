@@ -204,6 +204,7 @@
         <li><a href="advocacy.html">Our Position</a></li>
         <li><a href="#programmes">Programmes</a></li>
         <li><a href="#resources">Resources</a></li>
+        <li><a href="#blog">Blog</a></li>
         <li><a href="#membership">Join</a></li>
         <li><a href="#donate">Donate</a></li>
         <li><a href="#contact">Contact</a></li>
@@ -351,6 +352,21 @@
     <div class="filters" role="group" aria-label="Filter resources by category" id="res-filters"></div>
     <div id="resources-list" class="grid grid-2" aria-live="polite" aria-busy="true">
       <p id="res-loading">Loading resources…</p>
+    </div>
+  </div>
+</section>
+
+<!-- ================= BLOG ================= -->
+<section id="blog" aria-labelledby="blog-h">
+  <a class="back-to-menu" href="#mainnav">Back to menu</a>
+  <div class="wrap">
+    <div class="section-head">
+      <p class="kicker">Voices &amp; updates</p>
+      <h2 id="blog-h">Blog</h2>
+      <p class="lead">News, reflections and advocacy updates from Voice of Disability.</p>
+    </div>
+    <div id="blog-list" class="grid grid-2" aria-live="polite" aria-busy="true">
+      <p id="blog-loading">Loading posts&hellip;</p>
     </div>
   </div>
 </section>
@@ -543,6 +559,7 @@
         <li><a href="advocacy.html">Our Position</a></li>
         <li><a href="#programmes">Programmes</a></li>
         <li><a href="#resources">Resources</a></li>
+        <li><a href="#blog">Blog</a></li>
         <li><a href="#membership">Become a member</a></li>
       </ul>
     </div>
@@ -730,7 +747,27 @@ $('#donate-form').addEventListener('submit', async e=>{
 function escapeHtml(str){ return String(str).replace(/[&<>"']/g,c=>(
   {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c])); }
 
-loadEvents(); loadResources();
+/* ---------- Load blog posts ---------- */
+async function loadBlogPosts(){
+  const box = $('#blog-list');
+  const { data, error } = await sb.from('vod_blog_posts').select('slug,title,summary,published_at')
+    .eq('status','published').order('published_at',{ascending:false});
+  box.setAttribute('aria-busy','false');
+  if(error){ box.innerHTML = '<p>We couldn\u2019t load blog posts right now. Please check back soon.</p>'; return; }
+  if(!data || !data.length){ box.innerHTML = '<p>No posts yet &mdash; check back soon.</p>'; return; }
+  box.innerHTML = data.map(p=>{
+    const d = p.published_at ? new Date(p.published_at)
+      .toLocaleDateString('en-ZA',{day:'numeric',month:'long',year:'numeric'}) : '';
+    return `<article class="card">
+      ${d?`<span class="tag">${d}</span>`:''}
+      <h3>${escapeHtml(p.title)}</h3>
+      <p>${escapeHtml(p.summary||'')}</p>
+      <a class="btn btn-outline" href="blog-post.html?slug=${encodeURIComponent(p.slug)}">Read more</a>
+    </article>`;
+  }).join('');
+}
+
+loadEvents(); loadResources(); loadBlogPosts();
 </script>
 </body>
 </html>
