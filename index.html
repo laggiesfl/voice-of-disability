@@ -207,7 +207,6 @@
         <li><a href="#membership">Join</a></li>
         <li><a href="#donate">Donate</a></li>
         <li><a href="#contact">Contact</a></li>
-        <li><a href="#portal">Member Login</a></li>
       </ul>
     </nav>
     <div class="nav-cta">
@@ -407,36 +406,6 @@
   </div>
 </section>
 
-<!-- ================= MEMBER PORTAL ================= -->
-<section id="portal" aria-labelledby="portal-h">
-  <a class="back-to-menu" href="#mainnav">Back to menu</a>
-  <div class="wrap grid grid-2" style="align-items:start">
-    <div>
-      <p class="kicker">Members</p>
-      <h2 id="portal-h">Member portal</h2>
-      <p class="lead">Already a member? Sign in with a secure one-time link sent to your email —
-        no password to remember. Inside, you can see your application status and your event registrations.</p>
-    </div>
-    <div class="card">
-      <div id="signed-out">
-        <form id="login-form" novalidate aria-describedby="login-status">
-          <div class="field">
-            <label for="l-email">Your email</label>
-            <input id="l-email" name="email" type="email" required autocomplete="email">
-          </div>
-          <button class="btn btn-primary" type="submit" style="width:100%">Email me a login link</button>
-          <div id="login-status" class="status" role="status" aria-live="polite"></div>
-        </form>
-      </div>
-      <div id="signed-in" hidden>
-        <h3 id="welcome">Welcome back</h3>
-        <div id="portal-content" aria-live="polite"></div>
-        <button id="logout" class="btn btn-ghost" style="margin-top:14px">Sign out</button>
-      </div>
-    </div>
-  </div>
-</section>
-
 <!-- ================= DONATE ================= -->
 <section id="donate" class="value-band" aria-labelledby="don-h">
   <a class="back-to-menu" href="#mainnav">Back to menu</a>
@@ -582,7 +551,6 @@
       <ul>
         <li><a href="#donate">Donate</a></li>
         <li><a href="#newsletter">Newsletter</a></li>
-        <li><a href="#portal">Member login</a></li>
         <li><a href="#contact">Contact us</a></li>
       </ul>
     </div>
@@ -757,41 +725,6 @@ $('#donate-form').addEventListener('submit', async e=>{
     setStatus(s,'err','We could not start the secure payment right now. Please try again shortly or email us.');
   }
 });
-
-/* ---------- Member portal (magic link) ---------- */
-const signedOut=$('#signed-out'), signedIn=$('#signed-in');
-$('#login-form').addEventListener('submit', async e=>{
-  e.preventDefault(); const s=$('#login-status'), email=$('#l-email').value.trim();
-  if(!validEmail(email)){ setStatus(s,'err','Please enter a valid email.'); return; }
-  const { error } = await sb.auth.signInWithOtp({ email,
-    options:{ emailRedirectTo: window.location.href } });
-  if(error){ setStatus(s,'err','Could not send the link. Please try again.'); return; }
-  setStatus(s,'info','Check your inbox for a secure login link.');
-});
-$('#logout').addEventListener('click', async ()=>{ await sb.auth.signOut(); showPortal(null); });
-
-async function showPortal(session){
-  if(!session){ signedOut.hidden=false; signedIn.hidden=true; return; }
-  signedOut.hidden=true; signedIn.hidden=false;
-  const email = session.user.email;
-  $('#welcome').textContent = 'Welcome back, '+email;
-  const [{data:mem},{data:regs}] = await Promise.all([
-    sb.from('vod_members').select('full_name,status,created_at').ilike('email',email),
-    sb.from('vod_event_registrations').select('event_id,created_at').ilike('email',email)
-  ]);
-  let html='';
-  if(mem && mem.length){
-    const m=mem[0];
-    html += `<div class="status info" data-show="true">Membership status: <strong>${escapeHtml(m.status)}</strong></div>`;
-  } else {
-    html += `<p>We don’t see a membership application for this email yet. <a href="#membership">Apply here</a>.</p>`;
-  }
-  html += `<p class="form-note">Event registrations on file: ${regs?regs.length:0}</p>`;
-  html += `<p><a class="btn btn-outline" href="#resources">Browse member resources</a></p>`;
-  $('#portal-content').innerHTML = html;
-}
-sb.auth.getSession().then(({data})=>showPortal(data.session));
-sb.auth.onAuthStateChange((_e,session)=>showPortal(session));
 
 /* ---------- util ---------- */
 function escapeHtml(str){ return String(str).replace(/[&<>"']/g,c=>(
