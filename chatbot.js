@@ -77,6 +77,19 @@
       <label for="vod-chat-language">Language</label>
       <select id="vod-chat-language" aria-describedby="vod-chat-language-help"></select>
       <p class="vod-chat__note" id="vod-chat-language-help">Choose a South African language, or let the chatbot detect it.</p>
+      <div id="vod-chat-audio-controls" class="vod-chat__actions" hidden aria-label="Read-aloud controls">
+        <button id="vod-chat-pause" type="button" class="vod-chat__speak">Pause</button>
+        <button id="vod-chat-resume" type="button" class="vod-chat__speak">Resume</button>
+        <button id="vod-chat-audio-stop" type="button" class="vod-chat__stop">Stop</button>
+        <label for="vod-chat-speed" style="display:inline-flex;align-items:center;gap:6px;margin:0">Speed
+          <select id="vod-chat-speed" aria-label="Read-aloud speed" style="width:auto;min-height:44px">
+            <option value="0.75">0.75×</option>
+            <option value="1" selected>1×</option>
+            <option value="1.25">1.25×</option>
+            <option value="1.5">1.5×</option>
+          </select>
+        </label>
+      </div>
     </div>
     <div class="vod-chat__log" id="vod-chat-log" role="log" aria-live="polite" aria-relevant="additions text" tabindex="0"></div>
     <div class="vod-chat__status" id="vod-chat-status" role="status" aria-live="polite"></div>
@@ -88,7 +101,7 @@
         <button class="vod-chat__speak" type="button">Speak</button>
         <button class="vod-chat__stop" type="button" hidden>Stop recording</button>
       </div>
-      <p class="vod-chat__note">Voice is optional. Spoken input is placed in the text box first so you can review, edit, send, try again or cancel.</p>
+      <p class="vod-chat__note">Voice is optional. If your browser supports speech recognition, it may use your browser or device speech service. Your spoken words appear here as an editable transcript and are not sent to the chatbot until you press Send. You can always type instead.</p>
     </form>
   `;
 
@@ -102,6 +115,11 @@
   const language = panel.querySelector('#vod-chat-language');
   const speakBtn = panel.querySelector('.vod-chat__speak');
   const stopBtn = panel.querySelector('.vod-chat__stop');
+  const audioControls = panel.querySelector('#vod-chat-audio-controls');
+  const pauseAudioBtn = panel.querySelector('#vod-chat-pause');
+  const resumeAudioBtn = panel.querySelector('#vod-chat-resume');
+  const stopAudioBtn = panel.querySelector('#vod-chat-audio-stop');
+  const audioSpeed = panel.querySelector('#vod-chat-speed');
   let lastFocus = null;
   let history = [];
   let recognition = null;
@@ -161,12 +179,39 @@
     const exact = voices.find(v => v.lang.toLowerCase() === utterance.lang.toLowerCase());
     const family = voices.find(v => v.lang.toLowerCase().startsWith(utterance.lang.slice(0, 2).toLowerCase()));
     if (exact || family) utterance.voice = exact || family;
-    utterance.rate = 0.95;
-    utterance.onstart = () => setStatus('Reading the response aloud.');
-    utterance.onend = () => setStatus('Finished reading the response.');
-    utterance.onerror = () => setStatus('Audio could not be played. The full response is still available as text.');
+    utterance.rate = Number(audioSpeed?.value || 1);
+    utterance.onstart = () => {
+      if (audioControls) audioControls.hidden = false;
+      setStatus('Reading the response aloud. Use Pause, Resume, Stop or the speed control at any time.');
+    };
+    utterance.onend = () => {
+      if (audioControls) audioControls.hidden = true;
+      setStatus('Finished reading the response.');
+    };
+    utterance.onerror = () => {
+      if (audioControls) audioControls.hidden = true;
+      setStatus('Audio could not be played. The full response is still available as text.');
+    };
     window.speechSynthesis.speak(utterance);
   }
+
+  pauseAudioBtn?.addEventListener('click', () => {
+    if (window.speechSynthesis?.speaking && !window.speechSynthesis.paused) {
+      window.speechSynthesis.pause();
+      setStatus('Reading paused.');
+    }
+  });
+  resumeAudioBtn?.addEventListener('click', () => {
+    if (window.speechSynthesis?.paused) {
+      window.speechSynthesis.resume();
+      setStatus('Reading resumed.');
+    }
+  });
+  stopAudioBtn?.addEventListener('click', () => {
+    if ('speechSynthesis' in window) window.speechSynthesis.cancel();
+    if (audioControls) audioControls.hidden = true;
+    setStatus('Reading stopped.');
+  });
 
   function openPanel() {
     lastFocus = document.activeElement;
@@ -180,6 +225,7 @@
     launcher.setAttribute('aria-expanded', 'false');
     if (recognition && isRecording) recognition.stop();
     if ('speechSynthesis' in window) window.speechSynthesis.cancel();
+    if (audioControls) audioControls.hidden = true;
     (lastFocus || launcher).focus();
   }
 
