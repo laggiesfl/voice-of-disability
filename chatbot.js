@@ -10,7 +10,7 @@
     { value: 'Sepedi', label: 'Sepedi', locale: 'nso-ZA' },
     { value: 'Setswana', label: 'Setswana', locale: 'tn-ZA' },
     { value: 'Sesotho', label: 'Sesotho', locale: 'st-ZA' },
-    { value: 'itsonga', label: 'itsonga', locale: 'ts-ZA' },
+    { value: 'XiTsonga', label: 'XiTsonga', locale: 'ts-ZA' },
     { value: 'siSwati', label: 'siSwati', locale: 'ss-ZA' },
     { value: 'Tshivenda', label: 'Tshivenda', locale: 've-ZA' },
     { value: 'isiNdebele', label: 'isiNdebele', locale: 'nr-ZA' }

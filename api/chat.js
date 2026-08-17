@@ -1,6 +1,6 @@
 const SUPPORTED_LANGUAGES = [
   'English', 'isiZulu', 'isiXhosa', 'Afrikaans', 'Sepedi', 'Setswana',
-  'Sesotho', 'itsonga', 'siSwati', 'Tshivenda', 'isiNdebele'
+  'Sesotho', 'XiTsonga', 'siSwati', 'Tshivenda', 'isiNdebele'
 ];
 
 const SYSTEM_PROMPT = `You are the Voice of Disability Guide, the official website chatbot for Voice of Disability NPC in South Africa.
