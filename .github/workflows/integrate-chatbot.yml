@@ -1,0 +1,54 @@
+name: Integrate chatbot into site pages
+
+on:
+  push:
+    branches:
+      - agent/multilingual-accessible-chatbot
+
+permissions:
+  contents: write
+
+jobs:
+  integrate:
+    if: github.actor != 'github-actions[bot]'
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out branch
+        uses: actions/checkout@v4
+        with:
+          ref: agent/multilingual-accessible-chatbot
+
+      - name: Add chatbot loader to HTML pages and normalise Xitsonga label
+        shell: bash
+        run: |
+          set -euo pipefail
+          python - <<'PY'
+          from pathlib import Path
+
+          loader = '<script src="/chatbot.js" defer></script>'
+          for path in Path('.').glob('*.html'):
+              text = path.read_text(encoding='utf-8')
+              if loader not in text and '</body>' in text:
+                  text = text.replace('</body>', f'{loader}\n</body>', 1)
+                  path.write_text(text, encoding='utf-8')
+
+          for file_name in ('chatbot.js', 'api/chat.js'):
+              path = Path(file_name)
+              text = path.read_text(encoding='utf-8')
+              text = text.replace("'itsonga'", "'XiTsonga'")
+              text = text.replace("label: 'itsonga'", "label: 'XiTsonga'")
+              path.write_text(text, encoding='utf-8')
+          PY
+
+      - name: Commit integration changes
+        shell: bash
+        run: |
+          if git diff --quiet; then
+            echo "No integration changes needed."
+            exit 0
+          fi
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add '*.html' chatbot.js api/chat.js
+          git commit -m "Integrate accessible multilingual chatbot across site"
+          git push origin HEAD:agent/multilingual-accessible-chatbot
