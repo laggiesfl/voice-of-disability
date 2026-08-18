@@ -1,3 +1,4 @@
+// Temporary production health check for the Voice of Disability chatbot.
 export default async function handler(req, res) {
   res.setHeader('Cache-Control', 'no-store');
   res.setHeader('Content-Type', 'application/json; charset=utf-8');
