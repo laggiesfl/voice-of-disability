@@ -25,23 +25,24 @@
     .vod-chat-launcher:focus-visible,.vod-chat button:focus-visible,.vod-chat select:focus-visible,.vod-chat textarea:focus-visible{
       outline:4px solid #D9A441;outline-offset:3px;box-shadow:0 0 0 7px rgba(23,50,77,.35)}
     .vod-chat{position:fixed;right:22px;bottom:88px;z-index:1200;width:min(430px,calc(100vw - 28px));
-      max-height:min(720px,calc(100vh - 112px));background:#F7F4EF;color:#222;border:3px solid #17324D;
+      height:min(720px,calc(100vh - 112px));max-height:min(720px,calc(100vh - 112px));padding:0!important;background:#F7F4EF;color:#222;border:3px solid #17324D;
       border-radius:18px;box-shadow:0 16px 44px rgba(0,0,0,.28);display:none;overflow:hidden;
       font:400 1rem/1.5 system-ui,-apple-system,"Segoe UI",sans-serif}
     .vod-chat[data-open="true"]{display:flex;flex-direction:column}
-    .vod-chat__head{background:#17324D;color:#fff;padding:14px 16px;display:flex;align-items:flex-start;gap:12px;justify-content:space-between}
+    .vod-chat [hidden]{display:none!important}
+    .vod-chat__head{flex:0 0 auto;background:#17324D;color:#fff;padding:14px 16px;display:flex;align-items:flex-start;gap:12px;justify-content:space-between}
     .vod-chat__head h2{font-size:1.15rem;margin:0;color:#fff}.vod-chat__head p{font-size:.88rem;margin:4px 0 0;color:#E8EEF3}
     .vod-chat__close{background:#fff;color:#17324D;border:2px solid #fff;border-radius:10px;min-width:44px;min-height:44px;font-weight:800;cursor:pointer}
-    .vod-chat__controls{padding:12px 14px;border-bottom:2px solid #d7d0c7;background:#fff}
+    .vod-chat__controls{flex:0 0 auto;padding:12px 14px;border-bottom:2px solid #d7d0c7;background:#fff}
     .vod-chat__controls label{display:block;font-weight:700;margin-bottom:5px}.vod-chat__controls select{width:100%;min-height:44px;border:2px solid #17324D;border-radius:9px;padding:7px 10px;font:inherit;background:#fff;color:#222}
-    .vod-chat__log{padding:14px;overflow:auto;flex:1;min-height:220px;scrollbar-gutter:stable}
+    .vod-chat__log{padding:14px;overflow:auto;flex:1 1 auto;min-height:0;scrollbar-gutter:stable}
     .vod-chat__msg{margin:0 0 14px}.vod-chat__msg p{margin:0;white-space:pre-wrap;overflow-wrap:anywhere}
     .vod-chat__msg--assistant{background:#fff;border:2px solid #d7d0c7;border-radius:14px 14px 14px 4px;padding:11px 12px}
     .vod-chat__msg--user{background:#E8EEF3;border:2px solid #17324D;border-radius:14px 14px 4px 14px;padding:11px 12px;margin-left:34px}
     .vod-chat__speaker{font-size:.78rem;font-weight:800;color:#17324D;margin-bottom:4px}.vod-chat__msg--user .vod-chat__speaker{color:#17324D}
     .vod-chat__listen{margin-top:8px;border:2px solid #17324D;background:#fff;color:#17324D;border-radius:9px;padding:7px 10px;min-height:38px;font:700 .86rem/1 system-ui;cursor:pointer}
-    .vod-chat__status{padding:0 14px;min-height:26px;font-size:.88rem;font-weight:650;color:#17324D}
-    .vod-chat__composer{border-top:2px solid #d7d0c7;background:#fff;padding:12px 14px}
+    .vod-chat__status{flex:0 0 auto;padding:0 14px;min-height:26px;font-size:.88rem;font-weight:650;color:#17324D}
+    .vod-chat__composer{flex:0 0 auto;border-top:2px solid #d7d0c7;background:#fff;padding:12px 14px}
     .vod-chat__composer label{display:block;font-weight:700;margin-bottom:5px}.vod-chat__composer textarea{width:100%;min-height:78px;max-height:150px;resize:vertical;border:2px solid #17324D;border-radius:10px;padding:10px;font:inherit;color:#222;background:#fff}
     .vod-chat__actions{display:flex;gap:8px;flex-wrap:wrap;margin-top:8px}.vod-chat__actions button{border:2px solid #17324D;border-radius:10px;padding:9px 12px;min-height:44px;font:700 .92rem/1.1 system-ui;cursor:pointer}
     .vod-chat__send{background:#17324D;color:#fff}.vod-chat__speak{background:#fff;color:#17324D}.vod-chat__stop{background:#fff;color:#7A1F5C;border-color:#7A1F5C!important}
@@ -98,8 +99,8 @@
       <textarea id="vod-chat-input" maxlength="2400" required placeholder="Type your question here"></textarea>
       <div class="vod-chat__actions">
         <button class="vod-chat__send" type="submit">Send</button>
-        <button class="vod-chat__speak" type="button">Speak</button>
-        <button class="vod-chat__stop" type="button" hidden>Stop recording</button>
+        <button id="vod-chat-speak" class="vod-chat__speak" type="button">Speak</button>
+        <button id="vod-chat-record-stop" class="vod-chat__stop" type="button" hidden>Stop recording</button>
       </div>
       <p class="vod-chat__note">Voice is optional. If your browser supports speech recognition, it may use your browser or device speech service. Your spoken words appear here as an editable transcript and are not sent to the chatbot until you press Send. You can always type instead.</p>
     </form>
@@ -113,8 +114,8 @@
   const log = panel.querySelector('#vod-chat-log');
   const status = panel.querySelector('#vod-chat-status');
   const language = panel.querySelector('#vod-chat-language');
-  const speakBtn = panel.querySelector('.vod-chat__speak');
-  const stopBtn = panel.querySelector('.vod-chat__stop');
+  const speakBtn = panel.querySelector('#vod-chat-speak');
+  const stopBtn = panel.querySelector('#vod-chat-record-stop');
   const audioControls = panel.querySelector('#vod-chat-audio-controls');
   const pauseAudioBtn = panel.querySelector('#vod-chat-pause');
   const resumeAudioBtn = panel.querySelector('#vod-chat-resume');
