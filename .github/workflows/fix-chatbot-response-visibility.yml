@@ -1,0 +1,80 @@
+name: Fix chatbot response visibility
+
+on:
+  push:
+    branches: [main]
+
+permissions:
+  contents: write
+
+jobs:
+  fix:
+    if: github.actor != 'github-actions[bot]'
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: main
+
+      - name: Keep conversation visible and scroll newest reply into view
+        shell: bash
+        run: |
+          set -euo pipefail
+          python - <<'PY'
+          from pathlib import Path
+          p = Path('chatbot.js')
+          text = p.read_text(encoding='utf-8')
+
+          text = text.replace(
+            '.vod-chat[data-open="true"]{display:flex;flex-direction:column}',
+            '.vod-chat[data-open="true"]{display:grid;grid-template-rows:auto auto minmax(180px,1fr) auto auto}'
+          )
+          text = text.replace(
+            '.vod-chat__head{flex:0 0 auto;background:#17324D;',
+            '.vod-chat__head{background:#17324D;'
+          )
+          text = text.replace(
+            '.vod-chat__controls{flex:0 0 auto;padding:12px 14px;',
+            '.vod-chat__controls{padding:12px 14px;'
+          )
+          text = text.replace(
+            '.vod-chat__log{padding:14px;overflow:auto;flex:1 1 auto;min-height:0;scrollbar-gutter:stable}',
+            '.vod-chat__log{padding:14px;overflow:auto;min-height:180px;max-height:100%;scrollbar-gutter:stable;overscroll-behavior:contain;background:#F7F4EF}'
+          )
+          text = text.replace(
+            '.vod-chat__status{flex:0 0 auto;padding:0 14px;',
+            '.vod-chat__status{padding:4px 14px;'
+          )
+          text = text.replace(
+            '.vod-chat__composer{flex:0 0 auto;border-top:2px solid #d7d0c7;',
+            '.vod-chat__composer{border-top:2px solid #d7d0c7;'
+          )
+          text = text.replace(
+            '@media(max-width:520px){.vod-chat{right:7px;bottom:74px;width:calc(100vw - 14px);max-height:calc(100vh - 86px);border-radius:14px}.vod-chat-launcher{right:12px;bottom:12px}}',
+            '@media(max-width:520px){.vod-chat{right:7px;bottom:74px;width:calc(100vw - 14px);height:calc(100vh - 86px);max-height:calc(100vh - 86px);border-radius:14px}.vod-chat[data-open="true"]{grid-template-rows:auto auto minmax(150px,1fr) auto auto}.vod-chat__log{min-height:150px}.vod-chat-launcher{right:12px;bottom:12px}}'
+          )
+
+          old = '''    log.appendChild(wrap);\n    scrollLog();\n  }'''
+          new = '''    log.appendChild(wrap);\n    requestAnimationFrame(() => {\n      scrollLog();\n      if (role === 'assistant') wrap.scrollIntoView({ block: 'nearest', inline: 'nearest' });\n    });\n    return wrap;\n  }'''
+          text = text.replace(old, new)
+
+          text = text.replace(
+            "      addMessage('assistant', data.reply);\n      history.push",
+            "      const replyElement = addMessage('assistant', data.reply);\n      requestAnimationFrame(() => { log.scrollTop = log.scrollHeight; });\n      history.push"
+          )
+
+          p.write_text(text, encoding='utf-8')
+          PY
+
+      - name: Commit fix
+        shell: bash
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add chatbot.js
+          if git diff --cached --quiet; then
+            echo "No changes needed"
+            exit 0
+          fi
+          git commit -m "Fix chatbot response visibility and conversation scrolling"
+          git push origin main
