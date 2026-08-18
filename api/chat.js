@@ -141,7 +141,7 @@ export default async function handler(req, res) {
         'Content-Type': 'application/json'
       },
       body: JSON.stringify({
-        model: 'openai/gpt-5.5',
+        model: 'alibaba/qwen3.5-flash',
         temperature: 0.2,
         max_tokens: 700,
         messages: [
