@@ -1,0 +1,80 @@
+name: Fix chatbot composer visibility
+
+on:
+  push:
+    branches: [main]
+
+permissions:
+  contents: write
+
+jobs:
+  fix:
+    if: github.actor != 'github-actions[bot]'
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: main
+
+      - name: Keep message composer fully visible
+        shell: bash
+        run: |
+          set -euo pipefail
+          python - <<'PY'
+          from pathlib import Path
+          p = Path('chatbot.js')
+          text = p.read_text(encoding='utf-8')
+
+          text = text.replace(
+            '.vod-chat[data-open="true"]{display:grid;grid-template-rows:auto auto minmax(180px,1fr) auto auto}',
+            '.vod-chat[data-open="true"]{display:grid;grid-template-rows:auto auto minmax(110px,1fr) auto auto}'
+          )
+          text = text.replace(
+            '.vod-chat__log{padding:14px;overflow:auto;min-height:180px;max-height:100%;scrollbar-gutter:stable;overscroll-behavior:contain;background:#F7F4EF}',
+            '.vod-chat__log{padding:12px 14px;overflow:auto;min-height:110px;max-height:100%;scrollbar-gutter:stable;overscroll-behavior:contain;background:#F7F4EF}'
+          )
+          text = text.replace(
+            '.vod-chat__status{padding:4px 14px;min-height:26px;font-size:.88rem;font-weight:650;color:#17324D}',
+            '.vod-chat__status{padding:3px 14px;min-height:22px;font-size:.82rem;font-weight:650;color:#17324D}'
+          )
+          text = text.replace(
+            '.vod-chat__composer{border-top:2px solid #d7d0c7;background:#fff;padding:12px 14px}',
+            '.vod-chat__composer{border-top:2px solid #d7d0c7;background:#fff;padding:9px 14px 10px}'
+          )
+          text = text.replace(
+            '.vod-chat__composer label{display:block;font-weight:700;margin-bottom:5px}.vod-chat__composer textarea{width:100%;min-height:78px;max-height:150px;resize:vertical;',
+            '.vod-chat__composer label{display:block;font-weight:700;margin-bottom:4px}.vod-chat__composer textarea{width:100%;min-height:62px;max-height:120px;resize:vertical;'
+          )
+          text = text.replace(
+            '@media(max-width:520px){.vod-chat{right:7px;bottom:74px;width:calc(100vw - 14px);height:calc(100vh - 86px);max-height:calc(100vh - 86px);border-radius:14px}.vod-chat[data-open="true"]{grid-template-rows:auto auto minmax(150px,1fr) auto auto}.vod-chat__log{min-height:150px}.vod-chat-launcher{right:12px;bottom:12px}}',
+            '@media(max-width:520px){.vod-chat{right:7px;bottom:74px;width:calc(100vw - 14px);height:calc(100vh - 86px);max-height:calc(100vh - 86px);border-radius:14px}.vod-chat[data-open="true"]{grid-template-rows:auto auto minmax(100px,1fr) auto auto}.vod-chat__log{min-height:100px}.vod-chat-launcher{right:12px;bottom:12px}}'
+          )
+
+          text = text.replace(
+            '<p class="vod-chat__note">Voice is optional. If your browser supports speech recognition, it may use your browser or device speech service. Your spoken words appear here as an editable transcript and are not sent to the chatbot until you press Send. You can always type instead.</p>',
+            '<p class="vod-chat__note" id="vod-chat-voice-note">Voice is optional. Spoken words are not sent until you press Send.</p>'
+          )
+          text = text.replace(
+            "  const audioSpeed = panel.querySelector('#vod-chat-speed');",
+            "  const audioSpeed = panel.querySelector('#vod-chat-speed');\n  const voiceNote = panel.querySelector('#vod-chat-voice-note');"
+          )
+          text = text.replace(
+            "  if (!SpeechRecognition) {\n    speakBtn.hidden = true;\n    setStatus('Voice input is not available in this browser. You can use the chatbot fully by typing.');",
+            "  if (!SpeechRecognition) {\n    speakBtn.hidden = true;\n    if (voiceNote) voiceNote.hidden = true;\n    setStatus('Voice input is unavailable here. Type your question below.');"
+          )
+
+          p.write_text(text, encoding='utf-8')
+          PY
+
+      - name: Commit fix
+        shell: bash
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add chatbot.js
+          if git diff --cached --quiet; then
+            echo "No changes needed"
+            exit 0
+          fi
+          git commit -m "Keep chatbot message box and Send button visible"
+          git push origin main
