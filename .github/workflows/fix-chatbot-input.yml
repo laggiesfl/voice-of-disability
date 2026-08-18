@@ -1,0 +1,79 @@
+name: Fix chatbot input layout
+
+on:
+  push:
+    branches: [main]
+
+permissions:
+  contents: write
+
+jobs:
+  fix:
+    if: github.actor != 'github-actions[bot]'
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: main
+
+      - name: Fix chatbot layout and voice selectors
+        shell: bash
+        run: |
+          set -euo pipefail
+          python - <<'PY'
+          from pathlib import Path
+          p = Path('chatbot.js')
+          text = p.read_text(encoding='utf-8')
+
+          text = text.replace(
+            '.vod-chat{position:fixed;right:22px;bottom:88px;z-index:1200;width:min(430px,calc(100vw - 28px));\n      max-height:min(720px,calc(100vh - 112px));background:#F7F4EF;color:#222;border:3px solid #17324D;',
+            '.vod-chat{position:fixed;right:22px;bottom:88px;z-index:1200;width:min(430px,calc(100vw - 28px));\n      height:min(720px,calc(100vh - 112px));max-height:min(720px,calc(100vh - 112px));padding:0!important;background:#F7F4EF;color:#222;border:3px solid #17324D;'
+          )
+          text = text.replace(
+            '.vod-chat[data-open="true"]{display:flex;flex-direction:column}',
+            '.vod-chat[data-open="true"]{display:flex;flex-direction:column}\n    .vod-chat [hidden]{display:none!important}'
+          )
+          text = text.replace(
+            '.vod-chat__head{background:#17324D;',
+            '.vod-chat__head{flex:0 0 auto;background:#17324D;'
+          )
+          text = text.replace(
+            '.vod-chat__controls{padding:12px 14px;',
+            '.vod-chat__controls{flex:0 0 auto;padding:12px 14px;'
+          )
+          text = text.replace(
+            '.vod-chat__log{padding:14px;overflow:auto;flex:1;min-height:220px;scrollbar-gutter:stable}',
+            '.vod-chat__log{padding:14px;overflow:auto;flex:1 1 auto;min-height:0;scrollbar-gutter:stable}'
+          )
+          text = text.replace(
+            '.vod-chat__status{padding:0 14px;',
+            '.vod-chat__status{flex:0 0 auto;padding:0 14px;'
+          )
+          text = text.replace(
+            '.vod-chat__composer{border-top:2px solid #d7d0c7;',
+            '.vod-chat__composer{flex:0 0 auto;border-top:2px solid #d7d0c7;'
+          )
+          text = text.replace(
+            '<button class="vod-chat__speak" type="button">Speak</button>\n        <button class="vod-chat__stop" type="button" hidden>Stop recording</button>',
+            '<button id="vod-chat-speak" class="vod-chat__speak" type="button">Speak</button>\n        <button id="vod-chat-record-stop" class="vod-chat__stop" type="button" hidden>Stop recording</button>'
+          )
+          text = text.replace(
+            "const speakBtn = panel.querySelector('.vod-chat__speak');\n  const stopBtn = panel.querySelector('.vod-chat__stop');",
+            "const speakBtn = panel.querySelector('#vod-chat-speak');\n  const stopBtn = panel.querySelector('#vod-chat-record-stop');"
+          )
+
+          p.write_text(text, encoding='utf-8')
+          PY
+
+      - name: Commit fix
+        shell: bash
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add chatbot.js
+          if git diff --cached --quiet; then
+            echo "No changes needed"
+            exit 0
+          fi
+          git commit -m "Fix chatbot text and voice input visibility"
+          git push origin main
