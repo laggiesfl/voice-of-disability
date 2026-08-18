@@ -28,26 +28,26 @@
       height:min(720px,calc(100vh - 112px));max-height:min(720px,calc(100vh - 112px));padding:0!important;background:#F7F4EF;color:#222;border:3px solid #17324D;
       border-radius:18px;box-shadow:0 16px 44px rgba(0,0,0,.28);display:none;overflow:hidden;
       font:400 1rem/1.5 system-ui,-apple-system,"Segoe UI",sans-serif}
-    .vod-chat[data-open="true"]{display:flex;flex-direction:column}
+    .vod-chat[data-open="true"]{display:grid;grid-template-rows:auto auto minmax(180px,1fr) auto auto}
     .vod-chat [hidden]{display:none!important}
-    .vod-chat__head{flex:0 0 auto;background:#17324D;color:#fff;padding:14px 16px;display:flex;align-items:flex-start;gap:12px;justify-content:space-between}
+    .vod-chat__head{background:#17324D;color:#fff;padding:14px 16px;display:flex;align-items:flex-start;gap:12px;justify-content:space-between}
     .vod-chat__head h2{font-size:1.15rem;margin:0;color:#fff}.vod-chat__head p{font-size:.88rem;margin:4px 0 0;color:#E8EEF3}
     .vod-chat__close{background:#fff;color:#17324D;border:2px solid #fff;border-radius:10px;min-width:44px;min-height:44px;font-weight:800;cursor:pointer}
-    .vod-chat__controls{flex:0 0 auto;padding:12px 14px;border-bottom:2px solid #d7d0c7;background:#fff}
+    .vod-chat__controls{padding:12px 14px;border-bottom:2px solid #d7d0c7;background:#fff}
     .vod-chat__controls label{display:block;font-weight:700;margin-bottom:5px}.vod-chat__controls select{width:100%;min-height:44px;border:2px solid #17324D;border-radius:9px;padding:7px 10px;font:inherit;background:#fff;color:#222}
-    .vod-chat__log{padding:14px;overflow:auto;flex:1 1 auto;min-height:0;scrollbar-gutter:stable}
+    .vod-chat__log{padding:14px;overflow:auto;min-height:180px;max-height:100%;scrollbar-gutter:stable;overscroll-behavior:contain;background:#F7F4EF}
     .vod-chat__msg{margin:0 0 14px}.vod-chat__msg p{margin:0;white-space:pre-wrap;overflow-wrap:anywhere}
     .vod-chat__msg--assistant{background:#fff;border:2px solid #d7d0c7;border-radius:14px 14px 14px 4px;padding:11px 12px}
     .vod-chat__msg--user{background:#E8EEF3;border:2px solid #17324D;border-radius:14px 14px 4px 14px;padding:11px 12px;margin-left:34px}
     .vod-chat__speaker{font-size:.78rem;font-weight:800;color:#17324D;margin-bottom:4px}.vod-chat__msg--user .vod-chat__speaker{color:#17324D}
     .vod-chat__listen{margin-top:8px;border:2px solid #17324D;background:#fff;color:#17324D;border-radius:9px;padding:7px 10px;min-height:38px;font:700 .86rem/1 system-ui;cursor:pointer}
-    .vod-chat__status{flex:0 0 auto;padding:0 14px;min-height:26px;font-size:.88rem;font-weight:650;color:#17324D}
-    .vod-chat__composer{flex:0 0 auto;border-top:2px solid #d7d0c7;background:#fff;padding:12px 14px}
+    .vod-chat__status{padding:4px 14px;min-height:26px;font-size:.88rem;font-weight:650;color:#17324D}
+    .vod-chat__composer{border-top:2px solid #d7d0c7;background:#fff;padding:12px 14px}
     .vod-chat__composer label{display:block;font-weight:700;margin-bottom:5px}.vod-chat__composer textarea{width:100%;min-height:78px;max-height:150px;resize:vertical;border:2px solid #17324D;border-radius:10px;padding:10px;font:inherit;color:#222;background:#fff}
     .vod-chat__actions{display:flex;gap:8px;flex-wrap:wrap;margin-top:8px}.vod-chat__actions button{border:2px solid #17324D;border-radius:10px;padding:9px 12px;min-height:44px;font:700 .92rem/1.1 system-ui;cursor:pointer}
     .vod-chat__send{background:#17324D;color:#fff}.vod-chat__speak{background:#fff;color:#17324D}.vod-chat__stop{background:#fff;color:#7A1F5C;border-color:#7A1F5C!important}
     .vod-chat__note{font-size:.78rem;color:#4a4152;margin:7px 0 0}.vod-chat__link{color:#7A1F5C;font-weight:700}
-    @media(max-width:520px){.vod-chat{right:7px;bottom:74px;width:calc(100vw - 14px);max-height:calc(100vh - 86px);border-radius:14px}.vod-chat-launcher{right:12px;bottom:12px}}
+    @media(max-width:520px){.vod-chat{right:7px;bottom:74px;width:calc(100vw - 14px);height:calc(100vh - 86px);max-height:calc(100vh - 86px);border-radius:14px}.vod-chat[data-open="true"]{grid-template-rows:auto auto minmax(150px,1fr) auto auto}.vod-chat__log{min-height:150px}.vod-chat-launcher{right:12px;bottom:12px}}
     @media(prefers-reduced-motion:reduce){.vod-chat,.vod-chat-launcher{scroll-behavior:auto;transition:none!important}}
   `;
   document.head.appendChild(style);
@@ -160,7 +160,11 @@
     }
 
     log.appendChild(wrap);
-    scrollLog();
+    requestAnimationFrame(() => {
+      scrollLog();
+      if (role === 'assistant') wrap.scrollIntoView({ block: 'nearest', inline: 'nearest' });
+    });
+    return wrap;
   }
 
   function getLocale() {
@@ -270,7 +274,8 @@
       });
       const data = await response.json().catch(() => ({}));
       if (!response.ok) throw new Error(data.error || 'Chat service unavailable');
-      addMessage('assistant', data.reply);
+      const replyElement = addMessage('assistant', data.reply);
+      requestAnimationFrame(() => { log.scrollTop = log.scrollHeight; });
       history.push({ role: 'user', content: message }, { role: 'assistant', content: data.reply });
       history = history.slice(-10);
       setStatus('Response ready.');
