@@ -37,7 +37,7 @@ async function saveToAirtable(
         records: [
           {
             fields: {
-              Name:   name,
+              'Member Name': name,
               Email:  email,
               Phone:  phone,
               Joined: new Date().toISOString().split('T')[0],
