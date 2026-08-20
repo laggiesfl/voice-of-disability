@@ -1,5 +1,9 @@
 import Link from 'next/link';
 import type { Metadata } from 'next';
+import MembershipForm from './components/MembershipForm';
+import NewsletterForm from './components/NewsletterForm';
+import ContactForm    from './components/ContactForm';
+import DonateSection  from './components/DonateSection';
 
 export const metadata: Metadata = {
   title: 'Voice of Disability | Your voice. Your rights. Your community.',
@@ -179,7 +183,7 @@ export default function Home() {
               </p>
             </div>
             <div className="prog-card">
-              <div className="prog-card-icon" aria-hidden="true">🔙️</div>
+              <div className="prog-card-icon" aria-hidden="true">😙️</div>
               <h3>Voices Circle</h3>
               <p>
                 A members-only space for disabled women to connect, share experiences, and
@@ -273,23 +277,7 @@ export default function Home() {
             </div>
 
             <div className="membership-form-wrap">
-              <form action="#" method="post" aria-label="Membership sign-up form" noValidate>
-                <div className="form-group">
-                  <label htmlFor="m-name">Full name <span aria-hidden="true">*</span></label>
-                  <input type="text" id="m-name" name="name" autoComplete="name" required aria-required="true" placeholder="Your full name" />
-                </div>
-                <div className="form-group">
-                  <label htmlFor="m-email">Email <span aria-hidden="true">*</span></label>
-                  <input type="email" id="m-email" name="email" autoComplete="email" required aria-required="true" placeholder="your@email.com" />
-                </div>
-                <div className="form-group">
-                  <label htmlFor="m-phone">Phone (optional)</label>
-                  <input type="tel" id="m-phone" name="phone" autoComplete="tel" placeholder="+27 …" />
-                </div>
-                <button type="submit" className="btn btn-primary" style={{width: '100%', justifyContent: 'center', marginTop: '0.5rem'}}>
-                  Join the movement — it&rsquo;s free
-                </button>
-              </form>
+              <MembershipForm />
             </div>
           </div>
         </div>
@@ -309,26 +297,7 @@ export default function Home() {
               </p>
             </div>
 
-            <div>
-              <p style={{color: 'rgba(255,255,255,0.7)', marginBottom: '0.75rem', fontSize: '0.9rem'}}>Choose an amount (ZAR)</p>
-              <div className="donate-amounts" role="group" aria-label="Donation amount options">
-                <button type="button">R100</button>
-                <button type="button">R250</button>
-                <button type="button">R500</button>
-                <button type="button">Other</button>
-              </div>
-              <div className="form-group" style={{marginBottom: '1rem'}}>
-                <label htmlFor="donate-name" className="sr-only">Your name</label>
-                <input type="text" id="donate-name" placeholder="Your name" style={{background: 'rgba(255,255,255,0.1)', border: '2px solid rgba(255,255,255,0.3)', color: '#fff'}} />
-              </div>
-              <div className="form-group" style={{marginBottom: '1.25rem'}}>
-                <label htmlFor="donate-email" className="sr-only">Your email</label>
-                <input type="email" id="donate-email" placeholder="Your email" style={{background: 'rgba(255,255,255,0.1)', border: '2px solid rgba(255,255,255,0.3)', color: '#fff'}} />
-              </div>
-              <button type="button" className="btn btn-gold" style={{width: '100%', justifyContent: 'center'}}>
-                Donate securely
-              </button>
-            </div>
+            <DonateSection />
           </div>
         </div>
       </section>
@@ -340,11 +309,7 @@ export default function Home() {
             <h2 id="nl-h" style={{fontSize: '1.4rem'}}>Get updates from Voice of Disability</h2>
             <p style={{margin: 0}}>News, events, and resources — straight to your inbox. No spam, ever.</p>
           </div>
-          <form className="newsletter-form" aria-label="Newsletter sign-up" noValidate>
-            <label htmlFor="nl-email" className="sr-only">Email address</label>
-            <input type="email" id="nl-email" name="email" placeholder="your@email.com" autoComplete="email" required aria-required="true" />
-            <button type="submit" className="btn btn-primary">Subscribe</button>
-          </form>
+          <NewsletterForm />
         </div>
       </section>
 
@@ -383,27 +348,7 @@ export default function Home() {
             </div>
 
             <div>
-              <form aria-label="Contact form" noValidate>
-                <div className="form-group">
-                  <label htmlFor="c-name">Full name <span aria-hidden="true">*</span></label>
-                  <input type="text" id="c-name" name="name" autoComplete="name" required aria-required="true" placeholder="Your full name" />
-                </div>
-                <div className="form-group">
-                  <label htmlFor="c-email">Email <span aria-hidden="true">*</span></label>
-                  <input type="email" id="c-email" name="email" autoComplete="email" required aria-required="true" placeholder="your@email.com" />
-                </div>
-                <div className="form-group">
-                  <label htmlFor="c-subject">Subject</label>
-                  <input type="text" id="c-subject" name="subject" placeholder="What is this about?" />
-                </div>
-                <div className="form-group">
-                  <label htmlFor="c-message">Message <span aria-hidden="true">*</span></label>
-                  <textarea id="c-message" name="message" rows={5} required aria-required="true" placeholder="Your message…" />
-                </div>
-                <button type="submit" className="btn btn-primary" style={{width: '100%', justifyContent: 'center'}}>
-                  Send message
-                </button>
-              </form>
+              <ContactForm />
             </div>
           </div>
         </div>
