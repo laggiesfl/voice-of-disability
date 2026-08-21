@@ -1,0 +1,1 @@
+Production redeployment triggered after configuring RESEND_API_KEY in Vercel on 2026-08-21.
