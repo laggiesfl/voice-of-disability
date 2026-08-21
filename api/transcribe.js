@@ -1,6 +1,3 @@
-import { experimental_transcribe as transcribe } from 'ai';
-import { gateway } from '@ai-sdk/gateway';
-
 const MAX_AUDIO_BYTES = 4 * 1024 * 1024;
 
 function estimateBytes(base64) {
@@ -25,6 +22,11 @@ export default async function handler(req, res) {
     if (estimateBytes(audio) > MAX_AUDIO_BYTES) {
       return res.status(413).json({ error: 'The recording is too long. Please record a shorter message.' });
     }
+
+    const [{ experimental_transcribe: transcribe }, { gateway }] = await Promise.all([
+      import('ai'),
+      import('@ai-sdk/gateway'),
+    ]);
 
     const result = await transcribe({
       model: gateway.transcriptionModel('openai/whisper-1'),
