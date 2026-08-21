@@ -15,7 +15,7 @@ export async function POST(request: NextRequest) {
   const apiKey = process.env.RESEND_API_KEY;
   if (!apiKey) {
     return Response.json(
-      { error: 'Email service is not yet configured. Please email us directly at fadila@voiceofdisability.com.' },
+      { error: 'Email service is not yet configured. Please email us directly at hello@voiceofdisability.com.' },
       { status: 503 }
     );
   }
@@ -46,7 +46,7 @@ export async function POST(request: NextRequest) {
     const safeMessage = escapeHtml(message.trim()).replace(/\n/g, '<br>');
 
     await resend.emails.send({
-      from: 'Voice of Disability <noreply@voiceofdisability.com>',
+      from: 'Voice of Disability <hello@voiceofdisability.com>',
       to: 'fadila@voiceofdisability.com',
       replyTo: safeEmail,
       subject: safeSubject

@@ -60,7 +60,7 @@ export async function POST(request: NextRequest) {
   const apiKey = process.env.RESEND_API_KEY;
   if (!apiKey) {
     return Response.json(
-      { error: 'Email service is not yet configured. Please email us at fadila@voiceofdisability.com to join.' },
+      { error: 'Email service is not yet configured. Please email us at hello@voiceofdisability.com to join.' },
       { status: 503 }
     );
   }
@@ -93,7 +93,7 @@ export async function POST(request: NextRequest) {
 
     // 2. Notify Fadila
     await resend.emails.send({
-      from: 'Voice of Disability <noreply@voiceofdisability.com>',
+      from: 'Voice of Disability <hello@voiceofdisability.com>',
       to: 'fadila@voiceofdisability.com',
       subject: `New member: ${escapeHtml(safeName)}`,
       html: `
@@ -111,8 +111,9 @@ export async function POST(request: NextRequest) {
 
     // 3. Welcome email to new member
     await resend.emails.send({
-      from: 'Fadila at Voice of Disability <noreply@voiceofdisability.com>',
+      from: 'Fadila at Voice of Disability <hello@voiceofdisability.com>',
       to: safeEmail,
+      replyTo: 'hello@voiceofdisability.com',
       subject: 'Welcome to Voice of Disability',
       html: `
         <div style="font-family: Arial, sans-serif; max-width: 600px;">
@@ -126,7 +127,7 @@ export async function POST(request: NextRequest) {
           </ul>
           <p>
             If you have any questions, just reply to this email or write to us at
-            <a href="mailto:fadila@voiceofdisability.com">fadila@voiceofdisability.com</a>.
+            <a href="mailto:hello@voiceofdisability.com">hello@voiceofdisability.com</a>.
           </p>
           <p style="margin-top: 2rem;">
             — Fadila Lagadien<br>
