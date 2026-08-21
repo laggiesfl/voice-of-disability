@@ -334,7 +334,7 @@ export default function Home() {
                 <span className="contact-detail-icon" aria-hidden="true">✉️</span>
                 <div>
                   <strong>Media, partnerships and advocacy enquiries:</strong><br />
-                  <a href="mailto:fadila@voiceofdisability.com">fadila@voiceofdisability.com</a>
+                  <a href="mailto:hello@voiceofdisability.com">hello@voiceofdisability.com</a>
                 </div>
               </div>
               <div className="social-links">
