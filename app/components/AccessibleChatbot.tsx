@@ -27,13 +27,17 @@ export default function AccessibleChatbot() {
   const [status, setStatus] = useState('');
   const [sending, setSending] = useState(false);
   const [recording, setRecording] = useState(false);
+  const [transcribing, setTranscribing] = useState(false);
   const [speaking, setSpeaking] = useState(false);
   const [speechPaused, setSpeechPaused] = useState(false);
   const [rate, setRate] = useState(1);
   const launcherRef = useRef<HTMLButtonElement>(null);
   const closeRef = useRef<HTMLButtonElement>(null);
   const logRef = useRef<HTMLDivElement>(null);
-  const recognitionRef = useRef<any>(null);
+  const mediaRecorderRef = useRef<MediaRecorder | null>(null);
+  const streamRef = useRef<MediaStream | null>(null);
+  const chunksRef = useRef<Blob[]>([]);
+  const recordingTimerRef = useRef<number | null>(null);
 
   useEffect(() => {
     const saved = window.localStorage.getItem('vod-chat-language');
@@ -50,14 +54,12 @@ export default function AccessibleChatbot() {
     const previous = document.body.style.overflow;
     if (window.matchMedia('(max-width: 520px)').matches) document.body.style.overflow = 'hidden';
     const onKey = (event: KeyboardEvent) => {
-      if (event.key === 'Escape') setOpen(false);
+      if (event.key === 'Escape') closeChat();
     };
     document.addEventListener('keydown', onKey);
     return () => {
       document.removeEventListener('keydown', onKey);
       document.body.style.overflow = previous;
-      window.speechSynthesis?.cancel();
-      recognitionRef.current?.stop?.();
     };
   }, [open]);
 
@@ -65,12 +67,27 @@ export default function AccessibleChatbot() {
     logRef.current?.scrollTo({ top: logRef.current.scrollHeight, behavior: 'auto' });
   }, [messages, status]);
 
+  function stopMicrophoneTracks() {
+    streamRef.current?.getTracks().forEach(track => track.stop());
+    streamRef.current = null;
+  }
+
+  function clearRecordingTimer() {
+    if (recordingTimerRef.current !== null) {
+      window.clearTimeout(recordingTimerRef.current);
+      recordingTimerRef.current = null;
+    }
+  }
+
   function closeChat() {
+    if (mediaRecorderRef.current?.state === 'recording') mediaRecorderRef.current.stop();
+    clearRecordingTimer();
+    stopMicrophoneTracks();
+    window.speechSynthesis?.cancel();
     setOpen(false);
     setStatus('');
-    window.speechSynthesis?.cancel();
-    recognitionRef.current?.stop?.();
     setRecording(false);
+    setTranscribing(false);
     setSpeaking(false);
     setSpeechPaused(false);
     window.setTimeout(() => launcherRef.current?.focus(), 0);
@@ -83,7 +100,7 @@ export default function AccessibleChatbot() {
   async function sendMessage(event: FormEvent) {
     event.preventDefault();
     const text = input.trim();
-    if (!text || sending) return;
+    if (!text || sending || transcribing) return;
 
     const userMessage: ChatMessage = { role: 'user', content: text };
     const priorHistory = messages.slice(-10);
@@ -111,38 +128,99 @@ export default function AccessibleChatbot() {
     }
   }
 
-  function startRecording() {
-    if (recording) return;
-    const SpeechRecognition = (window as any).SpeechRecognition || (window as any).webkitSpeechRecognition;
-    if (!SpeechRecognition) {
-      setStatus('Speech input is not supported by this browser. Please type your question instead.');
+  function blobToBase64(blob: Blob) {
+    return new Promise<string>((resolve, reject) => {
+      const reader = new FileReader();
+      reader.onloadend = () => {
+        const result = String(reader.result || '');
+        resolve(result.includes(',') ? result.split(',')[1] : result);
+      };
+      reader.onerror = () => reject(new Error('Could not read the recording.'));
+      reader.readAsDataURL(blob);
+    });
+  }
+
+  async function transcribeRecording(blob: Blob) {
+    setTranscribing(true);
+    setStatus('Transcribing your recording. Your words will appear as editable text.');
+    try {
+      const audio = await blobToBase64(blob);
+      const response = await fetch('/api/transcribe', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ audio, mediaType: blob.type || 'audio/webm' }),
+      });
+      const data = await response.json().catch(() => ({}));
+      if (!response.ok || !data.text) throw new Error(data.error || 'The recording could not be transcribed.');
+      setInput(data.text);
+      setStatus('Transcript ready. Review or edit it, then press Send.');
+    } catch (error) {
+      const message = error instanceof Error ? error.message : 'The recording could not be transcribed.';
+      setStatus(`${message} Please try again or type your question.`);
+    } finally {
+      setTranscribing(false);
+    }
+  }
+
+  async function startRecording() {
+    if (recording || transcribing) return;
+    if (!navigator.mediaDevices?.getUserMedia || typeof MediaRecorder === 'undefined') {
+      setStatus('Microphone recording is not available in this browser. Please type your question instead.');
       return;
     }
 
-    const recognition = new SpeechRecognition();
-    recognition.lang = localeForSelectedLanguage();
-    recognition.interimResults = false;
-    recognition.continuous = false;
-    recognition.maxAlternatives = 1;
-    recognition.onstart = () => {
+    try {
+      const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
+      streamRef.current = stream;
+      chunksRef.current = [];
+
+      let options: MediaRecorderOptions | undefined;
+      if (MediaRecorder.isTypeSupported('audio/webm;codecs=opus')) options = { mimeType: 'audio/webm;codecs=opus' };
+      else if (MediaRecorder.isTypeSupported('audio/ogg;codecs=opus')) options = { mimeType: 'audio/ogg;codecs=opus' };
+
+      const recorder = new MediaRecorder(stream, options);
+      mediaRecorderRef.current = recorder;
+      recorder.ondataavailable = event => {
+        if (event.data.size > 0) chunksRef.current.push(event.data);
+      };
+      recorder.onerror = () => {
+        clearRecordingTimer();
+        stopMicrophoneTracks();
+        setRecording(false);
+        setStatus('The recording could not continue. Please try again or type your question.');
+      };
+      recorder.onstop = async () => {
+        clearRecordingTimer();
+        stopMicrophoneTracks();
+        setRecording(false);
+        const blob = new Blob(chunksRef.current, { type: recorder.mimeType || 'audio/webm' });
+        chunksRef.current = [];
+        if (blob.size > 0) await transcribeRecording(blob);
+        else setStatus('No audio was recorded. Please try again or type your question.');
+      };
+
+      recorder.start();
       setRecording(true);
-      setStatus('Listening. Your speech will appear as editable text before anything is sent.');
-    };
-    recognition.onresult = (event: any) => {
-      const transcript = event.results?.[0]?.[0]?.transcript || '';
-      setInput(transcript);
-      setStatus('Transcript ready. Review or edit it, then press Send.');
-    };
-    recognition.onerror = () => setStatus('Speech could not be recognised. Please try again or type your question.');
-    recognition.onend = () => setRecording(false);
-    recognitionRef.current = recognition;
-    recognition.start();
+      setStatus('Recording. Press Stop recording when you finish. Your message will not be sent automatically.');
+      recordingTimerRef.current = window.setTimeout(() => {
+        if (mediaRecorderRef.current?.state === 'recording') mediaRecorderRef.current.stop();
+      }, 60000);
+    } catch (error) {
+      stopMicrophoneTracks();
+      const name = error instanceof DOMException ? error.name : '';
+      if (name === 'NotAllowedError' || name === 'SecurityError') {
+        setStatus('Microphone permission was not granted. Allow microphone access for this site, or type your question instead.');
+      } else {
+        setStatus('The microphone could not be started. Please try again or type your question.');
+      }
+    }
   }
 
   function stopRecording() {
-    recognitionRef.current?.stop?.();
-    setRecording(false);
-    setStatus('Recording stopped. Review the transcript before sending.');
+    if (mediaRecorderRef.current?.state === 'recording') {
+      setStatus('Recording stopped. Preparing the transcript.');
+      mediaRecorderRef.current.stop();
+    }
   }
 
   function listen(text: string) {
@@ -189,26 +267,14 @@ export default function AccessibleChatbot() {
 
   return (
     <>
-      <button
-        ref={launcherRef}
-        type="button"
-        className="vodLauncher"
-        aria-haspopup="dialog"
-        aria-expanded={open}
-        aria-controls="vod-chat-panel"
-        onClick={() => setOpen(true)}
-        hidden={open}
-      >
+      <button ref={launcherRef} type="button" className="vodLauncher" aria-haspopup="dialog" aria-expanded={open} aria-controls="vod-chat-panel" onClick={() => setOpen(true)} hidden={open}>
         Ask Voice of Disability
       </button>
 
       {open && (
         <section id="vod-chat-panel" className="vodChat" role="dialog" aria-modal="false" aria-labelledby="vod-chat-title">
           <header className="vodHead">
-            <div>
-              <h2 id="vod-chat-title">Voice of Disability Guide</h2>
-              <p>Your voice. Your rights. Your community.</p>
-            </div>
+            <div><h2 id="vod-chat-title">Voice of Disability Guide</h2><p>Your voice. Your rights. Your community.</p></div>
             <button ref={closeRef} type="button" className="vodClose" onClick={closeChat}>Close</button>
           </header>
 
@@ -221,19 +287,12 @@ export default function AccessibleChatbot() {
           </div>
 
           <div ref={logRef} className="vodLog" role="log" aria-live="polite" aria-relevant="additions text" tabIndex={0}>
-            {messages.length === 0 && (
-              <div className="vodAssistantMsg">
-                <strong>Voice of Disability Guide</strong>
-                <p>Ask about disability rights, our work, membership, programmes, Universal Design, advocacy, donations or how to contact us.</p>
-              </div>
-            )}
+            {messages.length === 0 && <div className="vodAssistantMsg"><strong>Voice of Disability Guide</strong><p>Ask about disability rights, our work, membership, programmes, Universal Design, advocacy, donations or how to contact us.</p></div>}
             {messages.map((message, index) => (
               <div key={`${message.role}-${index}`} className={message.role === 'assistant' ? 'vodAssistantMsg' : 'vodUserMsg'}>
                 <strong>{message.role === 'assistant' ? 'Voice of Disability Guide' : 'You'}</strong>
                 <p>{message.content}</p>
-                {message.role === 'assistant' && (
-                  <button type="button" className="vodSecondary" onClick={() => listen(message.content)}>Listen to this response</button>
-                )}
+                {message.role === 'assistant' && <button type="button" className="vodSecondary" onClick={() => listen(message.content)}>Listen to this response</button>}
               </div>
             ))}
           </div>
@@ -256,14 +315,14 @@ export default function AccessibleChatbot() {
             <label htmlFor="vod-message">Your message</label>
             <textarea id="vod-message" value={input} onChange={e => setInput(e.target.value)} maxLength={2400} required placeholder="Type your question here" />
             <div className="vodActions">
-              <button type="submit" className="vodPrimary" disabled={sending}>{sending ? 'Sending…' : 'Send'}</button>
+              <button type="submit" className="vodPrimary" disabled={sending || transcribing}>{sending ? 'Sending…' : 'Send'}</button>
               {!recording ? (
-                <button type="button" className="vodSecondary" onClick={startRecording}>Speak</button>
+                <button type="button" className="vodSecondary" onClick={startRecording} disabled={transcribing}>{transcribing ? 'Transcribing…' : 'Speak'}</button>
               ) : (
                 <button type="button" className="vodSecondary" onClick={stopRecording}>Stop recording</button>
               )}
             </div>
-            <p className="vodPrivacy">Voice is optional. Speech recognition is provided by your browser and may use its speech service. Your transcript is shown for review and is not sent until you press Send.</p>
+            <p className="vodPrivacy">Voice is optional. When you use Speak, your recorded audio is sent securely for transcription. The transcript appears here for you to review or edit and is not sent as a chat message until you press Send.</p>
           </form>
         </section>
       )}
