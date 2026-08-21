@@ -1,11 +1,7 @@
-const MAX_AUDIO_BYTES = 4 * 1024 * 1024;
+import { experimental_transcribe as transcribe } from 'ai';
+import { gateway } from '@ai-sdk/gateway';
 
-function getRuntimeToken(req) {
-  const oidcHeader = Array.isArray(req.headers?.['x-vercel-oidc-token'])
-    ? req.headers['x-vercel-oidc-token'][0]
-    : req.headers?.['x-vercel-oidc-token'];
-  return process.env.AI_GATEWAY_API_KEY || oidcHeader || process.env.VERCEL_OIDC_TOKEN;
-}
+const MAX_AUDIO_BYTES = 4 * 1024 * 1024;
 
 function estimateBytes(base64) {
   if (!base64) return 0;
@@ -24,41 +20,27 @@ export default async function handler(req, res) {
 
   try {
     const audio = typeof req.body?.audio === 'string' ? req.body.audio : '';
-    const mediaType = typeof req.body?.mediaType === 'string' ? req.body.mediaType.split(';')[0] : 'audio/webm';
 
     if (!audio) return res.status(400).json({ error: 'No audio recording was received.' });
     if (estimateBytes(audio) > MAX_AUDIO_BYTES) {
       return res.status(413).json({ error: 'The recording is too long. Please record a shorter message.' });
     }
 
-    const token = getRuntimeToken(req);
-    if (!token) {
-      console.error('AI Gateway authentication unavailable for transcription.');
-      return res.status(503).json({ error: 'Speech transcription is temporarily unavailable. Please type your question instead.' });
-    }
-
-    const gatewayResponse = await fetch('https://ai-gateway.vercel.sh/v4/ai/transcription-model', {
-      method: 'POST',
-      headers: {
-        Authorization: `Bearer ${token}`,
-        'Content-Type': 'application/json',
-        'ai-model-id': 'openai/whisper-1',
-      },
-      body: JSON.stringify({ audio, mediaType }),
+    const result = await transcribe({
+      model: gateway.transcriptionModel('openai/whisper-1'),
+      audio: Buffer.from(audio, 'base64'),
     });
 
-    const data = await gatewayResponse.json().catch(() => ({}));
-    if (!gatewayResponse.ok) {
-      console.error('AI Gateway transcription error', gatewayResponse.status, data);
-      return res.status(502).json({ error: 'I could not transcribe that recording. Please try again or type your question.' });
-    }
-
-    const text = typeof data?.text === 'string' ? data.text.trim() : '';
+    const text = typeof result?.text === 'string' ? result.text.trim() : '';
     if (!text) return res.status(502).json({ error: 'No speech was detected. Please try again or type your question.' });
 
-    return res.status(200).json({ text, language: data?.language || null });
+    return res.status(200).json({
+      text,
+      language: result?.language || null,
+      durationInSeconds: result?.durationInSeconds || null,
+    });
   } catch (error) {
     console.error('Transcription API error', error);
-    return res.status(500).json({ error: 'Speech transcription failed. Please try again or type your question.' });
+    return res.status(502).json({ error: 'I could not transcribe that recording. Please try again or type your question.' });
   }
 }
