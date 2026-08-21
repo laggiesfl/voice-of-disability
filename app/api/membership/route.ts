@@ -1,6 +1,7 @@
 import { Resend } from 'resend';
 import type { NextRequest } from 'next/server';
 
+// Deployment touch: production RESEND_API_KEY configured in Vercel.
 const EMAIL_REGEX = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
 function escapeHtml(str: string): string {
