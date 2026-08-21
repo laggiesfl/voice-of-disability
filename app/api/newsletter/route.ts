@@ -52,7 +52,7 @@ export async function POST(request: NextRequest) {
 
     // Notify Fadila
     await resend.emails.send({
-      from: 'Voice of Disability <noreply@voiceofdisability.com>',
+      from: 'Voice of Disability <hello@voiceofdisability.com>',
       to: 'fadila@voiceofdisability.com',
       subject: `New newsletter subscriber: ${escapeHtml(email)}`,
       html: `
@@ -68,8 +68,9 @@ export async function POST(request: NextRequest) {
 
     // Confirmation to subscriber
     await resend.emails.send({
-      from: 'Fadila at Voice of Disability <noreply@voiceofdisability.com>',
+      from: 'Fadila at Voice of Disability <hello@voiceofdisability.com>',
       to: email,
+      replyTo: 'hello@voiceofdisability.com',
       subject: "You're subscribed to Voice of Disability",
       html: `
         <div style="font-family: Arial, sans-serif; max-width: 600px;">
