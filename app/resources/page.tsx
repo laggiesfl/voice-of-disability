@@ -1,10 +1,12 @@
 import Link from 'next/link';
+import { cookies } from 'next/headers';
 import type { Metadata } from 'next';
+import MembershipForm from '../components/MembershipForm';
 
 export const metadata: Metadata = {
   title: 'Resources — Tools for Your Rights',
   description:
-    'Accessible guides, templates and practical tools from Voice of Disability to support disability rights, Universal Design and self-advocacy.',
+    'Preview member-only guides, templates and practical tools from Voice of Disability supporting disability rights, Universal Design and self-advocacy.',
 };
 
 const resources = [
@@ -37,16 +39,19 @@ const resources = [
   },
 ];
 
-export default function ResourcesPage() {
+export default async function ResourcesPage() {
+  const cookieStore = await cookies();
+  const hasMemberAccess = cookieStore.get('vod_member_access')?.value === '1';
+
   return (
     <>
       <section className="page-hero" aria-labelledby="resources-h">
         <div className="container">
-          <p className="section-label" style={{color: 'rgba(255,255,255,0.7)'}}>Resource library</p>
+          <p className="section-label" style={{color: 'rgba(255,255,255,0.7)'}}>Member resource library</p>
           <h1 id="resources-h">Tools for your rights</h1>
           <p>
-            Accessible guides, templates and practical tools to help disabled women navigate systems,
-            claim their rights and make their voices heard.
+            Accessible guides, templates and practical tools for Voice of Disability members.
+            Membership is free.
           </p>
         </div>
       </section>
@@ -58,10 +63,40 @@ export default function ResourcesPage() {
           </Link>
 
           <h2 id="library-h" style={{marginBottom: '0.75rem'}}>Resource library</h2>
-          <p style={{maxWidth: 760, marginBottom: '2rem'}}>
-            All resources are designed to be usable with keyboard and assistive technology, written in
-            plain language, and structured so they can be read online before downloading or copying.
+          <p style={{maxWidth: 760, marginBottom: '1rem'}}>
+            You can preview what is available below. The full guides and templates are available only to
+            Voice of Disability members.
           </p>
+
+          {hasMemberAccess ? (
+            <div
+              role="status"
+              style={{
+                maxWidth: 760,
+                padding: '1rem 1.25rem',
+                marginBottom: '2rem',
+                border: '2px solid var(--purple-deep)',
+                borderRadius: '10px',
+                background: 'var(--light-purple)',
+              }}
+            >
+              <strong>Member access is active.</strong> You can open all resources below.
+            </div>
+          ) : (
+            <div
+              role="note"
+              style={{
+                maxWidth: 760,
+                padding: '1rem 1.25rem',
+                marginBottom: '2rem',
+                border: '2px solid var(--gold)',
+                borderRadius: '10px',
+                background: '#fffaf0',
+              }}
+            >
+              <strong>Members only.</strong> Join Voice of Disability for free to open these resources.
+            </div>
+          )}
 
           <div className="resource-grid">
             {resources.map((resource) => (
@@ -70,12 +105,42 @@ export default function ResourcesPage() {
                 <h3>{resource.title}</h3>
                 <p>{resource.description}</p>
                 <p style={{fontSize: '0.88rem', color: 'var(--text-muted)'}}>
-                  Format: {resource.format}
+                  Format: {resource.format} · {hasMemberAccess ? 'Member access active' : 'Members only'}
                 </p>
-                <Link href={resource.href}>{resource.action} →</Link>
+                <Link href={resource.href}>
+                  {hasMemberAccess ? resource.action : 'Join to access'} →
+                </Link>
               </article>
             ))}
           </div>
+
+          {!hasMemberAccess && (
+            <section
+              id="join-resources"
+              aria-labelledby="join-resources-h"
+              style={{
+                marginTop: '3rem',
+                padding: '2rem',
+                borderRadius: '12px',
+                background: 'var(--light-purple)',
+              }}
+            >
+              <div style={{maxWidth: 680}}>
+                <p className="section-label">Free membership</p>
+                <h2 id="join-resources-h">Join to unlock the resource library</h2>
+                <p>
+                  Complete the membership form once. After successful sign-up, this browser will receive
+                  member access and you can open all current and future member resources.
+                </p>
+                <div className="membership-form-wrap" style={{marginTop: '1.5rem'}}>
+                  <MembershipForm
+                    successHref="/resources"
+                    successLabel="Open the member resource library"
+                  />
+                </div>
+              </div>
+            </section>
+          )}
 
           <aside className="belief-block" style={{marginTop: '3rem'}} aria-labelledby="resource-note-h">
             <h2 id="resource-note-h" style={{fontSize: '1.4rem'}}>Need a resource in another format?</h2>
@@ -92,5 +157,3 @@ export default function ResourcesPage() {
     </>
   );
 }
-
-// Production deployment trigger after Resources library merge.

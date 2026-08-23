@@ -4,10 +4,18 @@ import { useState, useRef } from 'react';
 
 type Status = 'idle' | 'submitting' | 'success' | 'error';
 
-export default function MembershipForm() {
-  const [status, setStatus]   = useState<Status>('idle');
-  const [errMsg, setErrMsg]   = useState('');
-  const nameRef  = useRef<HTMLInputElement>(null);
+type MembershipFormProps = {
+  successHref?: string;
+  successLabel?: string;
+};
+
+export default function MembershipForm({
+  successHref,
+  successLabel = 'Open member resources',
+}: MembershipFormProps = {}) {
+  const [status, setStatus] = useState<Status>('idle');
+  const [errMsg, setErrMsg] = useState('');
+  const nameRef = useRef<HTMLInputElement>(null);
   const emailRef = useRef<HTMLInputElement>(null);
   const phoneRef = useRef<HTMLInputElement>(null);
   const statusRef = useRef<HTMLDivElement>(null);
@@ -17,12 +25,12 @@ export default function MembershipForm() {
     setStatus('submitting');
     setErrMsg('');
 
-    const name  = nameRef.current?.value.trim()  ?? '';
-    const email = emailRef.current?.value.trim()  ?? '';
-    const phone = phoneRef.current?.value.trim()  ?? '';
+    const name = nameRef.current?.value.trim() ?? '';
+    const email = emailRef.current?.value.trim() ?? '';
+    const phone = phoneRef.current?.value.trim() ?? '';
 
     try {
-      const res  = await fetch('/api/membership', {
+      const res = await fetch('/api/membership', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ name, email, phone }),
@@ -40,7 +48,6 @@ export default function MembershipForm() {
       setStatus('error');
     }
 
-    // Move focus to the live region so screen readers announce the result
     setTimeout(() => statusRef.current?.focus(), 100);
   }
 
@@ -54,20 +61,24 @@ export default function MembershipForm() {
         className="membership-success"
         style={{ outline: 'none' }}
       >
-        <p style={{ fontSize: '1.5rem', marginBottom: '0.5rem' }}>🎉</p>
+        <p style={{ fontSize: '1.5rem', marginBottom: '0.5rem' }} aria-hidden="true">✓</p>
         <h3 style={{ color: 'var(--purple-deep)', marginBottom: '0.5rem' }}>Welcome to Voice of Disability!</h3>
-        <p>You'll receive a welcome email shortly. We're glad you're here.</p>
+        <p>Your membership is active. You'll receive a welcome email shortly.</p>
+        {successHref && (
+          <a
+            href={successHref}
+            className="btn btn-primary"
+            style={{ display: 'inline-flex', marginTop: '1rem' }}
+          >
+            {successLabel} →
+          </a>
+        )}
       </div>
     );
   }
 
   return (
-    <form
-      onSubmit={handleSubmit}
-      aria-label="Membership sign-up form"
-      noValidate
-    >
-      {/* Live region for errors */}
+    <form onSubmit={handleSubmit} aria-label="Membership sign-up form" noValidate>
       <div
         ref={statusRef}
         role="alert"
