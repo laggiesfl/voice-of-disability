@@ -1,7 +1,7 @@
 import { Resend } from 'resend';
+import { NextResponse } from 'next/server';
 import type { NextRequest } from 'next/server';
 
-// Deployment touch: production RESEND_API_KEY configured in Vercel.
 const EMAIL_REGEX = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
 function escapeHtml(str: string): string {
@@ -17,14 +17,11 @@ async function saveToAirtable(
   email: string,
   phone: string
 ): Promise<void> {
-  const apiKey   = process.env.AIRTABLE_API_KEY;
-  const baseId   = process.env.AIRTABLE_BASE_ID;
-  const table    = process.env.AIRTABLE_MEMBERS_TABLE ?? 'Members';
+  const apiKey = process.env.AIRTABLE_API_KEY;
+  const baseId = process.env.AIRTABLE_BASE_ID;
+  const table = process.env.AIRTABLE_MEMBERS_TABLE ?? 'Members';
 
-  if (!apiKey || !baseId) {
-    // Airtable not yet configured — skip silently; Fadila is notified via email
-    return;
-  }
+  if (!apiKey || !baseId) return;
 
   const res = await fetch(
     `https://api.airtable.com/v0/${baseId}/${encodeURIComponent(table)}`,
@@ -39,8 +36,8 @@ async function saveToAirtable(
           {
             fields: {
               'Member Name': name,
-              Email:  email,
-              Phone:  phone,
+              Email: email,
+              Phone: phone,
               Joined: new Date().toISOString().split('T')[0],
               Source: 'Website form',
             },
@@ -51,7 +48,6 @@ async function saveToAirtable(
   );
 
   if (!res.ok) {
-    // Log but don't throw — the membership email still goes out
     const body = await res.text();
     console.error('[membership/airtable]', res.status, body);
   }
@@ -60,11 +56,12 @@ async function saveToAirtable(
 export async function POST(request: NextRequest) {
   const apiKey = process.env.RESEND_API_KEY;
   if (!apiKey) {
-    return Response.json(
+    return NextResponse.json(
       { error: 'Email service is not yet configured. Please email us at hello@voiceofdisability.com to join.' },
       { status: 503 }
     );
   }
+
   const resend = new Resend(apiKey);
 
   try {
@@ -72,27 +69,25 @@ export async function POST(request: NextRequest) {
     const { name, email, phone } = body as Record<string, string>;
 
     if (!name?.trim() || !email?.trim()) {
-      return Response.json(
+      return NextResponse.json(
         { error: 'Full name and email address are required.' },
         { status: 400 }
       );
     }
 
     if (!EMAIL_REGEX.test(email.trim())) {
-      return Response.json(
+      return NextResponse.json(
         { error: 'Please enter a valid email address.' },
         { status: 400 }
       );
     }
 
-    const safeName  = name.trim();
+    const safeName = name.trim();
     const safeEmail = email.trim();
     const safePhone = phone?.trim() ?? '';
 
-    // 1. Save to Airtable (best-effort, won't block email)
     await saveToAirtable(safeName, safeEmail, safePhone);
 
-    // 2. Notify Fadila
     await resend.emails.send({
       from: 'Voice of Disability <hello@voiceofdisability.com>',
       to: 'fadila@voiceofdisability.com',
@@ -110,7 +105,6 @@ export async function POST(request: NextRequest) {
       `,
     });
 
-    // 3. Welcome email to new member
     await resend.emails.send({
       from: 'Fadila at Voice of Disability <hello@voiceofdisability.com>',
       to: safeEmail,
@@ -127,6 +121,10 @@ export async function POST(request: NextRequest) {
             <li>The latest from our disability rights advocacy work</li>
           </ul>
           <p>
+            You can now access the member resource library at
+            <a href="https://www.voiceofdisability.com/resources">voiceofdisability.com/resources</a>.
+          </p>
+          <p>
             If you have any questions, just reply to this email or write to us at
             <a href="mailto:hello@voiceofdisability.com">hello@voiceofdisability.com</a>.
           </p>
@@ -142,10 +140,21 @@ export async function POST(request: NextRequest) {
       `,
     });
 
-    return Response.json({ success: true });
+    const response = NextResponse.json({ success: true, memberAccess: true });
+    response.cookies.set({
+      name: 'vod_member_access',
+      value: '1',
+      httpOnly: true,
+      secure: process.env.NODE_ENV === 'production',
+      sameSite: 'lax',
+      path: '/',
+      maxAge: 60 * 60 * 24 * 180,
+    });
+
+    return response;
   } catch (err) {
     console.error('[membership route]', err);
-    return Response.json(
+    return NextResponse.json(
       { error: 'Something went wrong. Please try again.' },
       { status: 500 }
     );
