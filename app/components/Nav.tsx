@@ -34,7 +34,7 @@ export default function Nav() {
           <li><Link href="/#founder">Our Founder</Link></li>
           <li><Link href="/our-position">Our Position</Link></li>
           <li><Link href="/#programmes">Programmes</Link></li>
-          <li><Link href="/#resources">Resources</Link></li>
+          <li><Link href="/resources">Resources</Link></li>
           <li><Link href="/blog">Blog</Link></li>
           <li><Link href="/#membership">Join</Link></li>
           <li><Link href="/#donate">Donate</Link></li>
