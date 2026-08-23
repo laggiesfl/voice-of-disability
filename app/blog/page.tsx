@@ -28,6 +28,26 @@ export default function Blog() {
           <div className="blog-grid">
             <article className="blog-card">
               <div className="blog-card-body">
+                <span className="tag">Disability inclusion</span>
+                <h2 style={{fontSize: '1.1rem', marginBottom: '0.5rem'}}>
+                  <Link href="/blog/south-africa-china-disability-inclusion" style={{color: 'var(--dark)', textDecoration: 'none'}}>
+                    South Africa and China Deepen Cooperation on Disability Inclusion
+                  </Link>
+                </h2>
+                <p style={{fontSize: '0.9rem', marginBottom: '1rem'}}>
+                  South Africa and China are exploring deeper cooperation on disability data, Universal Design,
+                  accessible communication, AI and assistive technology. Voice of Disability looks at what is
+                  being proposed — and why implementation and accountability will matter.
+                </p>
+                <Link href="/blog/south-africa-china-disability-inclusion">Read more →</Link>
+                <div className="blog-card-meta">
+                  Voice of Disability NPC · August 2026
+                </div>
+              </div>
+            </article>
+
+            <article className="blog-card">
+              <div className="blog-card-body">
                 <span className="tag">Advocacy</span>
                 <h2 style={{fontSize: '1.1rem', marginBottom: '0.5rem'}}>
                   <Link href="/our-position" style={{color: 'var(--dark)', textDecoration: 'none'}}>
@@ -48,8 +68,7 @@ export default function Blog() {
           </div>
 
           <p style={{marginTop: '3rem', color: 'var(--text-muted)', fontSize: '0.95rem'}}>
-            More articles coming soon. <Link href="/#membership">Become a member</Link> to
-            get notified when new posts are published.
+            <Link href="/#membership">Become a member</Link> to get notified when new posts are published.
           </p>
         </div>
       </div>
