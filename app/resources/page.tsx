@@ -6,10 +6,19 @@ import MembershipForm from '../components/MembershipForm';
 export const metadata: Metadata = {
   title: 'Resources — Tools for Your Rights',
   description:
-    'Preview member-only guides, templates and practical tools from Voice of Disability supporting disability rights, Universal Design and self-advocacy.',
+    'Preview member-only guides, AI tools, templates and practical resources from Voice of Disability supporting disability rights, Universal Design and self-advocacy.',
 };
 
 const resources = [
+  {
+    category: 'AI assistant',
+    title: 'Disability Equity Guide',
+    description:
+      'An interactive GPT that helps you explore disability equity, inclusion, access and rights-based practice through a practical conversational guide.',
+    format: 'GPT',
+    href: '/resources/disability-equity-guide',
+    action: 'Open AI guide',
+  },
   {
     category: 'Rights',
     title: 'Your rights in the workplace',
@@ -50,7 +59,7 @@ export default async function ResourcesPage() {
           <p className="section-label" style={{color: 'rgba(255,255,255,0.7)'}}>Member resource library</p>
           <h1 id="resources-h">Tools for your rights</h1>
           <p>
-            Accessible guides, templates and practical tools for Voice of Disability members.
+            Accessible guides, AI tools, templates and practical resources for Voice of Disability members.
             Membership is free.
           </p>
         </div>
@@ -64,7 +73,7 @@ export default async function ResourcesPage() {
 
           <h2 id="library-h" style={{marginBottom: '0.75rem'}}>Resource library</h2>
           <p style={{maxWidth: 760, marginBottom: '1rem'}}>
-            You can preview what is available below. The full guides and templates are available only to
+            You can preview what is available below. The full resources are available only to
             Voice of Disability members.
           </p>
 
