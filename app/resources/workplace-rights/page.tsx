@@ -66,9 +66,19 @@ export default function WorkplaceRightsGuide() {
           internal or legal process for your situation.
         </p>
 
-        <aside className="belief-block" aria-labelledby="legal-note-h">
-          <h2 id="legal-note-h" style={{fontSize: '1.25rem'}}>Important</h2>
-          <p>
+        <aside
+          aria-labelledby="legal-note-h"
+          style={{
+            margin: '2.5rem 0',
+            padding: '1.5rem',
+            border: '2px solid var(--border)',
+            borderLeft: '5px solid var(--purple-mid)',
+            borderRadius: '12px',
+            background: 'var(--light-purple)',
+          }}
+        >
+          <h2 id="legal-note-h" style={{fontSize: '1.25rem', margin: '0 0 0.75rem', color: 'var(--purple-deep)'}}>Important</h2>
+          <p style={{margin: 0, color: 'var(--text)'}}>
             This resource is general information, not legal advice. South African employment law and regulatory
             requirements can change. For a legal dispute or deadline, obtain advice from an appropriate legal,
             labour or disability-rights professional.
