@@ -57,9 +57,21 @@ export default function UniversalDesignGuide() {
           <li>Check that the accessible option is not hidden, inferior or harder to use.</li>
         </ul>
 
-        <aside className="belief-block" aria-labelledby="ud-note-h">
-          <h2 id="ud-note-h" style={{fontSize: '1.25rem'}}>Universal Design does not remove every need for accommodation</h2>
-          <p>
+        <aside
+          aria-labelledby="ud-note-h"
+          style={{
+            margin: '2.5rem 0',
+            padding: '1.5rem',
+            border: '2px solid var(--border)',
+            borderLeft: '5px solid var(--purple-mid)',
+            borderRadius: '12px',
+            background: 'var(--light-purple)',
+          }}
+        >
+          <h2 id="ud-note-h" style={{fontSize: '1.25rem', margin: '0 0 0.75rem', color: 'var(--purple-deep)'}}>
+            Universal Design does not remove every need for accommodation
+          </h2>
+          <p style={{margin: 0, color: 'var(--text)'}}>
             Good inclusive design reduces barriers for many people, but individual reasonable accommodation
             can still be necessary. Universal Design and accommodation work together rather than replacing one another.
           </p>
