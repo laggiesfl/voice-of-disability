@@ -56,6 +56,28 @@ export default function Footer() {
           <span>Built to <Link href="https://www.w3.org/WAI/WCAG22/quickref/" target="_blank" rel="noopener noreferrer">WCAG 2.2</Link> Level AA · Universal Design Principles Applied</span>
         </div>
       </div>
+
+      <style>{`
+        .footer .footer-brand p {
+          color: #F4EEF8;
+        }
+        .footer .footer-col h4 {
+          color: #FFFFFF;
+        }
+        .footer .footer-col a,
+        .footer .footer-bottom,
+        .footer .footer-bottom a {
+          color: #F7F3FA;
+        }
+        .footer .footer-col a {
+          text-decoration-thickness: 1.5px;
+          text-underline-offset: 3px;
+        }
+        .footer .footer-col a:hover,
+        .footer .footer-bottom a:hover {
+          color: #FFC24B;
+        }
+      `}</style>
     </footer>
   );
 }
