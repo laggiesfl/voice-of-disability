@@ -28,6 +28,26 @@ export default function Blog() {
           <div className="blog-grid">
             <article className="blog-card">
               <div className="blog-card-body">
+                <span className="tag">Disability rights</span>
+                <h2 style={{fontSize: '1.1rem', marginBottom: '0.5rem'}}>
+                  <Link href="/blog/uncrpd-global-accountability" style={{color: 'var(--dark)', textDecoration: 'none'}}>
+                    UNCRPD in Action: Global Accountability
+                  </Link>
+                </h2>
+                <p style={{fontSize: '0.9rem', marginBottom: '1rem'}}>
+                  Twenty years after the CRPD was adopted, the question is no longer only what governments
+                  have promised, but what they can demonstrate has changed. Voice of Disability looks at
+                  implementation, representation and accountability.
+                </p>
+                <Link href="/blog/uncrpd-global-accountability">Read more →</Link>
+                <div className="blog-card-meta">
+                  Voice of Disability NPC · 24 August 2026
+                </div>
+              </div>
+            </article>
+
+            <article className="blog-card">
+              <div className="blog-card-body">
                 <span className="tag">Disability inclusion</span>
                 <h2 style={{fontSize: '1.1rem', marginBottom: '0.5rem'}}>
                   <Link href="/blog/south-africa-china-disability-inclusion" style={{color: 'var(--dark)', textDecoration: 'none'}}>
