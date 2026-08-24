@@ -10,7 +10,7 @@ export const metadata: Metadata = {
 export default function OurPosition() {
   return (
     <>
-      <section className="page-hero" aria-labelledby="pos-h">
+      <section className="page-hero position-hero" aria-labelledby="pos-h">
         <div className="container">
           <p className="byline">Our Position</p>
           <h1 id="pos-h">The Door That Would Not Open —<br />Now It Is an Algorithm</h1>
@@ -18,7 +18,7 @@ export default function OurPosition() {
         </div>
       </section>
 
-      <article className="prose" aria-label="Our position article">
+      <article className="prose position-article" aria-label="Our position article">
         <Link href="/" className="back-link">← Back to homepage</Link>
 
         <p>Forty years ago, I was left in a corridor.</p>
@@ -168,11 +168,11 @@ export default function OurPosition() {
         <p>
           Forty years ago, a system decided that the specialist care built to treat my injury was not
           available to a body like mine. No one asked me. No one consulted the woman on the stretcher.
-          The system simply acted, and I bore the consequences in my body for for the rest of my life.
+          The system simply acted, and I bore the consequences in my body for the rest of my life.
         </p>
 
         <p>
-          I will not allow an algorithm to do the same — to me, or or me, or to the next generation of
+          I will not allow an algorithm to do the same — to me, or to the next generation of
           disabled Black women in this country.
         </p>
 
@@ -181,29 +181,98 @@ export default function OurPosition() {
           And this time, I am naming it before it closes.
         </p>
 
-        <hr style={{margin: '2.5rem 0', border: 'none', borderTop: '2px solid var(--border)'}} />
+        <hr style={{margin: '2.5rem 0', border: 'none', borderTop: '2px solid #B9A8CF'}} />
 
-        <h3>About the author</h3>
-        <p>
-          Fadila Lagadien is the founder of Voice of Disability NPC, an organisation for disabled
-          women in South Africa. She is the founder of BeAccessible, an AI-enabled accessibility
-          and disability inclusion consultancy, and the creator of BiasLens, an algorithmic bias
-          testing and accountability platform. She is the author of the memoir
-          <em> The Door That Would Not Open</em>. She has been a quadriplegic wheelchair
-          user for forty years.
-        </p>
+        <section className="position-author" aria-labelledby="author-h">
+          <h3 id="author-h">About the author</h3>
+          <p>
+            Fadila Lagadien is the founder of Voice of Disability NPC, an organisation for disabled
+            women in South Africa. She is the founder of BeAccessible, an AI-enabled accessibility
+            and disability inclusion consultancy, and the creator of BiasLens, an algorithmic bias
+            testing and accountability platform. She is the author of the memoir
+            <em> The Door That Would Not Open</em>. She has been a quadriplegic wheelchair
+            user for forty years.
+          </p>
 
-        <h3>Media, partnerships and advocacy enquiries</h3>
-        <p>
-          We welcome journalists, policymakers and allied organisations who want to discuss this position.
-        </p>
-        <p>
-          Email: <a href="mailto:fadila@voiceofdisability.com">fadila@voiceofdisability.com</a>
-        </p>
-        <Link href="/#contact" className="btn btn-primary" style={{display: 'inline-flex', marginTop: '0.5rem'}}>
-          Visit our contact page →
-        </Link>
+          <h3>Media, partnerships and advocacy enquiries</h3>
+          <p>
+            We welcome journalists, policymakers and allied organisations who want to discuss this position.
+          </p>
+          <p>
+            Email: <a href="mailto:fadila@voiceofdisability.com">fadila@voiceofdisability.com</a>
+          </p>
+          <Link href="/#contact" className="btn btn-primary position-contact-button">
+            Visit our contact page →
+          </Link>
+        </section>
       </article>
+
+      <style>{`
+        .position-hero .byline {
+          color: #FFC24B;
+          font-weight: 800;
+          letter-spacing: 0.02em;
+        }
+        .position-hero p:not(.byline) {
+          color: #FFFFFF;
+          font-weight: 600;
+        }
+        .position-article {
+          max-width: 820px;
+        }
+        .position-article p,
+        .position-article li {
+          color: #2B1A3D;
+          font-size: 1.0625rem;
+          line-height: 1.82;
+        }
+        .position-article h2,
+        .position-article h3 {
+          color: #5B2A86;
+        }
+        .position-article a:not(.btn) {
+          color: #5B2A86;
+          font-weight: 700;
+          text-decoration-thickness: 2px;
+          text-underline-offset: 3px;
+        }
+        .position-article blockquote {
+          background: #F3EEF9;
+          border-left: 4px solid #B0227A;
+        }
+        .position-article blockquote p {
+          color: #2B1A3D;
+        }
+        .position-author {
+          margin-top: 2rem;
+          padding: 1.75rem;
+          background: #F3EEF9;
+          border-left: 4px solid #5B2A86;
+          border-radius: 12px;
+        }
+        .position-author h3 {
+          margin-top: 0;
+          margin-bottom: 0.75rem;
+        }
+        .position-author h3 + p {
+          margin-bottom: 1.5rem;
+        }
+        .position-contact-button {
+          display: inline-flex;
+          margin-top: 0.5rem;
+          background: #5B2A86;
+          color: #FFFFFF;
+        }
+        @media (max-width: 640px) {
+          .position-article p,
+          .position-article li {
+            font-size: 1rem;
+          }
+          .position-author {
+            padding: 1.25rem;
+          }
+        }
+      `}</style>
     </>
   );
 }
