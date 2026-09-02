@@ -18,10 +18,10 @@ export async function GET(request: NextRequest) {
 
   try {
     const resend = new Resend(apiKey);
-    try {
-      await resend.contacts.create({ email: data.email, audienceId, unsubscribed: false });
-    } catch (error) {
-      console.error('[newsletter/confirm/contact]', error);
+    const result = await resend.contacts.create({ email: data.email, audienceId, unsubscribed: false });
+    if (result.error) {
+      console.error('[newsletter/confirm/contact]', result.error);
+      return new NextResponse('We could not confirm your subscription right now. Please try again later.', { status: 503 });
     }
     return NextResponse.redirect(new URL('/?newsletter=confirmed#newsletter', request.url));
   } catch (error) {
