@@ -1,5 +1,6 @@
 name: Security hardening verification
 
+# Preview rebuild marker: Turnstile Preview variables configured 2026-09-02
 on:
   push:
     branches:
