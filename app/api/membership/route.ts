@@ -44,13 +44,17 @@ export async function POST(request: NextRequest) {
     const confirmUrl = `${siteUrl}/api/membership/confirm?token=${encodeURIComponent(token)}`;
     const resend = new Resend(apiKey);
 
-    await resend.emails.send({
+    const result = await resend.emails.send({
       from: 'Voice of Disability <hello@voiceofdisability.com>',
       to: email,
       replyTo: 'hello@voiceofdisability.com',
       subject: 'Confirm your Voice of Disability membership',
       html: `<!doctype html><html><body style="font-family:Arial,Helvetica,sans-serif;color:#222;line-height:1.6"><h1 style="font-size:24px;color:#5B2A86">Confirm your membership</h1><p>Hello ${escapeHtml(name)},</p><p>Please confirm that you submitted this Voice of Disability membership application.</p><p><a href="${confirmUrl}" style="display:inline-block;padding:12px 18px;background:#5B2A86;color:#fff;text-decoration:none;border-radius:6px">Confirm membership</a></p><p>This link expires in 24 hours. If you did not request membership, you can ignore this email.</p><p>Voice of Disability NPC</p></body></html>`,
     });
+    if (result.error) {
+      console.error('[membership/resend]', result.error);
+      return Response.json({ error: 'We could not send the confirmation email right now. Please try again later.' }, { status: 503 });
+    }
 
     return Response.json({ success: true });
   } catch (error) {
