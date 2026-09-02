@@ -1,0 +1,47 @@
+name: Security hardening verification
+
+# Preview rebuild marker: Turnstile Preview variables configured 2026-09-02
+on:
+  push:
+    branches:
+      - security/form-abuse-hardening
+  pull_request:
+    branches:
+      - main
+
+permissions:
+  contents: read
+
+jobs:
+  verify:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v4
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '24'
+
+      - name: Install dependencies
+        run: npm install
+
+      - name: Lint security changes
+        run: >-
+          npx eslint
+          app/api/contact/route.ts
+          app/api/membership/route.ts
+          app/api/membership/confirm/route.ts
+          app/api/newsletter/route.ts
+          app/api/newsletter/confirm/route.ts
+          app/components/ContactForm.tsx
+          app/components/FormBotProtection.tsx
+          app/components/MembershipForm.tsx
+          app/components/NewsletterForm.tsx
+          app/lib/form-security.ts
+          app/resources/page.tsx
+
+      - name: Production build
+        run: npm run build
