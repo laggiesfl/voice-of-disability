@@ -75,7 +75,7 @@ export default function MembershipForm() {
         <input type="tel" id="m-phone" name="phone" autoComplete="tel" maxLength={40} placeholder="+27 …" disabled={status === 'submitting'} />
       </div>
 
-      <FormBotProtection />
+      <FormBotProtection idPrefix="membership" />
 
       <button type="submit" className="btn btn-primary" style={{ width: '100%', justifyContent: 'center', marginTop: '0.5rem' }} disabled={status === 'submitting' || !securityReady} aria-busy={status === 'submitting'}>
         {status === 'submitting' ? 'Sending…' : 'Join the movement — it’s free'}
