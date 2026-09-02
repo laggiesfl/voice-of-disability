@@ -138,14 +138,11 @@ export default async function ResourcesPage() {
                 <p className="section-label">Free membership</p>
                 <h2 id="join-resources-h">Join to unlock the resource library</h2>
                 <p>
-                  Complete the membership form once. After successful sign-up, this browser will receive
-                  member access and you can open all current and future member resources.
+                  Complete the membership form and confirm the email we send you. After confirmation,
+                  this browser will receive member access and you can open all current and future member resources.
                 </p>
                 <div className="membership-form-wrap" style={{marginTop: '1.5rem'}}>
-                  <MembershipForm
-                    successHref="/resources"
-                    successLabel="Open the member resource library"
-                  />
+                  <MembershipForm />
                 </div>
               </div>
             </section>
