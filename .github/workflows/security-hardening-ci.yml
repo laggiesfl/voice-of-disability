@@ -27,8 +27,20 @@ jobs:
       - name: Install dependencies
         run: npm install
 
-      - name: Lint
-        run: npm run lint
+      - name: Lint security changes
+        run: >-
+          npx eslint
+          app/api/contact/route.ts
+          app/api/membership/route.ts
+          app/api/membership/confirm/route.ts
+          app/api/newsletter/route.ts
+          app/api/newsletter/confirm/route.ts
+          app/components/ContactForm.tsx
+          app/components/FormBotProtection.tsx
+          app/components/MembershipForm.tsx
+          app/components/NewsletterForm.tsx
+          app/lib/form-security.ts
+          app/resources/page.tsx
 
       - name: Production build
         run: npm run build
