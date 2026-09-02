@@ -21,6 +21,31 @@ export default function Crpd35thSessionArticle() {
       <article className="prose" aria-label="UN Experts Set New Standard for Women and Girls With Disabilities article">
         <Link href="/blog" className="back-link">← Back to Voices &amp; Views</Link>
 
+        <aside className="editors-note" aria-labelledby="editors-note-h">
+          <h2 id="editors-note-h">Editor&apos;s note</h2>
+
+          <p>
+            <strong><time dateTime="2026-09-02">2 September 2026</time></strong> — The CRPD
+            Committee formally adopted these guidelines on 27 August 2026, at the close of the 35th
+            session. The final published text is not yet available on the OHCHR general comments
+            page — UN documents typically take several weeks to be processed into the official
+            document system after adoption.
+          </p>
+
+          <p>
+            The draft version that informed the session is available here:{' '}
+            <a href="https://www.ohchr.org/en/calls-for-input/2026/call-inputs-draft-guidelines-identifying-and-addressing-intersectional">
+              OHCHR call for inputs: draft guidelines on intersectional discrimination against women
+              and girls with disabilities
+            </a>.
+          </p>
+
+          <p>
+            This post will be updated with a direct link to the final adopted text as soon as it is
+            published.
+          </p>
+        </aside>
+
         <p>The United Nations Committee on the Rights of Persons with Disabilities concluded its 35th Session in Geneva in late August 2026, and the work it produced matters, especially for disabled women and girls everywhere, including here in South Africa.</p>
 
         <p>The session, which ran from 12 to 27 August, saw the Committee of 18 independent experts review five countries: Qatar, Sri Lanka, Lithuania, Chile, and Slovakia. The outcome that stands out is a new set of guidelines adopted by the Committee on identifying and addressing intersectional discrimination against girls, women, and older women with disabilities.</p>
