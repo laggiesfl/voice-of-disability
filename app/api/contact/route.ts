@@ -42,13 +42,17 @@ export async function POST(request: NextRequest) {
     const safeSubject = escapeHtml(subject);
     const safeMessage = escapeHtml(message).replace(/\n/g, '<br>');
 
-    await resend.emails.send({
+    const result = await resend.emails.send({
       from: 'Voice of Disability <hello@voiceofdisability.com>',
       to: 'fadila@voiceofdisability.com',
       replyTo: email,
       subject: safeSubject ? `Contact form: ${safeSubject}` : `Contact form message from ${safeName}`,
       html: `<!doctype html><html><body style="font-family:Arial,Helvetica,sans-serif;color:#222;line-height:1.6"><h1 style="font-size:24px;color:#5B2A86">New contact message</h1><p><strong>Name:</strong> ${safeName}</p><p><strong>Email:</strong> ${safeEmail}</p>${safeSubject ? `<p><strong>Subject:</strong> ${safeSubject}</p>` : ''}<p><strong>Message:</strong></p><p>${safeMessage}</p></body></html>`,
     });
+    if (result.error) {
+      console.error('[contact/resend]', result.error);
+      return Response.json({ error: 'We could not send your message right now. Please email fadila@voiceofdisability.com directly.' }, { status: 503 });
+    }
 
     return Response.json({ success: true });
   } catch (error) {
