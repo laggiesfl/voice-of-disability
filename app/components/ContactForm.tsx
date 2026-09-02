@@ -78,7 +78,7 @@ export default function ContactForm() {
         <textarea id="c-message" name="message" rows={5} required aria-required="true" maxLength={5000} placeholder="Your message…" disabled={status === 'submitting'} />
       </div>
 
-      <FormBotProtection />
+      <FormBotProtection idPrefix="contact" />
 
       <button type="submit" className="btn btn-primary" style={{ width: '100%', justifyContent: 'center' }} disabled={status === 'submitting' || !securityReady} aria-busy={status === 'submitting'}>
         {status === 'submitting' ? 'Sending…' : 'Send message'}
