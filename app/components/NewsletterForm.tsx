@@ -57,7 +57,7 @@ export default function NewsletterForm() {
     <form className="newsletter-form" onSubmit={handleSubmit} aria-label="Newsletter sign-up" noValidate>
       <label htmlFor="nl-email" className="sr-only">Email address</label>
       <input type="email" id="nl-email" name="email" placeholder="your@email.com" autoComplete="email" required aria-required="true" maxLength={254} aria-describedby={errMsg ? 'nl-error' : undefined} disabled={status === 'submitting'} />
-      <FormBotProtection />
+      <FormBotProtection idPrefix="newsletter" />
       <button type="submit" className="btn btn-primary" disabled={status === 'submitting' || !securityReady} aria-busy={status === 'submitting'}>
         {status === 'submitting' ? 'Subscribing…' : 'Subscribe'}
       </button>
