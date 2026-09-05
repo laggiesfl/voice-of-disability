@@ -28,6 +28,25 @@ export default function Blog() {
           <div className="blog-grid">
             <article className="blog-card">
               <div className="blog-card-body">
+                <span className="tag">Intersectionality &amp; disability rights</span>
+                <h2 style={{fontSize: '1.1rem', marginBottom: '0.5rem'}}>
+                  <Link href="/blog/intersectionality-disability-rights-south-africa" style={{color: 'var(--dark)', textDecoration: 'none'}}>
+                    Our Lives Are Not Single-Issue: What Intersectional Disability Rights Actually Looks Like in South Africa
+                  </Link>
+                </h2>
+                <p style={{fontSize: '0.9rem', marginBottom: '1rem'}}>
+                  Disability, gender, race, age and place do not create barriers one at a time. Voice of Disability examines
+                  what intersectional disability rights means in practice for disabled women in South Africa.
+                </p>
+                <Link href="/blog/intersectionality-disability-rights-south-africa">Read more →</Link>
+                <div className="blog-card-meta">
+                  Voice of Disability NPC · 5 September 2026
+                </div>
+              </div>
+            </article>
+
+            <article className="blog-card">
+              <div className="blog-card-body">
                 <span className="tag">Disability rights</span>
                 <h2 style={{fontSize: '1.1rem', marginBottom: '0.5rem'}}>
                   <Link href="/blog/uncrpd-global-accountability" style={{color: 'var(--dark)', textDecoration: 'none'}}>
