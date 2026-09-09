@@ -1,7 +1,5 @@
 import './globals.css';
-import Nav from './components/Nav';
-import Footer from './components/Footer';
-import AccessibleChatbot from './components/AccessibleChatbot';
+import SiteChrome from './components/SiteChrome';
 import PwaRegister from './components/PwaRegister';
 import type { Metadata, Viewport } from 'next';
 
@@ -40,13 +38,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
   return (
     <html lang="en-ZA">
       <body>
-        <a href="#main-content" className="skip-link">Skip to main content</a>
-        <Nav />
-        <main id="main-content" tabIndex={-1}>
-          {children}
-        </main>
-        <Footer />
-        <AccessibleChatbot />
+        <SiteChrome>{children}</SiteChrome>
         <PwaRegister />
       </body>
     </html>
