@@ -1,0 +1,18 @@
+name: Navigation app link regression
+
+on:
+  pull_request:
+    paths:
+      - 'app/components/Nav.tsx'
+      - 'tests/nav-app-link.test.mjs'
+      - '.github/workflows/nav-app-link-test.yml'
+
+jobs:
+  nav-app-link:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+      - run: node --test tests/nav-app-link.test.mjs
