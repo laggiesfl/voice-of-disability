@@ -1,5 +1,6 @@
 import Link from 'next/link';
 import styles from './app-home.module.css';
+import { getLatestPosts } from '../lib/vod-public-data';
 
 const tasks = [
   { href: '/app-home/rights', title: 'Know my rights', text: 'Plain-language guidance on disability rights, access and reasonable accommodation.' },
@@ -10,37 +11,13 @@ const tasks = [
   { href: '/app-home/accessibility', title: 'Accessibility settings', text: 'Choose display and interaction preferences for the app experience.' },
 ];
 
-type BlogPost = {
-  slug: string;
-  title: string;
-  summary: string | null;
-  published_at: string | null;
-};
-
-const SUPABASE_URL = 'https://uuvxqyrqhqktkeovkivx.supabase.co';
-const SUPABASE_KEY = 'sb_publishable_B9aFyfK496rI7gw2reMdLg_E44OksPK';
-
-async function getLatestPosts(): Promise<BlogPost[]> {
-  const url = `${SUPABASE_URL}/rest/v1/vod_blog_posts?select=slug,title,summary,published_at&status=eq.published&order=published_at.desc&limit=3`;
-  try {
-    const response = await fetch(url, {
-      headers: { apikey: SUPABASE_KEY },
-      next: { revalidate: 300 },
-    });
-    if (!response.ok) return [];
-    return (await response.json()) as BlogPost[];
-  } catch {
-    return [];
-  }
-}
-
 function formatDate(value: string | null) {
   if (!value) return null;
   return new Intl.DateTimeFormat('en-ZA', { day: 'numeric', month: 'short', year: 'numeric' }).format(new Date(value));
 }
 
 export default async function AppHomePage() {
-  const posts = await getLatestPosts();
+  const posts = await getLatestPosts(3);
 
   return (
     <div className={styles.shell}>
