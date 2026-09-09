@@ -2,7 +2,8 @@ import './globals.css';
 import Nav from './components/Nav';
 import Footer from './components/Footer';
 import AccessibleChatbot from './components/AccessibleChatbot';
-import type { Metadata } from 'next';
+import PwaRegister from './components/PwaRegister';
+import type { Metadata, Viewport } from 'next';
 
 export const metadata: Metadata = {
   title: {
@@ -12,6 +13,12 @@ export const metadata: Metadata = {
   description:
     'Voice of Disability is a movement of disabled women making their own voices heard. We remove the barriers that disable people — through advocacy, Universal Design, and knowing our rights.',
   metadataBase: new URL('https://www.voiceofdisability.com'),
+  manifest: '/manifest.webmanifest',
+  appleWebApp: {
+    capable: true,
+    title: 'Voice of Disability',
+    statusBarStyle: 'default',
+  },
   icons: {
     icon: '/favicon.ico',
     shortcut: '/favicon.ico',
@@ -22,6 +29,11 @@ export const metadata: Metadata = {
     locale: 'en_ZA',
     type: 'website',
   },
+};
+
+export const viewport: Viewport = {
+  themeColor: '#3D1A5B',
+  colorScheme: 'light',
 };
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
@@ -35,6 +47,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         </main>
         <Footer />
         <AccessibleChatbot />
+        <PwaRegister />
       </body>
     </html>
   );
