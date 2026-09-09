@@ -6,7 +6,7 @@ export default function manifest(): MetadataRoute.Manifest {
     short_name: 'Voice of Disability',
     description:
       'Accessible rights, resources, programmes and community information from Voice of Disability.',
-    start_url: '/',
+    start_url: '/app-home',
     scope: '/',
     display: 'standalone',
     background_color: '#FFFDF8',
