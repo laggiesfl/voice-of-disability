@@ -10,7 +10,38 @@ const tasks = [
   { href: '/app-home/accessibility', title: 'Accessibility settings', text: 'Choose display and interaction preferences for the app experience.' },
 ];
 
-export default function AppHomePage() {
+type BlogPost = {
+  slug: string;
+  title: string;
+  summary: string | null;
+  published_at: string | null;
+};
+
+const SUPABASE_URL = 'https://uuvxqyrqhqktkeovkivx.supabase.co';
+const SUPABASE_KEY = 'sb_publishable_B9aFyfK496rI7gw2reMdLg_E44OksPK';
+
+async function getLatestPosts(): Promise<BlogPost[]> {
+  const url = `${SUPABASE_URL}/rest/v1/vod_blog_posts?select=slug,title,summary,published_at&status=eq.published&order=published_at.desc&limit=3`;
+  try {
+    const response = await fetch(url, {
+      headers: { apikey: SUPABASE_KEY },
+      next: { revalidate: 300 },
+    });
+    if (!response.ok) return [];
+    return (await response.json()) as BlogPost[];
+  } catch {
+    return [];
+  }
+}
+
+function formatDate(value: string | null) {
+  if (!value) return null;
+  return new Intl.DateTimeFormat('en-ZA', { day: 'numeric', month: 'short', year: 'numeric' }).format(new Date(value));
+}
+
+export default async function AppHomePage() {
+  const posts = await getLatestPosts();
+
   return (
     <div className={styles.shell}>
       <section className={styles.hero} aria-labelledby="app-home-title">
@@ -34,13 +65,26 @@ export default function AppHomePage() {
 
       <section className={styles.section} aria-labelledby="latest-title">
         <h2 id="latest-title">Latest from Voice of Disability</h2>
-        <div className={styles.status}>
-          <p><strong>Latest articles and programme notices will appear here from the shared Voice of Disability data source.</strong></p>
-          <p className={styles.note}>This app dashboard is being connected to the same content used by the existing Vercel platform.</p>
-          <div className={styles.actions}>
-            <Link className={styles.buttonSecondary} href="/blog">Read latest articles</Link>
-            <Link className={styles.buttonSecondary} href="/#programmes">View programmes</Link>
+        {posts.length > 0 ? (
+          <div className={styles.latestGrid}>
+            {posts.map((post) => (
+              <article key={post.slug} className={styles.latestCard}>
+                {formatDate(post.published_at) && <p className={styles.meta}>{formatDate(post.published_at)}</p>}
+                <h3>{post.title}</h3>
+                {post.summary && <p>{post.summary}</p>}
+                <Link href={`/blog/${post.slug}`}>Read article</Link>
+              </article>
+            ))}
           </div>
+        ) : (
+          <div className={styles.status} role="status">
+            <p><strong>No published updates are available right now.</strong></p>
+            <p className={styles.note}>The app is connected to the same Voice of Disability content source used by the website.</p>
+          </div>
+        )}
+        <div className={styles.actions}>
+          <Link className={styles.buttonSecondary} href="/blog">Read all articles</Link>
+          <Link className={styles.buttonSecondary} href="/app-home/programmes">View programmes</Link>
         </div>
       </section>
 
