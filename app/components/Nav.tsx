@@ -39,10 +39,11 @@ export default function Nav() {
           <li><Link href="/#membership">Join</Link></li>
           <li><Link href="/#donate">Donate</Link></li>
           <li><Link href="/#contact">Contact</Link></li>
+          <li><Link href="/app-home">Open Voice of Disability App</Link></li>
         </ul>
 
-        <Link href="/#membership" className="btn btn-primary nav-cta">
-          Become a member
+        <Link href="/app-home" className="btn btn-primary nav-cta">
+          Open Voice of Disability App
         </Link>
       </div>
     </nav>
