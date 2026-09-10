@@ -54,7 +54,21 @@ a:hover { color: var(--voice-navy); }
   -webkit-text-fill-color: currentColor;
   color: var(--leadership-plum);
 }
-.hero-card { background: var(--leadership-plum); }
+.hero-card {
+  background: var(--leadership-plum);
+  position: relative;
+}
+.hero-card > svg {
+  display: none;
+}
+.hero-card::before {
+  content: '';
+  display: block;
+  width: 52px;
+  height: 52px;
+  margin-bottom: 1rem;
+  background: url('/brand/vod-concept-a-mark.svg') center / contain no-repeat;
+}
 .hero-card-link { color: #FFFFFF; }
 
 .about-card,
