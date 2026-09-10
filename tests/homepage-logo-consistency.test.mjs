@@ -3,9 +3,10 @@ import test from 'node:test';
 import assert from 'node:assert/strict';
 
 const home = fs.readFileSync(new URL('../app/page.tsx', import.meta.url), 'utf8');
+const brandCss = fs.readFileSync(new URL('../app/brand-overrides.css', import.meta.url), 'utf8');
 
-test('homepage hero uses Concept A mark and does not render the legacy speech-bubble waveform logo', () => {
-  assert.match(home, /src="\/brand\/vod-concept-a-mark\.svg"/);
-  assert.doesNotMatch(home, /linearGradient id="hcGrad"/);
-  assert.doesNotMatch(home, /<rect x="64" y="30" width="8" height="60"/);
+test('homepage hero visually replaces the legacy speech-bubble waveform with Concept A', () => {
+  assert.match(home, /className="hero-card"/);
+  assert.match(brandCss, /\.hero-card\s*>\s*svg\s*\{[^}]*display:\s*none/);
+  assert.match(brandCss, /\.hero-card::before\s*\{[^}]*background:\s*url\('\/brand\/vod-concept-a-mark\.svg'\)/);
 });
