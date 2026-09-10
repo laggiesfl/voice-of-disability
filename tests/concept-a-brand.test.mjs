@@ -27,6 +27,7 @@ test('Concept A brand assets exist and are wired into website and app', () => {
   assert.match(appLayout, /\/brand\/vod-concept-a-logo-horizontal\.svg/);
   assert.match(manifest, /\/brand\/vod-concept-a-mark\.svg/);
   assert.match(manifest, /#17324D/);
+  assert.match(manifest, /#F7F4EF/);
 });
 
 test('Concept A SVGs use the approved Voice of Disability palette only', () => {
@@ -45,4 +46,19 @@ test('Concept A SVGs use the approved Voice of Disability palette only', () => {
       assert.ok(approved.has(colour), `${file} contains unapproved colour ${colour}`);
     }
   }
+});
+
+test('website and app styles expose the v1.2 accessible palette', () => {
+  const globalCss = read('app/globals.css');
+  const appCss = read('app/app-home/app-home.module.css');
+
+  for (const colour of ['#17324D', '#7A1F5C', '#C04A7A', '#D9A441', '#F7F4EF', '#E8EEF3', '#222222', '#FFFFFF']) {
+    assert.ok(globalCss.toUpperCase().includes(colour), `globals.css should include ${colour}`);
+  }
+
+  for (const colour of ['#17324D', '#7A1F5C', '#D9A441', '#F7F4EF', '#E8EEF3', '#222222', '#FFFFFF']) {
+    assert.ok(appCss.toUpperCase().includes(colour), `app CSS should include ${colour}`);
+  }
+
+  assert.ok(!appCss.includes('#3D1A5B'), 'legacy app purple #3D1A5B should be removed');
 });
