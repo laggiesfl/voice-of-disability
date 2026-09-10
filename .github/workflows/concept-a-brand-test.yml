@@ -1,0 +1,22 @@
+name: Concept A brand integration
+
+on:
+  push:
+    branches:
+      - feature/vod-concept-a-brand-system
+  pull_request:
+    paths:
+      - 'app/**'
+      - 'public/brand/**'
+      - 'tests/concept-a-brand.test.mjs'
+      - '.github/workflows/concept-a-brand-test.yml'
+
+jobs:
+  brand-test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+      - run: node --test tests/concept-a-brand.test.mjs
