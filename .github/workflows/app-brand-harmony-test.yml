@@ -1,0 +1,21 @@
+name: App brand harmony
+
+on:
+  push:
+    branches:
+      - feature/vod-app-brand-harmony
+  pull_request:
+    paths:
+      - 'app/app-home/app-home.module.css'
+      - 'tests/app-brand-harmony.test.mjs'
+      - '.github/workflows/app-brand-harmony-test.yml'
+
+jobs:
+  app-brand-harmony:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+      - run: node --test tests/app-brand-harmony.test.mjs
