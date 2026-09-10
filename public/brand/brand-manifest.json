@@ -1,0 +1,55 @@
+{
+  "brand": "Voice of Disability",
+  "version": "1.2-concept-a",
+  "concept": "A",
+  "status": "approved working identity",
+  "lockup": {
+    "primaryName": "VOICE OF DISABILITY",
+    "primaryTagline": "Nothing About Us Without Us",
+    "secondaryLine": "Your voice. Your rights. Your community."
+  },
+  "assets": {
+    "mark": "/brand/vod-concept-a-mark.svg",
+    "horizontal": "/brand/vod-concept-a-logo-horizontal.svg",
+    "monochrome": "/brand/vod-concept-a-logo-monochrome.svg",
+    "reversed": "/brand/vod-concept-a-logo-reversed.svg"
+  },
+  "palette": {
+    "voiceNavy": "#17324D",
+    "leadershipPlum": "#7A1F5C",
+    "voiceRose": "#C04A7A",
+    "justiceGold": "#D9A441",
+    "warmCanvas": "#F7F4EF",
+    "cloudBlue": "#E8EEF3",
+    "charcoal": "#222222",
+    "white": "#FFFFFF"
+  },
+  "digitalUsage": {
+    "pageBackground": "#F7F4EF",
+    "heading": "#17324D",
+    "bodyText": "#222222",
+    "primaryButtonBackground": "#7A1F5C",
+    "primaryButtonText": "#FFFFFF",
+    "darkNavigationBackground": "#17324D",
+    "darkNavigationText": "#FFFFFF",
+    "informationPanel": "#E8EEF3",
+    "accentOnly": ["#C04A7A", "#D9A441"]
+  },
+  "accessibility": {
+    "target": "WCAG 2.2 AAA where feasible; never knowingly below AA without flagging",
+    "rules": [
+      "Do not rely on colour alone",
+      "Do not use Justice Gold for ordinary text on light backgrounds",
+      "Use structural indicators in addition to colour for active states",
+      "Use the monochrome or reversed logo when context requires stronger contrast",
+      "Logo images must have an accessible name on the containing link or image"
+    ]
+  },
+  "aiInstructions": [
+    "Treat this manifest and the Voice of Disability v1.2 brand skill as authoritative.",
+    "Do not redraw, invent, or substitute the Concept A mark without explicit approval.",
+    "Prefer the horizontal logo in headers and the mark for app icon/favicon contexts.",
+    "Use the reversed logo only on Voice Navy or another verified dark background.",
+    "Keep all logo source assets as SVG so AI coding tools can inspect and edit them directly."
+  ]
+}
