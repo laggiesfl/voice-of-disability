@@ -1,4 +1,5 @@
 import './globals.css';
+import './brand-overrides.css';
 import SiteChrome from './components/SiteChrome';
 import PwaRegister from './components/PwaRegister';
 import type { Metadata, Viewport } from 'next';
@@ -18,9 +19,9 @@ export const metadata: Metadata = {
     statusBarStyle: 'default',
   },
   icons: {
-    icon: '/favicon.ico',
-    shortcut: '/favicon.ico',
-    apple: '/logo-mark.svg',
+    icon: '/brand/vod-concept-a-mark.svg',
+    shortcut: '/brand/vod-concept-a-mark.svg',
+    apple: '/brand/vod-concept-a-mark.svg',
   },
   openGraph: {
     siteName: 'Voice of Disability',
@@ -30,7 +31,7 @@ export const metadata: Metadata = {
 };
 
 export const viewport: Viewport = {
-  themeColor: '#3D1A5B',
+  themeColor: '#17324D',
   colorScheme: 'light',
 };
 
