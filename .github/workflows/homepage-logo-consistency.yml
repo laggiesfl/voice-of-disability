@@ -1,0 +1,18 @@
+name: Homepage logo consistency
+
+on:
+  pull_request:
+    paths:
+      - 'app/page.tsx'
+      - 'tests/homepage-logo-consistency.test.mjs'
+      - '.github/workflows/homepage-logo-consistency.yml'
+
+jobs:
+  homepage-logo-consistency:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+      - run: node --test tests/homepage-logo-consistency.test.mjs
