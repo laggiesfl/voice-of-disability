@@ -1,0 +1,12 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 760 150" role="img" aria-labelledby="title desc">
+  <title id="title">Voice of Disability reversed logo</title>
+  <desc id="desc">White Concept A logo for use on Voice Navy or other sufficiently dark backgrounds.</desc>
+  <g transform="translate(10 12)" fill="none" stroke="#FFFFFF" stroke-width="18" stroke-linecap="round">
+    <path d="M27 37A47 47 0 0 1 58 19"/>
+    <path d="M76 20A47 47 0 0 1 105 48"/>
+    <path d="M104 81A47 47 0 0 1 75 108"/>
+    <path d="M56 108A47 47 0 0 1 24 80"/>
+  </g>
+  <text x="155" y="68" fill="#FFFFFF" font-family="Atkinson Hyperlegible Next, Atkinson Hyperlegible, Arial, Helvetica, sans-serif" font-size="46" font-weight="800">VOICE OF DISABILITY</text>
+  <text x="157" y="108" fill="#FFFFFF" font-family="Atkinson Hyperlegible Next, Atkinson Hyperlegible, Arial, Helvetica, sans-serif" font-size="25" font-weight="700">Nothing About Us Without Us</text>
+</svg>
