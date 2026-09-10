@@ -1,0 +1,19 @@
+name: App and website brand unity
+
+on:
+  pull_request:
+    paths:
+      - 'app/app-home/**'
+      - 'app/brand-overrides.css'
+      - 'tests/app-website-brand-unity.test.mjs'
+      - '.github/workflows/app-website-brand-unity.yml'
+
+jobs:
+  brand-unity:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+      - run: node --test tests/app-website-brand-unity.test.mjs

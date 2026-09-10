@@ -37,9 +37,10 @@ a:hover { color: var(--voice-navy); }
 .nav {
   background: #FFFFFF;
   border-bottom-color: #C9D3DC;
+  padding: 1rem 0;
 }
 .nav-brand img {
-  width: clamp(190px, 20vw, 300px);
+  width: clamp(240px, 24vw, 360px);
   height: auto;
 }
 .nav-links a { color: var(--voice-navy); }
