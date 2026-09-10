@@ -7,11 +7,13 @@ export default function AppHomeLayout({ children }: { children: React.ReactNode 
       <header className={styles.appHeader}>
         <div className={styles.appHeaderInner}>
           <Link href="/app-home" className={styles.appBrand} aria-label="Voice of Disability app home">
-            <img src="/logo-mark.svg" alt="" width="42" height="42" aria-hidden="true" />
-            <span>
-              <strong>Voice of Disability</strong>
-              <small>Accessible app</small>
-            </span>
+            <img
+              src="/brand/vod-concept-a-logo-horizontal.svg"
+              alt=""
+              width="300"
+              height="67"
+              aria-hidden="true"
+            />
           </Link>
           <div className={styles.appHeaderActions}>
             <Link href="/app-home/ask" className={styles.askLink}>Ask VOD</Link>

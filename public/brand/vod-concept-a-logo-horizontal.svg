@@ -1,0 +1,13 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 760 170" role="img" aria-labelledby="title desc">
+  <title id="title">Voice of Disability</title>
+  <desc id="desc">Concept A logo with the open-circle mark and the words Voice of Disability, Nothing About Us Without Us.</desc>
+  <g transform="translate(10 20)">
+    <path d="M27 37A47 47 0 0 1 58 19" fill="none" stroke="#17324D" stroke-width="18" stroke-linecap="round"/>
+    <path d="M76 20A47 47 0 0 1 105 48" fill="none" stroke="#7A1F5C" stroke-width="18" stroke-linecap="round"/>
+    <path d="M104 81A47 47 0 0 1 75 108" fill="none" stroke="#D9A441" stroke-width="18" stroke-linecap="round"/>
+    <path d="M56 108A47 47 0 0 1 24 80" fill="none" stroke="#C04A7A" stroke-width="18" stroke-linecap="round"/>
+  </g>
+  <text x="155" y="74" fill="#17324D" font-family="Atkinson Hyperlegible Next, Atkinson Hyperlegible, Arial, Helvetica, sans-serif" font-size="46" font-weight="800" letter-spacing="0.5">VOICE OF DISABILITY</text>
+  <text x="157" y="116" fill="#7A1F5C" font-family="Atkinson Hyperlegible Next, Atkinson Hyperlegible, Arial, Helvetica, sans-serif" font-size="25" font-weight="700">Nothing About Us Without Us</text>
+  <text x="157" y="146" fill="#222222" font-family="Atkinson Hyperlegible Next, Atkinson Hyperlegible, Arial, Helvetica, sans-serif" font-size="19">Your voice. Your rights. Your community.</text>
+</svg>
