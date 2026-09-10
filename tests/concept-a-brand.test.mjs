@@ -11,6 +11,7 @@ test('Concept A brand assets exist and are wired into website and app', () => {
     'public/brand/vod-concept-a-logo-monochrome.svg',
     'public/brand/vod-concept-a-logo-reversed.svg',
     'public/brand/brand-manifest.json',
+    'app/brand-overrides.css',
   ];
 
   for (const asset of expectedAssets) {
@@ -20,11 +21,14 @@ test('Concept A brand assets exist and are wired into website and app', () => {
   const nav = read('app/components/Nav.tsx');
   const footer = read('app/components/Footer.tsx');
   const appLayout = read('app/app-home/layout.tsx');
+  const rootLayout = read('app/layout.tsx');
   const manifest = read('app/manifest.ts');
 
   assert.match(nav, /\/brand\/vod-concept-a-logo-horizontal\.svg/);
   assert.match(footer, /\/brand\/vod-concept-a-logo-reversed\.svg/);
   assert.match(appLayout, /\/brand\/vod-concept-a-logo-horizontal\.svg/);
+  assert.match(rootLayout, /brand-overrides\.css/);
+  assert.match(rootLayout, /\/brand\/vod-concept-a-mark\.svg/);
   assert.match(manifest, /\/brand\/vod-concept-a-mark\.svg/);
   assert.match(manifest, /#17324D/);
   assert.match(manifest, /#F7F4EF/);
@@ -49,11 +53,11 @@ test('Concept A SVGs use the approved Voice of Disability palette only', () => {
 });
 
 test('website and app styles expose the v1.2 accessible palette', () => {
-  const globalCss = read('app/globals.css');
+  const brandCss = read('app/brand-overrides.css');
   const appCss = read('app/app-home/app-home.module.css');
 
   for (const colour of ['#17324D', '#7A1F5C', '#C04A7A', '#D9A441', '#F7F4EF', '#E8EEF3', '#222222', '#FFFFFF']) {
-    assert.ok(globalCss.toUpperCase().includes(colour), `globals.css should include ${colour}`);
+    assert.ok(brandCss.toUpperCase().includes(colour), `brand-overrides.css should include ${colour}`);
   }
 
   for (const colour of ['#17324D', '#7A1F5C', '#D9A441', '#F7F4EF', '#E8EEF3', '#222222', '#FFFFFF']) {
