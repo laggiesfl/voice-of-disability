@@ -16,68 +16,53 @@ export default function OpenGraphImage() {
           height: '100%',
           display: 'flex',
           alignItems: 'center',
-          justifyContent: 'center',
           background: '#F7F4EF',
-          padding: '54px',
+          padding: '72px 80px',
           fontFamily: 'Arial, Helvetica, sans-serif',
         }}
       >
         <div
+          aria-hidden="true"
           style={{
-            width: '100%',
-            height: '100%',
+            width: '330px',
+            height: '330px',
+            position: 'relative',
             display: 'flex',
             alignItems: 'center',
-            justifyContent: 'space-between',
-            background: '#7A1F5C',
-            borderRadius: '34px',
-            padding: '54px 62px',
+            justifyContent: 'center',
+            flexShrink: 0,
+            marginRight: '72px',
           }}
         >
-          <div style={{ display: 'flex', flexDirection: 'column', width: '72%' }}>
-            <div
-              style={{
-                fontSize: 28,
-                fontWeight: 800,
-                color: '#FFFFFF',
-                letterSpacing: '0.05em',
-                marginBottom: '18px',
-              }}
-            >
-              Voice of Disability
-            </div>
-            <div
-              style={{
-                fontSize: 68,
-                lineHeight: 1.02,
-                fontWeight: 800,
-                color: '#FFFFFF',
-                marginBottom: '24px',
-              }}
-            >
-              Nothing About Us Without Us
-            </div>
-            <div style={{ fontSize: 30, lineHeight: 1.3, color: '#FFFFFF' }}>
-              Your voice. Your rights. Your community.
-            </div>
-          </div>
+          <div style={{ position: 'absolute', top: '10px', left: '113px', width: '104px', height: '48px', borderRadius: '30px', background: '#17324D', transform: 'rotate(18deg)' }} />
+          <div style={{ position: 'absolute', top: '113px', right: '10px', width: '104px', height: '48px', borderRadius: '30px', background: '#7A1F5C', transform: 'rotate(108deg)' }} />
+          <div style={{ position: 'absolute', bottom: '10px', left: '113px', width: '104px', height: '48px', borderRadius: '30px', background: '#D9A441', transform: 'rotate(198deg)' }} />
+          <div style={{ position: 'absolute', top: '113px', left: '10px', width: '104px', height: '48px', borderRadius: '30px', background: '#C04A7A', transform: 'rotate(288deg)' }} />
+          <div style={{ width: '142px', height: '142px', borderRadius: '50%', background: '#F7F4EF' }} />
+        </div>
 
+        <div style={{ display: 'flex', flexDirection: 'column', justifyContent: 'center', flex: 1 }}>
           <div
-            aria-hidden="true"
             style={{
-              width: '190px',
-              height: '190px',
-              position: 'relative',
-              display: 'flex',
-              alignItems: 'center',
-              justifyContent: 'center',
+              fontSize: 64,
+              lineHeight: 1.02,
+              fontWeight: 800,
+              color: '#17324D',
+              letterSpacing: '-0.02em',
+              marginBottom: '26px',
             }}
           >
-            <div style={{ position: 'absolute', top: '4px', left: '65px', width: '60px', height: '28px', borderRadius: '20px', background: '#17324D', transform: 'rotate(18deg)' }} />
-            <div style={{ position: 'absolute', top: '65px', right: '4px', width: '60px', height: '28px', borderRadius: '20px', background: '#7A1F5C', transform: 'rotate(108deg)' }} />
-            <div style={{ position: 'absolute', bottom: '4px', left: '65px', width: '60px', height: '28px', borderRadius: '20px', background: '#D9A441', transform: 'rotate(198deg)' }} />
-            <div style={{ position: 'absolute', top: '65px', left: '4px', width: '60px', height: '28px', borderRadius: '20px', background: '#C04A7A', transform: 'rotate(288deg)' }} />
-            <div style={{ width: '82px', height: '82px', borderRadius: '50%', background: '#F7F4EF' }} />
+            VOICE OF DISABILITY
+          </div>
+          <div
+            style={{
+              fontSize: 34,
+              lineHeight: 1.2,
+              fontWeight: 700,
+              color: '#7A1F5C',
+            }}
+          >
+            Nothing About Us Without Us
           </div>
         </div>
       </div>
