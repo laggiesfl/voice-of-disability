@@ -13,13 +13,14 @@ test('app-home exposes branded share metadata for messaging previews', () => {
   assert.match(layout, /twitter/);
 });
 
-test('app share card is logo-led and simplified for recognition', () => {
+test('app share card makes the Concept A mark dominant and lets metadata carry app context', () => {
   assert.match(ogImage, /ImageResponse/);
   assert.match(ogImage, /width:\s*1200/);
   assert.match(ogImage, /height:\s*630/);
   assert.match(ogImage, /VOICE OF DISABILITY/);
-  assert.match(ogImage, /Voice of Disability App/);
-  assert.match(ogImage, /What do you need today\?/);
-  assert.match(ogImage, /width:\s*'3[0-9]{2}px'/);
+  assert.match(ogImage, /width:\s*'4[4-9][0-9]px'/);
+  assert.match(ogImage, /height:\s*'4[4-9][0-9]px'/);
+  assert.doesNotMatch(ogImage, />\s*Voice of Disability App\s*</);
+  assert.doesNotMatch(ogImage, />\s*What do you need today\?\s*</);
   assert.doesNotMatch(ogImage, /Your voice\. Your rights\. Your community\./);
 });
