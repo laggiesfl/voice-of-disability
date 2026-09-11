@@ -1,0 +1,19 @@
+name: App share preview
+
+on:
+  pull_request:
+    paths:
+      - 'app/app-home/layout.tsx'
+      - 'app/app-home/opengraph-image.tsx'
+      - 'tests/app-share-preview.test.mjs'
+      - '.github/workflows/app-share-preview-test.yml'
+
+jobs:
+  app-share-preview:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+      - run: node --test tests/app-share-preview.test.mjs
