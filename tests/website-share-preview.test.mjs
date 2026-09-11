@@ -12,11 +12,12 @@ test('website exposes branded share metadata', () => {
   assert.match(layout, /twitter/);
 });
 
-test('website provides a 1200x630 branded social preview image', () => {
+test('website share card is logo-led and simplified for recognition', () => {
   assert.match(ogImage, /ImageResponse/);
   assert.match(ogImage, /width:\s*1200/);
   assert.match(ogImage, /height:\s*630/);
-  assert.match(ogImage, /Voice of Disability/);
+  assert.match(ogImage, /VOICE OF DISABILITY/);
   assert.match(ogImage, /Nothing About Us Without Us/);
-  assert.match(ogImage, /#7A1F5C/);
+  assert.match(ogImage, /width:\s*'3[0-9]{2}px'/);
+  assert.doesNotMatch(ogImage, /Your voice\. Your rights\. Your community\./);
 });
