@@ -4,13 +4,15 @@ import SiteChrome from './components/SiteChrome';
 import PwaRegister from './components/PwaRegister';
 import type { Metadata, Viewport } from 'next';
 
+const description =
+  'Voice of Disability is a movement of disabled women making their own voices heard. We remove the barriers that disable people — through advocacy, Universal Design, and knowing our rights.';
+
 export const metadata: Metadata = {
   title: {
     default: 'Voice of Disability | Nothing About Us Without Us',
     template: '%s | Voice of Disability',
   },
-  description:
-    'Voice of Disability is a movement of disabled women making their own voices heard. We remove the barriers that disable people — through advocacy, Universal Design, and knowing our rights.',
+  description,
   metadataBase: new URL('https://www.voiceofdisability.com'),
   manifest: '/manifest.webmanifest',
   appleWebApp: {
@@ -24,9 +26,17 @@ export const metadata: Metadata = {
     apple: '/brand/vod-concept-a-mark.svg',
   },
   openGraph: {
+    title: 'Voice of Disability | Nothing About Us Without Us',
+    description,
+    url: 'https://www.voiceofdisability.com/',
     siteName: 'Voice of Disability',
     locale: 'en_ZA',
     type: 'website',
+  },
+  twitter: {
+    card: 'summary_large_image',
+    title: 'Voice of Disability | Nothing About Us Without Us',
+    description,
   },
 };
 
