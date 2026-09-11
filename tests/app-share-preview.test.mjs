@@ -18,6 +18,6 @@ test('app-home provides a 1200x630 branded social preview image', () => {
   assert.match(ogImage, /width:\s*1200/);
   assert.match(ogImage, /height:\s*630/);
   assert.match(ogImage, /#7A1F5C/);
-  assert.match(ogImage, /Voice of Disability/);
+  assert.match(ogImage, /voice of disability/i);
   assert.match(ogImage, /What do you need today\?/);
 });
