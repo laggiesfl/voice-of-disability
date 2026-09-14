@@ -30,6 +30,25 @@ export default function Blog() {
               <div className="blog-card-body">
                 <span className="tag">Disability rights</span>
                 <h2 style={{fontSize: '1.1rem', marginBottom: '0.5rem'}}>
+                  <Link href="/blog/deaf-awareness-month-2026-law-reality-gap" style={{color: 'var(--dark)', textDecoration: 'none'}}>
+                    Deaf Awareness Month Spotlights the Gap Between Law and Lived Reality in South Africa
+                  </Link>
+                </h2>
+                <p style={{fontSize: '0.9rem', marginBottom: '1rem'}}>
+                  South Africa&apos;s Deaf Awareness Month launch brought renewed government calls for sign language access
+                  across public services, but the distance between legal obligation and daily experience for Deaf South Africans remains wide.
+                </p>
+                <Link href="/blog/deaf-awareness-month-2026-law-reality-gap">Read more →</Link>
+                <div className="blog-card-meta">
+                  Voice of Disability NPC · 8 September 2026
+                </div>
+              </div>
+            </article>
+
+            <article className="blog-card">
+              <div className="blog-card-body">
+                <span className="tag">Disability rights</span>
+                <h2 style={{fontSize: '1.1rem', marginBottom: '0.5rem'}}>
                   <Link href="/blog/charity-not-enough-south-africa-disability-rights-2026" style={{color: 'var(--dark)', textDecoration: 'none'}}>
                     Charity Is Not Enough: South Africa Gets Serious About Disability Rights
                   </Link>
