@@ -28,6 +28,25 @@ export default function Blog() {
           <div className="blog-grid">
             <article className="blog-card">
               <div className="blog-card-body">
+                <span className="tag">Disability rights</span>
+                <h2 style={{fontSize: '1.1rem', marginBottom: '0.5rem'}}>
+                  <Link href="/blog/charity-not-enough-south-africa-disability-rights-2026" style={{color: 'var(--dark)', textDecoration: 'none'}}>
+                    Charity Is Not Enough: South Africa Gets Serious About Disability Rights
+                  </Link>
+                </h2>
+                <p style={{fontSize: '0.9rem', marginBottom: '1rem'}}>
+                  Two senior South African government voices delivered powerful messages about disability rights this month.
+                  Voice of Disability unpacks what they said, why it matters, and what needs to happen next.
+                </p>
+                <Link href="/blog/charity-not-enough-south-africa-disability-rights-2026">Read more →</Link>
+                <div className="blog-card-meta">
+                  Voice of Disability NPC · 14 September 2026
+                </div>
+              </div>
+            </article>
+
+            <article className="blog-card">
+              <div className="blog-card-body">
                 <span className="tag">Intersectionality &amp; disability rights</span>
                 <h2 style={{fontSize: '1.1rem', marginBottom: '0.5rem'}}>
                   <Link href="/blog/intersectionality-disability-rights-south-africa" style={{color: 'var(--dark)', textDecoration: 'none'}}>
