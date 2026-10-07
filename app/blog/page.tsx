@@ -26,6 +26,25 @@ export default function Blog() {
           <Link href="/" className="back-link" style={{marginBottom: '2rem', display: 'inline-flex'}}>Ã¢ÂÂ Back to homepage</Link>
 
           <div className="blog-grid">
+            <article className="blog-card" style={{gridColumn: '1 / -1', border: '2px solid var(--purple)'}}>
+              <div className="blog-card-body">
+                <span className="tag">Founder story</span>
+                <h2 style={{fontSize: '1.35rem', marginBottom: '0.5rem'}}>
+                  <Link href="/blog/before-my-time" style={{color: 'var(--dark)', textDecoration: 'none'}}>
+                    Before My Time: How AI Made Dreams I Had Carried for Decades Finally Buildable
+                  </Link>
+                </h2>
+                <p style={{fontSize: '0.95rem', marginBottom: '1rem'}}>
+                  For nearly three decades, Fadila Lagadien carried ideas about disability employment,
+                  accessibility auditing and inclusive technology that she could describe but could not afford to build.
+                  Then AI changed the equation.
+                </p>
+                <Link href="/blog/before-my-time">Read the founder story →</Link>
+                <div className="blog-card-meta">
+                  By Fadila Lagadien · 7 October 2026
+                </div>
+              </div>
+            </article>
             <article className="blog-card">
               <div className="blog-card-body">
                 <span className="tag">Disability rights</span>
