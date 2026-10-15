@@ -26,6 +26,12 @@ export default function AccommodationRequestTemplate() {
           medical information. Focus on the barrier, the adjustment you need and how it will support equal participation.
         </p>
 
+        <p>
+          <a href="/resources/reasonable-accommodation-request.txt" download="Voice-of-Disability-Accommodation-Request.txt" className="btn btn-primary" style={{display:'inline-flex'}}>
+            Download editable template (text file) ↓
+          </a>
+        </p>
+        <p>The editable text file can be opened in Word or another text editor. You can also copy the version below.</p>
         <h2>Template</h2>
 
         <section
