@@ -31,6 +31,7 @@ export default function Footer() {
             <h4>Take action</h4>
             <ul role="list">
               <li><Link href="/#membership">Become a member</Link></li>
+              <li><Link href="/#volunteer">Volunteer with us</Link></li>
               <li><Link href="/#donate">Donate</Link></li>
               <li><Link href="/#contact">Contact us</Link></li>
               <li><Link href="/privacy">Privacy policy</Link></li>
