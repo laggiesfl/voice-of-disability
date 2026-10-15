@@ -2,6 +2,7 @@ import Link from 'next/link';
 import { cookies } from 'next/headers';
 import type { Metadata } from 'next';
 import MembershipForm from '../components/MembershipForm';
+import ContactForm from '../components/ContactForm';
 
 export const metadata: Metadata = {
   title: 'Resources — Tools for Your Rights',
@@ -147,6 +148,20 @@ export default async function ResourcesPage() {
               </div>
             </section>
           )}
+
+          <section id="suggest-resource" aria-labelledby="suggest-resource-h" style={{ marginTop: '3rem', padding: '2rem', border: '2px solid var(--purple-deep)', borderRadius: '12px', background: 'var(--light-purple)' }}>
+            <div style={{ maxWidth: 720 }}>
+              <p className="section-label">Help shape this library</p>
+              <h2 id="suggest-resource-h">Request or suggest a resource</h2>
+              <p>Is there a guide, accessible template, rights explanation or practical tool you need? Tell us what would help. Disabled women and members can suggest topics, and anyone can report a missing resource.</p>
+              <p>You do not need to share details about your impairment or private circumstances. Please tell us if you need a particular accessible format. We review suggestions, but cannot promise to publish every request.</p>
+              <p><strong>Required:</strong> name, email and your suggestion. We use your contact details only to respond to your request, in line with our <Link href="/privacy">privacy policy</Link>.</p>
+              <div className="membership-form-wrap" style={{ marginTop: '1.5rem' }}>
+                <ContactForm resourceRequest />
+              </div>
+              <p style={{ marginTop: '1rem' }}>If the form is not accessible to you, email <a href="mailto:fadila@voiceofdisability.com?subject=Resource%20request%20or%20suggestion">fadila@voiceofdisability.com</a>.</p>
+            </div>
+          </section>
 
           <aside className="belief-block" style={{marginTop: '3rem'}} aria-labelledby="resource-note-h">
             <h2 id="resource-note-h" style={{fontSize: '1.4rem'}}>Need a resource in another format?</h2>
