@@ -78,7 +78,7 @@ export default function UncrpdGlobalAccountabilityArticle() {
 
         <p>
           One of the major themes of COSP19 was the shift <strong>from participation to representation</strong> — strengthening
-          accessible civic engagement, leadership and advocacy by persons with disabilities in political and public life.
+          accessible civic engagement, leadership and advocacy by disabled people in political and public life.
         </p>
 
         <p>That distinction deserves attention.</p>
@@ -92,7 +92,7 @@ export default function UncrpdGlobalAccountabilityArticle() {
 
         <p>
           Representation means disabled people are present where decisions are actually made. It means organisations of
-          persons with disabilities have influence over priorities, budgets, implementation and evaluation.
+          disabled people have influence over priorities, budgets, implementation and evaluation.
         </p>
 
         <p>It means <strong>Nothing About Us Without Us</strong> operates as a governance principle, not a slogan.</p>
