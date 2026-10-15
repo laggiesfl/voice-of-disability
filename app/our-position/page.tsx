@@ -223,7 +223,7 @@ export default function OurPosition() {
         .position-article p,
         .position-article li {
           color: #2B1A3D;
-          font-size: 1.0625rem;
+          font-size: 1.125rem;
           line-height: 1.82;
         }
         .position-article h2,
@@ -257,11 +257,22 @@ export default function OurPosition() {
         .position-author h3 + p {
           margin-bottom: 1.5rem;
         }
-        .position-contact-button {
+        .position-article a.position-contact-button,
+        .position-article a.position-contact-button:visited {
           display: inline-flex;
           margin-top: 0.5rem;
           background: #5B2A86;
           color: #FFFFFF;
+          font-weight: 700;
+          text-decoration: none;
+        }
+        .position-article a.position-contact-button:hover {
+          background: #17324D;
+          color: #FFFFFF;
+        }
+        .position-article a.position-contact-button:focus-visible {
+          outline: 4px solid #D9A441;
+          outline-offset: 4px;
         }
         @media (max-width: 640px) {
           .position-article p,
