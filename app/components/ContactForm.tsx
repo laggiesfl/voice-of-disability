@@ -5,7 +5,7 @@ import FormBotProtection from './FormBotProtection';
 
 type Status = 'idle' | 'submitting' | 'success' | 'error';
 
-export default function ContactForm() {
+export default function ContactForm({ resourceRequest = false }: { resourceRequest?: boolean }) {
   const [status, setStatus] = useState<Status>('idle');
   const [errMsg, setErrMsg] = useState('');
   const statusRef = useRef<HTMLDivElement>(null);
@@ -56,7 +56,7 @@ export default function ContactForm() {
   }
 
   return (
-    <form onSubmit={handleSubmit} aria-label="Contact form" noValidate>
+    <form onSubmit={handleSubmit} aria-label={resourceRequest ? "Request or suggest a resource" : "Contact form"} noValidate>
       <div ref={statusRef} role="alert" aria-live="assertive" aria-atomic="true" tabIndex={-1} style={{ outline: 'none' }}>
         {status === 'error' && errMsg && <p style={{ background: '#fff0f0', border: '1px solid #c00', borderRadius: '6px', padding: '0.75rem 1rem', marginBottom: '1rem', color: '#900', fontSize: '0.9rem' }}>{errMsg}</p>}
       </div>
@@ -71,17 +71,17 @@ export default function ContactForm() {
       </div>
       <div className="form-group">
         <label htmlFor="c-subject">Subject</label>
-        <input type="text" id="c-subject" name="subject" maxLength={140} placeholder="What is this about?" disabled={status === 'submitting'} />
+        <input type="text" id="c-subject" name="subject" maxLength={140} defaultValue={resourceRequest ? "Resource request or suggestion" : ""} placeholder="What is this about?" disabled={status === 'submitting'} />
       </div>
       <div className="form-group">
-        <label htmlFor="c-message">Message <span aria-hidden="true">*</span></label>
-        <textarea id="c-message" name="message" rows={5} required aria-required="true" maxLength={5000} placeholder="Your message…" disabled={status === 'submitting'} />
+        <label htmlFor="c-message">{resourceRequest ? "What resource would help you?" : "Message"} <span aria-hidden="true">*</span></label>
+        <textarea id="c-message" name="message" rows={5} required aria-required="true" maxLength={5000} placeholder={resourceRequest ? "Describe the guide, template or information you would like, and any accessible format you prefer. Please do not include sensitive personal details." : "Your message…"} disabled={status === 'submitting'} />
       </div>
 
       <FormBotProtection idPrefix="contact" />
 
       <button type="submit" className="btn btn-primary" style={{ width: '100%', justifyContent: 'center' }} disabled={status === 'submitting' || !securityReady} aria-busy={status === 'submitting'}>
-        {status === 'submitting' ? 'Sending…' : 'Send message'}
+        {status === 'submitting' ? 'Sending…' : resourceRequest ? 'Send resource suggestion' : 'Send message'}
       </button>
     </form>
   );
