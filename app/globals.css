@@ -425,6 +425,24 @@ a:hover { color: var(--purple-deep); }
 .prose blockquote { border-left: 4px solid var(--purple-mid); margin: 2rem 0; padding: 0.75rem 1.5rem; background: var(--light-purple); border-radius: 0 10px 10px 0; }
 .prose blockquote p { color: var(--purple-deep); font-style: italic; font-weight: 600; margin: 0; }
 .prose a { color: var(--purple-mid); }
+/* Links styled as buttons must retain visible button labels at rest, hover and visited states. */
+.prose a.btn-primary,
+.prose a.btn-primary:visited {
+  color: #FFFFFF;
+  background: #7A1F5C;
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+.prose a.btn-primary:hover,
+.prose a.btn-primary:focus-visible {
+  color: #FFFFFF;
+  background: #17324D;
+}
+.prose a.btn-primary:focus-visible {
+  outline: 4px solid #D9A441;
+  outline-offset: 4px;
+}
+
 
 /* ── Back link ── */
 .back-link { display: inline-flex; align-items: center; gap: 0.4rem; color: var(--purple-mid); font-weight: 600; text-decoration: none; font-size: 0.9rem; margin-bottom: 1rem; }
