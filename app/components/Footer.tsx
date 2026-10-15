@@ -34,6 +34,7 @@ export default function Footer() {
               <li><Link href="/#volunteer">Volunteer with us</Link></li>
               <li><Link href="/#donate">Donate</Link></li>
               <li><Link href="/#contact">Contact us</Link></li>
+              <li><Link href="/accessibility-statement">Accessibility statement</Link></li>
               <li><Link href="/privacy">Privacy policy</Link></li>
               <li><Link href="/terms">Terms of use</Link></li>
               <li><Link href="/refund-policy">Refund policy</Link></li>
@@ -43,7 +44,7 @@ export default function Footer() {
 
         <div className="footer-bottom">
           <span>© {new Date().getFullYear()} Voice of Disability NPC. All rights reserved.</span>
-          <span>Built to <Link href="https://www.w3.org/WAI/WCAG22/quickref/" target="_blank" rel="noopener noreferrer">WCAG 2.2</Link> Level AA · Universal Design Principles Applied</span>
+          <span>Designed with <Link href="https://www.w3.org/WAI/WCAG22/quickref/" target="_blank" rel="noopener noreferrer">WCAG 2.2</Link> and Universal Design principles · <Link href="/accessibility-statement">See testing status</Link></span>
         </div>
       </div>
 
