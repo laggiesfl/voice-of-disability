@@ -85,7 +85,7 @@ export default function ChinaDisabilityInclusionArticle() {
           Government has proposed a seven-point framework that includes a South Africa–China Disability
           Inclusion Knowledge Exchange Platform, joint capacity-building, stronger links between research
           institutions and universities, collaboration with technology developers and organisations of
-          persons with disabilities, joint exploration of AI and assistive technologies, deeper cooperation
+          disabled people, joint exploration of AI and assistive technologies, deeper cooperation
           on disability data and statistics, and joint programmes on Universal Design and accessibility.
         </p>
 
@@ -110,7 +110,7 @@ export default function ChinaDisabilityInclusionArticle() {
         <p>
           “Nothing About Us Without Us” must apply to international cooperation just as much as it applies to
           national policy. If South Africa and China want this partnership to become a meaningful model of
-          disability inclusion, organisations of persons with disabilities must be part of setting priorities,
+          disability inclusion, disabled people's organisations must be part of setting priorities,
           evaluating progress and defining what successful implementation looks like.
         </p>
 
