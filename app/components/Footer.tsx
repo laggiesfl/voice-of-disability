@@ -12,7 +12,7 @@ export default function Footer() {
               width="330"
               height="66"
             />
-            <p>Voice of Disability is a movement of disabled women making their own voices heard. Registered Non-Profit Organisation, South Africa.</p>
+            <p>Voice of Disability is a South African movement led by disabled women, advancing disability rights, accessibility and equality. Registered non-profit organisation.</p>
           </div>
 
           <div className="footer-col">
