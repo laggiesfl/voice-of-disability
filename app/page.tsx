@@ -66,9 +66,13 @@ export default function Home() {
             <p className="section-label">Who we are</p>
             <h2 id="about-h">Disability is created by barriers — not by people</h2>
             <p>
-              Disability is the loss or limitation of opportunities to take part in the normal life
-              of the community on an equal level with others, due to physical and social barriers
-              (Disabled People&rsquo;s International, 1994).
+              The United Nations Convention on the Rights of Persons with Disabilities recognises
+              that disability is an evolving concept arising from the interaction between people
+              with impairments and attitudinal and environmental barriers that hinder their full
+              and effective participation in society on an equal basis with others.
+              This is the Convention&rsquo;s approach in its Preamble, paragraph (e).
+              <a href="https://www.un.org/disabilities/documents/convention/convention_accessible_pdf.pdf"
+                 target="_blank" rel="noopener noreferrer">Read the UN Convention (accessible PDF)</a>.
             </p>
           </div>
 
