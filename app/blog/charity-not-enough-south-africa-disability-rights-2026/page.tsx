@@ -25,7 +25,7 @@ export default function CharityNotEnoughSouthAfricaDisabilityRights2026Article()
 
         <h2>From the Sports Field to the Policy Table</h2>
 
-        <p>On Saturday, 30 August 2026, Deputy Minister in the Presidency for Women, Youth and Persons with Disabilities, Mmapaseka Steve Letsike, delivered the closing address at the 2026 Special Olympics South Africa National Summer Games in Rustenburg. Her message was direct: South Africa needs to move beyond charity and accommodation towards equal opportunities, dignity, and meaningful participation for persons with disabilities.</p>
+        <p>On Saturday, 30 August 2026, Deputy Minister in the Presidency for Women, Youth and Persons with Disabilities, Mmapaseka Steve Letsike, delivered the closing address at the 2026 Special Olympics South Africa National Summer Games in Rustenburg. Her message was direct: South Africa needs to move beyond charity and accommodation towards equal opportunities, dignity, and meaningful participation for disabled people.</p>
 
         <p>She was clear about what systemic exclusion looks like. Schools that cannot support learners with disabilities. Healthcare systems that communicate poorly. Workplaces that have already decided what disabled people can and cannot contribute. Communities where disability is still met with pity rather than recognised as a rights issue.</p>
 
