@@ -60,7 +60,7 @@ export default function IntersectionalityDisabilityRightsArticle() {
           According to the Human Sciences Research Council&apos;s First South African National Gender-Based Violence
           Prevalence Study, the prevalence of sexual violence by a lifetime partner is exactly twice as high for women
           with disabilities (14.6%) as for women without disabilities (7.2%). Physical abuse tells the same story: 29.3%
-          of women with disabilities have experienced lifetime physical abuse, compared to 21.7% of women without
+          of disabled women have experienced lifetime physical abuse, compared to 21.7% of women without
           disabilities. Financial abuse (16.3%) and emotional abuse (31.9%) are also disproportionately experienced by
           disabled women.
         </p>
@@ -73,7 +73,7 @@ export default function IntersectionalityDisabilityRightsArticle() {
         <h3>Employment and economic exclusion</h3>
 
         <p>
-          People with disabilities account for only approximately 1.3% of the South African workforce across all skill
+          Disabled people account for only approximately 1.3% of the South African workforce across all skill
           levels — a figure that signals severe systemic exclusion, not individual failing. Households headed by women
           with at least one member with a severe functional limitation experience the lowest average monthly income per
           capita of any demographic group in South Africa. In rural municipalities, only 11% of disabled youth are
@@ -102,7 +102,7 @@ export default function IntersectionalityDisabilityRightsArticle() {
         <p>
           When the UN Committee on the Rights of Persons with Disabilities closed its 35th Session in Geneva on 27
           August 2026, it adopted new guidelines specifically addressing intersectional discrimination against girls,
-          women, and older women with disabilities. For the first time, the international accountability framework
+          women, and older disabled women. For the first time, the international accountability framework
           governing disability rights has formally recognised that our experiences cannot be disaggregated.
         </p>
 
