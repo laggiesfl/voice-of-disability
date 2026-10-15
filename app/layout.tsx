@@ -5,7 +5,7 @@ import PwaRegister from './components/PwaRegister';
 import type { Metadata, Viewport } from 'next';
 
 const description =
-  'Voice of Disability is a movement of disabled women making their own voices heard. We remove the barriers that disable people — through advocacy, Universal Design, and knowing our rights.';
+  'Voice of Disability is a South African movement led by disabled women, advocating for equality, accessibility and meaningful participation through rights advocacy, education and Universal Design.';
 
 export const metadata: Metadata = {
   title: {
