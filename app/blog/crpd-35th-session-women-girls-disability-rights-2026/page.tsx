@@ -48,7 +48,7 @@ export default function Crpd35thSessionArticle() {
 
         <p>The United Nations Committee on the Rights of Persons with Disabilities concluded its 35th Session in Geneva in late August 2026, and the work it produced matters, especially for disabled women and girls everywhere, including here in South Africa.</p>
 
-        <p>The session, which ran from 12 to 27 August, saw the Committee of 18 independent experts review five countries: Qatar, Sri Lanka, Lithuania, Chile, and Slovakia. The outcome that stands out is a new set of guidelines adopted by the Committee on identifying and addressing intersectional discrimination against girls, women, and older women with disabilities.</p>
+        <p>The session, which ran from 12 to 27 August, saw the Committee of 18 independent experts review five countries: Qatar, Sri Lanka, Lithuania, Chile, and Slovakia. The outcome that stands out is a new set of guidelines adopted by the Committee on identifying and addressing intersectional discrimination against girls, women, and older disabled women.</p>
 
         <h2>Why intersectionality matters</h2>
 
