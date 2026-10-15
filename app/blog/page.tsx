@@ -58,9 +58,9 @@ export default function Blog() {
                   accessibility auditing and inclusive technology that she could describe but could not afford to build.
                   Then AI changed the equation.
                 </p>
-                <Link href="/blog/before-my-time">Read the founder story â</Link>
+                <Link href="/blog/before-my-time">Read the founder story →</Link>
                 <div className="blog-card-meta">
-                  By Fadila Lagadien Â· 7 October 2026
+                  By Fadila Lagadien · 7 October 2026
                 </div>
               </div>
             </article>
@@ -75,9 +75,9 @@ export default function Blog() {
                 <p style={{fontSize: '0.9rem', marginBottom: '1rem'}}>
                   South Africa has signed the promises. What it still has not done is pass the law that makes those promises enforceable.
                 </p>
-                <Link href="/blog/disability-rights-bill-two-years-on">Read more â</Link>
+                <Link href="/blog/disability-rights-bill-two-years-on">Read more →</Link>
                 <div className="blog-card-meta">
-                  Voice of Disability NPC Â· 7 October 2026
+                  Voice of Disability NPC · 7 October 2026
                 </div>
               </div>
             </article>
@@ -94,9 +94,9 @@ export default function Blog() {
                 <p style={{fontSize: '0.9rem', marginBottom: '1rem'}}>
                   New UN Committee findings on five countries and a US court ruling stripping community integration protections show how fragile the right to live in community still is, and why South Africa cannot take its own UNCRPD commitments for granted.
                 </p>
-                <Link href="/blog/un-findings-us-ruling-right-to-live-in-community">Read more Ã¢ÂÂ</Link>
+                <Link href="/blog/un-findings-us-ruling-right-to-live-in-community">Read more →</Link>
                 <div className="blog-card-meta">
-                  Voice of Disability NPC ÃÂ· 28 September 2026
+                  Voice of Disability NPC · 28 September 2026
                 </div>
               </div>
             </article>
@@ -114,9 +114,9 @@ export default function Blog() {
                   South Africa&apos;s Deaf Awareness Month launch brought renewed government calls for sign language access
                   across public services, but the distance between legal obligation and daily experience for Deaf South Africans remains wide.
                 </p>
-                <Link href="/blog/deaf-awareness-month-2026-law-reality-gap">Read more ÃÂ¢ÃÂÃÂ</Link>
+                <Link href="/blog/deaf-awareness-month-2026-law-reality-gap">Read more →</Link>
                 <div className="blog-card-meta">
-                  Voice of Disability NPC ÃÂÃÂ· 8 September 2026
+                  Voice of Disability NPC · 8 September 2026
                 </div>
               </div>
             </article>
@@ -133,9 +133,9 @@ export default function Blog() {
                   Two senior South African government voices delivered powerful messages about disability rights this month.
                   Voice of Disability unpacks what they said, why it matters, and what needs to happen next.
                 </p>
-                <Link href="/blog/charity-not-enough-south-africa-disability-rights-2026">Read more ÃÂ¢ÃÂÃÂ</Link>
+                <Link href="/blog/charity-not-enough-south-africa-disability-rights-2026">Read more →</Link>
                 <div className="blog-card-meta">
-                  Voice of Disability NPC ÃÂÃÂ· 14 September 2026
+                  Voice of Disability NPC · 14 September 2026
                 </div>
               </div>
             </article>
@@ -152,9 +152,9 @@ export default function Blog() {
                   Disability, gender, race, age and place do not create barriers one at a time. Voice of Disability examines
                   what intersectional disability rights means in practice for disabled women in South Africa.
                 </p>
-                <Link href="/blog/intersectionality-disability-rights-south-africa">Read more ÃÂ¢ÃÂÃÂ</Link>
+                <Link href="/blog/intersectionality-disability-rights-south-africa">Read more →</Link>
                 <div className="blog-card-meta">
-                  Voice of Disability NPC ÃÂÃÂ· 5 September 2026
+                  Voice of Disability NPC · 5 September 2026
                 </div>
               </div>
             </article>
@@ -172,9 +172,9 @@ export default function Blog() {
                   have promised, but what they can demonstrate has changed. Voice of Disability looks at
                   implementation, representation and accountability.
                 </p>
-                <Link href="/blog/uncrpd-global-accountability">Read more ÃÂ¢ÃÂÃÂ</Link>
+                <Link href="/blog/uncrpd-global-accountability">Read more →</Link>
                 <div className="blog-card-meta">
-                  Voice of Disability NPC ÃÂÃÂ· 24 August 2026
+                  Voice of Disability NPC · 24 August 2026
                 </div>
               </div>
             </article>
@@ -192,9 +192,9 @@ export default function Blog() {
                   accessible communication, AI and assistive technology. Voice of Disability looks at what is
                   being proposed — and why implementation and accountability will matter.
                 </p>
-                <Link href="/blog/south-africa-china-disability-inclusion">Read more ÃÂ¢ÃÂÃÂ</Link>
+                <Link href="/blog/south-africa-china-disability-inclusion">Read more →</Link>
                 <div className="blog-card-meta">
-                  Voice of Disability NPC ÃÂÃÂ· August 2026
+                  Voice of Disability NPC · August 2026
                 </div>
               </div>
             </article>
@@ -212,9 +212,9 @@ export default function Blog() {
                   rebuilt in digital systems South Africa is deploying right now — at its borders and
                   in its identity infrastructure.
                 </p>
-                <Link href="/our-position">Read more ÃÂ¢ÃÂÃÂ</Link>
+                <Link href="/our-position">Read more →</Link>
                 <div className="blog-card-meta">
-                  By Fadila Lagadien ÃÂÃÂ· Founder, Voice of Disability NPC
+                  By Fadila Lagadien · Founder, Voice of Disability NPC
                 </div>
               </div>
             </article>
