@@ -2,9 +2,9 @@ import Link from 'next/link';
 import type { Metadata } from 'next';
 
 export const metadata: Metadata = {
-  title: 'Blog ÃÂ¢ÃÂÃÂ Voices & Views',
+  title: 'Blog — Voices & Views',
   description:
-    'Perspectives from the Voice of Disability movement ÃÂ¢ÃÂÃÂ on disability rights, access, AI, policy, and the lived experience of disabled women.',
+    'Perspectives from the Voice of Disability movement — on disability rights, access, AI, policy, and the lived experience of disabled women.',
 };
 
 export default function Blog() {
@@ -15,7 +15,7 @@ export default function Blog() {
           <p className="section-label" style={{color: 'rgba(255,255,255,0.7)'}}>Blog</p>
           <h1 id="blog-h">Voices &amp; views</h1>
           <p>
-            Perspectives from the movement ÃÂ¢ÃÂÃÂ on disability rights, access, AI, policy,
+            Perspectives from the movement — on disability rights, access, AI, policy,
             and the lived experience of disabled women in South Africa and beyond.
           </p>
         </div>
@@ -23,7 +23,7 @@ export default function Blog() {
 
       <div style={{padding: '4rem 0', background: 'var(--white)'}}>
         <div className="container">
-          <Link href="/" className="back-link" style={{marginBottom: '2rem', display: 'inline-flex'}}>ÃÂ¢ÃÂÃÂ Back to homepage</Link>
+          <Link href="/" className="back-link" style={{marginBottom: '2rem', display: 'inline-flex'}}>← Back to homepage</Link>
 
           <div className="blog-grid">
             <article className="blog-card">
@@ -190,7 +190,7 @@ export default function Blog() {
                 <p style={{fontSize: '0.9rem', marginBottom: '1rem'}}>
                   South Africa and China are exploring deeper cooperation on disability data, Universal Design,
                   accessible communication, AI and assistive technology. Voice of Disability looks at what is
-                  being proposed ÃÂ¢ÃÂÃÂ and why implementation and accountability will matter.
+                  being proposed — and why implementation and accountability will matter.
                 </p>
                 <Link href="/blog/south-africa-china-disability-inclusion">Read more ÃÂ¢ÃÂÃÂ</Link>
                 <div className="blog-card-meta">
@@ -204,12 +204,12 @@ export default function Blog() {
                 <span className="tag">Advocacy</span>
                 <h2 style={{fontSize: '1.1rem', marginBottom: '0.5rem'}}>
                   <Link href="/our-position" style={{color: 'var(--dark)', textDecoration: 'none'}}>
-                    The Door That Would Not Open ÃÂ¢ÃÂÃÂ Now It Is an Algorithm
+                    The Door That Would Not Open — Now It Is an Algorithm
                   </Link>
                 </h2>
                 <p style={{fontSize: '0.9rem', marginBottom: '1rem'}}>
                   Forty years ago, I was left in a corridor. The exclusion I experienced then is being
-                  rebuilt in digital systems South Africa is deploying right now ÃÂ¢ÃÂÃÂ at its borders and
+                  rebuilt in digital systems South Africa is deploying right now — at its borders and
                   in its identity infrastructure.
                 </p>
                 <Link href="/our-position">Read more ÃÂ¢ÃÂÃÂ</Link>
