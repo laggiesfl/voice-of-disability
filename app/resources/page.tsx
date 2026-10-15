@@ -15,7 +15,7 @@ const resources = [
     category: 'AI assistant',
     title: 'Disability Equity Guide',
     description:
-      'An interactive GPT that helps you explore disability equity, inclusion, access and rights-based practice through a practical conversational guide.',
+      'Temporary ChatGPT guide available until its planned retirement on 11 December 2026. We are preparing an independent accessible replacement.',
     format: 'GPT',
     href: '/resources/disability-equity-guide',
     action: 'Open AI guide',
@@ -68,9 +68,10 @@ export default async function ResourcesPage() {
 
       <section style={{padding: '4rem 0', background: 'var(--white)'}} aria-labelledby="library-h">
         <div className="container">
-          <Link href="/" className="back-link" style={{marginBottom: '2rem', display: 'inline-flex'}}>
-            ← Back to homepage
-          </Link>
+          <nav aria-label="Resource page navigation" style={{marginBottom:'2rem',display:'flex',flexWrap:'wrap',gap:'1rem'}}>
+            <Link href="/" className="btn btn-outline">← Previous: Homepage</Link>
+            <Link href="/#resources" className="btn btn-outline">Return to homepage resources</Link>
+          </nav>
 
           <h2 id="library-h" style={{marginBottom: '0.75rem'}}>Resource library</h2>
           <p style={{maxWidth: 760, marginBottom: '1rem'}}>
