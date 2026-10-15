@@ -22,9 +22,9 @@ export default function Home() {
               <span>Your community.</span>
             </h1>
             <p className="hero-desc">
-              Voice of Disability is a movement of disabled women making their own voices heard.
-              We remove the barriers that disable people — through advocacy, Universal Design,
-              and knowing our rights.
+              Voice of Disability is a South African movement led by disabled women, advocating for equality,
+              accessibility and meaningful participation in society. We challenge the barriers that
+              exclude disabled people through rights advocacy, education and Universal Design.
             </p>
             <div className="hero-btns">
               <Link href="#membership" className="btn btn-primary">Join the movement</Link>
@@ -51,8 +51,8 @@ export default function Home() {
             </svg>
             <blockquote>&ldquo;Nothing About Us Without Us&rdquo;</blockquote>
             <p>
-              Nothing will change for disabled women without them making their own voices heard.
-              This platform gives those voices a home.
+              Disabled women lead decisions about our lives, rights and futures.
+              This platform amplifies our voices and collective action.
             </p>
             <Link href="/our-position" className="hero-card-link">Why we exist →</Link>
           </div>
@@ -76,15 +76,17 @@ export default function Home() {
             <div className="about-card">
               <h3>The social model</h3>
               <p>
-                A person with a physical impairment in a fully accessible environment is not disabled.
-                Barriers — not bodies — create disability. Remove the barrier and you remove the disability.
+                Disabled people face exclusion when environments, attitudes, institutions and systems
+                create barriers to equal participation. Removing those barriers advances independence,
+                dignity and inclusion.
               </p>
             </div>
             <div className="about-card">
               <h3>Universal Design</h3>
               <p>
-                We remove disabling factors through reasonable accommodation and the seven principles of
-                Universal Design, so spaces work for everyone.
+                Universal Design anticipates diverse needs from the outset so environments, services and
+                technologies work for as many people as possible. Reasonable accommodation complements
+                Universal Design by addressing individual access requirements.
               </p>
             </div>
             <div className="about-card">
@@ -101,9 +103,9 @@ export default function Home() {
               &ldquo;If it is not accessible, it is not equal.&rdquo;
             </blockquote>
             <p>
-              Our belief is simple: access is a right, not a privilege. When systems, spaces and
-              services are designed for everyone from the start, nobody is left behind. This is
-              what Universal Design means in practice.
+              Access is a right, not a privilege. Access and accessibility are not the same:
+              reaching a service does not mean it can be used independently, effectively or equally.
+              We advocate for both access to services and accessibility in their use.
             </p>
           </div>
         </div>
@@ -121,7 +123,7 @@ export default function Home() {
                 Black woman, quadriplegic wheelchair user, and disability rights advocate of forty years.
               </p>
               <p>
-                In 1986, Fadila was left in a hospital corridor through the night after a car accident
+                Following a car accident in December 1985, Fadila was left in a hospital corridor through the night
                 while her white partner received immediate care. Her spinal cord was severed. A specialist
                 unit existed but was not available to her under apartheid. She was given seven years to live.
               </p>
@@ -137,7 +139,7 @@ export default function Home() {
                 institutions refused to credit.
               </p>
               <p>
-                She is now an AI-Enabled Accessibility and Disability Inclusion Specialist, applying
+                She is now an AI-Driven Accessibility &amp; Disability Inclusion Innovator, applying
                 AI to make the movement faster, louder, and harder to ignore.
               </p>
               <Link href="/our-position" className="btn btn-primary" style={{marginTop: '1.5rem'}}>
@@ -169,8 +171,8 @@ export default function Home() {
           <p className="section-label">Programmes &amp; events</p>
           <h2 id="prog-h">What we do</h2>
           <p style={{maxWidth: 600}}>
-            Our programmes are designed by disabled women, for disabled women. Everything we run
-            is accessible — from the venue to the format to the language used.
+            Our programmes are led by and designed with disabled women. We work to ensure
+            accessible venues, formats and communication, and respond to individual access requirements.
           </p>
 
           <div className="prog-grid">
@@ -225,19 +227,19 @@ export default function Home() {
               <span className="tag">Rights</span>
               <h3>Your rights in the workplace</h3>
               <p>A plain-language guide to reasonable accommodation and the Employment Equity Act.</p>
-              <Link href="/#resources">Download guide →</Link>
+              <Link href="/#membership">Join to access guide →</Link>
             </div>
             <div className="resource-card">
               <span className="tag">Universal Design</span>
               <h3>The 7 Principles of Universal Design</h3>
               <p>What Universal Design means, why it matters, and how to apply it.</p>
-              <Link href="/#resources">Read more →</Link>
+              <Link href="/#membership">Join to access guide →</Link>
             </div>
             <div className="resource-card">
               <span className="tag">Advocacy</span>
               <h3>How to write a reasonable accommodation request</h3>
               <p>A template letter you can adapt for your workplace or institution.</p>
-              <Link href="/#resources">Get template →</Link>
+              <Link href="/#membership">Join to access template →</Link>
             </div>
           </div>
         </div>
