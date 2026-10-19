@@ -31,6 +31,7 @@ export default function AccessibleChatbot() {
   const [speaking, setSpeaking] = useState(false);
   const [speechPaused, setSpeechPaused] = useState(false);
   const [rate, setRate] = useState(1);
+  const [readingView, setReadingView] = useState(false);
   const latestAnswer = [...messages].reverse().find(message => message.role === "assistant")?.content;
   const launcherRef = useRef<HTMLButtonElement>(null);
   const closeRef = useRef<HTMLButtonElement>(null);
@@ -86,6 +87,7 @@ export default function AccessibleChatbot() {
     stopMicrophoneTracks();
     window.speechSynthesis?.cancel();
     setOpen(false);
+    setReadingView(false);
     setStatus('');
     setRecording(false);
     setTranscribing(false);
@@ -120,6 +122,7 @@ export default function AccessibleChatbot() {
       const data = await response.json().catch(() => ({}));
       if (!response.ok || !data.reply) throw new Error(data.error || 'The chatbot could not answer just now.');
       setMessages(prev => [...prev, { role: 'assistant', content: data.reply }]);
+      setReadingView(true);
       setStatus('Response ready.');
     } catch (error) {
       const message = error instanceof Error ? error.message : 'The chatbot could not answer just now.';
@@ -279,13 +282,17 @@ export default function AccessibleChatbot() {
             <button ref={closeRef} type="button" className="vodClose" onClick={closeChat}>Close</button>
           </header>
 
-          <div className="vodLanguage">
+          {!readingView && <div className="vodLanguage">
             <label htmlFor="vod-language">Language</label>
             <select id="vod-language" value={language} onChange={e => setLanguage(e.target.value)}>
               {LANGUAGES.map(([value, label]) => <option key={value} value={value}>{label}</option>)}
             </select>
             
           </div>
+
+          }
+
+          {readingView && <div className="vodReadingBar"><button type="button" className="vodSecondary" onClick={() => setReadingView(false)}>← Back to questions</button><span>Response reading view</span></div>}
 
           <div ref={logRef} className="vodLog" role="log" aria-live="polite" aria-relevant="additions text" tabIndex={0}>
             {messages.length === 0 && <div className="vodAssistantMsg"><strong>Voice of Disability Guide</strong><p>Ask about disability rights, our work, membership, programmes, Universal Design, advocacy, donations or how to contact us.</p></div>}
@@ -299,7 +306,7 @@ export default function AccessibleChatbot() {
           </div>
 
           <div className="vodStatus" role="status" aria-live="polite">{status}</div>
-          {latestAnswer && (
+          {latestAnswer && !readingView && (
             <div className="vodLatestActions">
               <button type="button" className="vodSecondary" onClick={() => listen(latestAnswer)}>Listen to latest response</button>
               {speaking && <button type="button" className="vodSecondary" onClick={stopSpeech}>Stop reading</button>}
@@ -319,7 +326,7 @@ export default function AccessibleChatbot() {
             </div>
           )}
 
-          <form className="vodComposer" onSubmit={sendMessage}>
+          {!readingView && <form className="vodComposer" onSubmit={sendMessage}>
             <label htmlFor="vod-message">Your message</label>
             <textarea id="vod-message" value={input} onChange={e => setInput(e.target.value)} maxLength={2400} required placeholder="Type your question here" />
             <div className="vodActions">
@@ -331,7 +338,7 @@ export default function AccessibleChatbot() {
               )}
             </div>
             <p className="vodPrivacy">Voice is optional. When you use Speak, your recorded audio is sent securely for transcription. The transcript appears here for you to review or edit and is not sent as a chat message until you press Send.</p>
-          </form>
+          </form>}
         </section>
       )}
 
@@ -342,7 +349,7 @@ export default function AccessibleChatbot() {
         .vodHead{background:#17324D;color:#fff;padding:14px 16px;display:flex;align-items:flex-start;gap:12px;justify-content:space-between}.vodHead h2{font-size:1.15rem;margin:0;color:#fff}.vodHead p{font-size:.88rem;margin:4px 0 0;color:#E8EEF3}.vodClose{background:#fff;color:#17324D;border:2px solid #fff;border-radius:10px;min-width:58px;min-height:44px;font-weight:800;cursor:pointer}
         .vodLanguage{padding:6px 14px;border-bottom:2px solid #d7d0c7;background:#fff}.vodLanguage label,.vodComposer label{display:block;font-weight:700;margin-bottom:4px}.vodLanguage select,.vodAudio select{width:100%;min-height:44px;border:2px solid #17324D;border-radius:9px;padding:7px 10px;font:inherit;background:#fff;color:#222}.vodLanguage p,.vodPrivacy{font-size:.78rem;color:#4a4152;margin:6px 0 0}
         .vodLog{padding:12px 14px;overflow:auto;overscroll-behavior:contain;scrollbar-gutter:stable;background:#F7F4EF}.vodAssistantMsg,.vodUserMsg{margin:0 0 12px;padding:11px 12px;border-radius:14px;overflow-wrap:anywhere}.vodAssistantMsg{background:#fff;border:2px solid #d7d0c7;border-radius:14px 14px 14px 4px}.vodUserMsg{background:#E8EEF3;border:2px solid #17324D;border-radius:14px 14px 4px 14px;margin-left:30px}.vodAssistantMsg strong,.vodUserMsg strong{font-size:.82rem;color:#17324D}.vodAssistantMsg p,.vodUserMsg p{white-space:pre-wrap;margin:4px 0 0}
-        .vodLatestActions{display:flex;flex-wrap:wrap;gap:8px;padding:8px 14px;background:#fff;border-top:1px solid #C9D3DC}.vodLatestActions .vodSecondary{margin-top:0;min-height:44px}.vodStatus{padding:4px 14px;min-height:28px;font-size:.82rem;font-weight:650;color:#17324D;background:#fff}.vodAudio{padding:8px 14px;background:#E8EEF3;display:flex;align-items:center;gap:7px;flex-wrap:wrap}.vodAudio select{width:auto}.vodAudio label{font-weight:700}
+        .vodReadingBar{display:flex;align-items:center;flex-wrap:wrap;gap:12px;padding:8px 14px;background:#fff;color:#17324D;font-weight:700;border-bottom:1px solid #C9D3DC}.vodReadingBar .vodSecondary{margin:0}.vodChat:has(.vodReadingBar){grid-template-rows:auto auto minmax(0,1fr) auto auto}.vodChat:has(.vodReadingBar) .vodLog{min-height:0;overflow:auto}.vodChat:has(.vodReadingBar) .vodAudio{flex:0 0 auto}.vodLatestActions{display:flex;flex-wrap:wrap;gap:8px;padding:8px 14px;background:#fff;border-top:1px solid #C9D3DC}.vodLatestActions .vodSecondary{margin-top:0;min-height:44px}.vodStatus{padding:4px 14px;min-height:28px;font-size:.82rem;font-weight:650;color:#17324D;background:#fff}.vodAudio{padding:8px 14px;background:#E8EEF3;display:flex;align-items:center;gap:7px;flex-wrap:wrap}.vodAudio select{width:auto}.vodAudio label{font-weight:700}
         .vodComposer{border-top:2px solid #d7d0c7;background:#fff;padding:10px 14px}.vodComposer textarea{box-sizing:border-box;width:100%;min-height:64px;max-height:120px;resize:vertical;border:2px solid #17324D;border-radius:10px;padding:10px;font:inherit;color:#222;background:#fff}.vodActions{display:flex;gap:8px;flex-wrap:wrap;margin-top:8px}.vodPrimary,.vodSecondary{border:2px solid #17324D;border-radius:10px;padding:9px 12px;min-height:44px;font:700 .92rem/1.1 system-ui;cursor:pointer}.vodPrimary{background:#17324D;color:#fff}.vodSecondary{background:#fff;color:#17324D;margin-top:8px}.vodActions .vodSecondary,.vodAudio .vodSecondary{margin-top:0}.vodPrimary:disabled,.vodSecondary:disabled{opacity:.6;cursor:not-allowed}
         /* At high zoom and on narrow screens, use a full-viewport guide rather than a tiny floating box. */
         @media(max-width:900px){
@@ -359,7 +366,7 @@ export default function AccessibleChatbot() {
            Let the entire dialog scroll when its controls cannot fit vertically. */
         @media(max-height:650px){
           .vodChat{display:flex;flex-direction:column;overflow-y:auto;overscroll-behavior:contain;scrollbar-gutter:stable}
-          .vodHead,.vodLanguage,.vodStatus,.vodLatestActions,.vodAudio,.vodComposer{flex:0 0 auto}
+          .vodHead,.vodLanguage,.vodReadingBar,.vodStatus,.vodLatestActions,.vodAudio,.vodComposer{flex:0 0 auto}
           .vodHead{position:sticky;top:0;z-index:2}
           .vodLog{flex:1 1 160px;max-height:none;min-height:120px;overflow:auto}
           .vodComposer textarea{min-height:48px;max-height:85px}
