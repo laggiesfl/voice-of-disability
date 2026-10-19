@@ -13,7 +13,11 @@ export default function AccessibilityStatement() {
  <li><strong>Keyboard navigation:</strong> User-tested in the course of reviewing the website. The user reported using the keyboard. Full verification of every interactive control remains outstanding.</li>
  <li><strong>Text-to-speech reading:</strong> A user-provided screenshot shows the live homepage text displayed in a reading tool. This demonstrates a reading workflow, but does not establish compatibility with all screen readers or assistive technologies.</li>
  </ul>
- <p>These are recorded observations, not a complete WCAG conformance audit. Additional testing is needed for all pages, keyboard focus and controls, form submissions, and reflow at 320 CSS pixels. Testing by blind users with different screen-reading software is planned and has not yet been completed.</p>
+ <h2>Disability Guide testing — 19 October 2026</h2>
+ <p>A disabled user tested the Voice of Disability Guide and confirmed that written answers can be read, audio responses can be listened to, and the guide's reading, listening and navigation controls work in their testing environment. These features are recorded as user-tested, not independently certified.</p>
+ <h2>Independent assistive technology testing</h2>
+ <p>Testing with blind users on their own devices and preferred screen readers is planned. No completion date has been set. This pending work does not invalidate the practical testing already completed, but we do not yet claim full screen-reader compatibility or WCAG 2.2 conformance.</p>
+ <p>These are recorded observations, not a complete WCAG conformance audit. Additional testing is needed for all pages, keyboard focus and controls, form submissions, and reflow at 320 CSS pixels. Independent screen-reader assessment remains outstanding and will be incorporated when available.</p>
  <h2>Report an accessibility barrier</h2>
  <p>If a page, form or document is difficult to use, <Link href="/#contact">contact us</Link> or email <a href="mailto:hello@voiceofdisability.com?subject=Website%20accessibility">hello@voiceofdisability.com</a>. Tell us the affected page and preferred response format; sensitive medical details are not required.</p>
  <p><Link href="/">← Back to homepage</Link></p>
