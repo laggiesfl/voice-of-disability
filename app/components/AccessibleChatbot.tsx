@@ -52,7 +52,7 @@ export default function AccessibleChatbot() {
     if (!open) return;
     closeRef.current?.focus();
     const previous = document.body.style.overflow;
-    if (window.matchMedia('(max-width: 520px)').matches) document.body.style.overflow = 'hidden';
+    if (window.matchMedia('(max-width: 900px)').matches) document.body.style.overflow = 'hidden';
     const onKey = (event: KeyboardEvent) => {
       if (event.key === 'Escape') closeChat();
     };
@@ -272,7 +272,7 @@ export default function AccessibleChatbot() {
       </button>
 
       {open && (
-        <section id="vod-chat-panel" className="vodChat" role="dialog" aria-modal="false" aria-labelledby="vod-chat-title">
+        <section id="vod-chat-panel" className="vodChat" role="dialog" aria-modal="true" aria-labelledby="vod-chat-title">
           <header className="vodHead">
             <div><h2 id="vod-chat-title">Voice of Disability Guide</h2><p>Your voice. Your rights. Your community.</p></div>
             <button ref={closeRef} type="button" className="vodClose" onClick={closeChat}>Close</button>
@@ -336,7 +336,29 @@ export default function AccessibleChatbot() {
         .vodLog{padding:12px 14px;overflow:auto;overscroll-behavior:contain;scrollbar-gutter:stable;background:#F7F4EF}.vodAssistantMsg,.vodUserMsg{margin:0 0 12px;padding:11px 12px;border-radius:14px;overflow-wrap:anywhere}.vodAssistantMsg{background:#fff;border:2px solid #d7d0c7;border-radius:14px 14px 14px 4px}.vodUserMsg{background:#E8EEF3;border:2px solid #17324D;border-radius:14px 14px 4px 14px;margin-left:30px}.vodAssistantMsg strong,.vodUserMsg strong{font-size:.82rem;color:#17324D}.vodAssistantMsg p,.vodUserMsg p{white-space:pre-wrap;margin:4px 0 0}
         .vodStatus{padding:4px 14px;min-height:28px;font-size:.82rem;font-weight:650;color:#17324D;background:#fff}.vodAudio{padding:8px 14px;background:#E8EEF3;display:flex;align-items:center;gap:7px;flex-wrap:wrap}.vodAudio select{width:auto}.vodAudio label{font-weight:700}
         .vodComposer{border-top:2px solid #d7d0c7;background:#fff;padding:10px 14px}.vodComposer textarea{box-sizing:border-box;width:100%;min-height:64px;max-height:120px;resize:vertical;border:2px solid #17324D;border-radius:10px;padding:10px;font:inherit;color:#222;background:#fff}.vodActions{display:flex;gap:8px;flex-wrap:wrap;margin-top:8px}.vodPrimary,.vodSecondary{border:2px solid #17324D;border-radius:10px;padding:9px 12px;min-height:44px;font:700 .92rem/1.1 system-ui;cursor:pointer}.vodPrimary{background:#17324D;color:#fff}.vodSecondary{background:#fff;color:#17324D;margin-top:8px}.vodActions .vodSecondary,.vodAudio .vodSecondary{margin-top:0}.vodPrimary:disabled,.vodSecondary:disabled{opacity:.6;cursor:not-allowed}
-        @media(max-width:520px){.vodLauncher{right:12px;bottom:12px}.vodChat{right:7px;bottom:7px;width:calc(100vw - 14px);height:calc(100vh - 14px);border-radius:14px}}
+        /* At high zoom and on narrow screens, use a full-viewport guide rather than a tiny floating box. */
+        @media(max-width:900px){
+          .vodLauncher{right:12px;bottom:12px;max-width:calc(100vw - 24px)}
+          .vodChat{inset:0;width:100%;height:100vh;height:100dvh;max-width:none;max-height:none;border:0;border-radius:0}
+          .vodHead{padding:12px 16px}
+          .vodLanguage{padding:8px 14px}
+          .vodLanguage p{font-size:.875rem}
+          .vodLog{min-height:0}
+          .vodComposer{padding:10px 14px max(12px,env(safe-area-inset-bottom))}
+          .vodPrivacy{font-size:.875rem;max-height:5.5em;overflow-y:auto}
+        }
+        @media(max-height:650px){
+          .vodChat{grid-template-rows:auto auto minmax(70px,1fr) auto auto auto}
+          .vodLanguage p{display:none}
+          .vodComposer textarea{min-height:48px;max-height:85px}
+          .vodPrivacy{max-height:3.5em;overflow:auto}
+        }
+        .vodChat p{overflow-wrap:anywhere}
+        .vodHead h2{line-height:1.3}
+        .vodComposer textarea{font-size:1rem}
+        .vodPrimary,.vodSecondary,.vodClose{flex-shrink:0}
+        .vodLog:focus-visible{outline:4px solid #D9A441;outline-offset:-4px}
+        
         @media(prefers-reduced-motion:reduce){.vodChat,.vodLauncher{scroll-behavior:auto;transition:none!important}}
       `}</style>
     </>
