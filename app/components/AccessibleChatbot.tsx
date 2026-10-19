@@ -347,11 +347,16 @@ export default function AccessibleChatbot() {
           .vodComposer{padding:10px 14px max(12px,env(safe-area-inset-bottom))}
           .vodPrivacy{font-size:.875rem;max-height:5.5em;overflow-y:auto}
         }
+        /* Small CSS viewports at 200%-400% zoom must never clip the composer.
+           Let the entire dialog scroll when its controls cannot fit vertically. */
         @media(max-height:650px){
-          .vodChat{grid-template-rows:auto auto minmax(70px,1fr) auto auto auto}
+          .vodChat{display:flex;flex-direction:column;overflow-y:auto;overscroll-behavior:contain;scrollbar-gutter:stable}
+          .vodHead,.vodLanguage,.vodStatus,.vodAudio,.vodComposer{flex:0 0 auto}
+          .vodHead{position:sticky;top:0;z-index:2}
+          .vodLog{flex:0 0 auto;max-height:35vh;min-height:80px;overflow:auto}
           .vodLanguage p{display:none}
           .vodComposer textarea{min-height:48px;max-height:85px}
-          .vodPrivacy{max-height:3.5em;overflow:auto}
+          .vodPrivacy{max-height:none;overflow:visible}
         }
         .vodChat p{overflow-wrap:anywhere}
         .vodHead h2{line-height:1.3}
