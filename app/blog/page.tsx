@@ -2,9 +2,9 @@ import Link from 'next/link';
 import type { Metadata } from 'next';
 
 export const metadata: Metadata = {
-  title: 'Blog — Voices & Views',
+  title: 'Blog â Voices & Views',
   description:
-    'Perspectives from the Voice of Disability movement — on disability rights, access, AI, policy, and the lived experience of disabled women.',
+    'Perspectives from the Voice of Disability movement â on disability rights, access, AI, policy, and the lived experience of disabled women.',
 };
 
 export default function Blog() {
@@ -15,7 +15,7 @@ export default function Blog() {
           <p className="section-label" style={{color: 'rgba(255,255,255,0.7)'}}>Blog</p>
           <h1 id="blog-h">Voices &amp; views</h1>
           <p>
-            Perspectives from the movement — on disability rights, access, AI, policy,
+            Perspectives from the movement â on disability rights, access, AI, policy,
             and the lived experience of disabled women in South Africa and beyond.
           </p>
         </div>
@@ -23,9 +23,28 @@ export default function Blog() {
 
       <div style={{padding: '4rem 0', background: 'var(--white)'}}>
         <div className="container">
-          <Link href="/" className="back-link" style={{marginBottom: '2rem', display: 'inline-flex'}}>← Back to homepage</Link>
+          <Link href="/" className="back-link" style={{marginBottom: '2rem', display: 'inline-flex'}}>â Back to homepage</Link>
 
           <div className="blog-grid">
+            <article className="blog-card">
+              <div className="blog-card-body">
+                <span className="tag">Disability rights</span>
+                <h2 style={{fontSize: '1.1rem', marginBottom: '0.5rem'}}>
+                  <Link href="/blog/locked-out-online-government-digital-services" style={{color: 'var(--dark)', textDecoration: 'none'}}>
+                    Locked Out Online: Why Government Digital Services Still Fail Disabled South Africans
+                  </Link>
+                </h2>
+                <p style={{fontSize: '0.9rem', marginBottom: '1rem'}}>
+                  Government services are moving online fast. For many disabled people, the door is closing just as quickly.
+                </p>
+                <Link href="/blog/locked-out-online-government-digital-services">Read more →</Link>
+                <div className="blog-card-meta">
+                  Voice of Disability NPC · 21 October 2026
+                </div>
+              </div>
+            </article>
+
+
             <article className="blog-card">
               <div className="blog-card-body">
                 <span className="tag">Disability rights</span>
@@ -37,9 +56,9 @@ export default function Blog() {
                 <p style={{fontSize: '0.9rem', marginBottom: '1rem'}}>
                   Disability Rights Awareness Month has started early this year, and the fight against gender-based violence is already in our communities. Women with disabilities belong at the centre of both, as leaders and decision-makers, not as an afterthought.
                 </p>
-                <Link href="/blog/nothing-about-us-gbv-disability-month">Read more →</Link>
+                <Link href="/blog/nothing-about-us-gbv-disability-month">Read more â</Link>
                 <div className="blog-card-meta">
-                  Voice of Disability NPC · 19 October 2026
+                  Voice of Disability NPC Â· 19 October 2026
                 </div>
               </div>
             </article>
@@ -50,15 +69,15 @@ export default function Blog() {
                 <span className="tag">Disability rights</span>
                 <h2 style={{fontSize: '1.1rem', marginBottom: '0.5rem'}}>
                   <Link href="/blog/mental-health-legal-capacity-right-to-choose" style={{color: 'var(--dark)', textDecoration: 'none'}}>
-                    “I Decide”: Mental Health, Legal Capacity and the Right to Choose
+                    âI Decideâ: Mental Health, Legal Capacity and the Right to Choose
                   </Link>
                 </h2>
                 <p style={{fontSize: '0.9rem', marginBottom: '1rem'}}>
                   World Mental Health Day asks us to talk about mental health. Disabled people with psychosocial disabilities are asking for something more: the right to decide.
                 </p>
-                <Link href="/blog/mental-health-legal-capacity-right-to-choose">Read more →</Link>
+                <Link href="/blog/mental-health-legal-capacity-right-to-choose">Read more â</Link>
                 <div className="blog-card-meta">
-                  Voice of Disability NPC · 12 October 2026
+                  Voice of Disability NPC Â· 12 October 2026
                 </div>
               </div>
             </article>
@@ -77,9 +96,9 @@ export default function Blog() {
                   accessibility auditing and inclusive technology that she could describe but could not afford to build.
                   Then AI changed the equation.
                 </p>
-                <Link href="/blog/before-my-time">Read the founder story →</Link>
+                <Link href="/blog/before-my-time">Read the founder story â</Link>
                 <div className="blog-card-meta">
-                  By Fadila Lagadien · 7 October 2026
+                  By Fadila Lagadien Â· 7 October 2026
                 </div>
               </div>
             </article>
@@ -94,9 +113,9 @@ export default function Blog() {
                 <p style={{fontSize: '0.9rem', marginBottom: '1rem'}}>
                   South Africa has signed the promises. What it still has not done is pass the law that makes those promises enforceable.
                 </p>
-                <Link href="/blog/disability-rights-bill-two-years-on">Read more →</Link>
+                <Link href="/blog/disability-rights-bill-two-years-on">Read more â</Link>
                 <div className="blog-card-meta">
-                  Voice of Disability NPC · 7 October 2026
+                  Voice of Disability NPC Â· 7 October 2026
                 </div>
               </div>
             </article>
@@ -113,9 +132,9 @@ export default function Blog() {
                 <p style={{fontSize: '0.9rem', marginBottom: '1rem'}}>
                   New UN Committee findings on five countries and a US court ruling stripping community integration protections show how fragile the right to live in community still is, and why South Africa cannot take its own UNCRPD commitments for granted.
                 </p>
-                <Link href="/blog/un-findings-us-ruling-right-to-live-in-community">Read more →</Link>
+                <Link href="/blog/un-findings-us-ruling-right-to-live-in-community">Read more â</Link>
                 <div className="blog-card-meta">
-                  Voice of Disability NPC · 28 September 2026
+                  Voice of Disability NPC Â· 28 September 2026
                 </div>
               </div>
             </article>
@@ -133,9 +152,9 @@ export default function Blog() {
                   South Africa&apos;s Deaf Awareness Month launch brought renewed government calls for sign language access
                   across public services, but the distance between legal obligation and daily experience for Deaf South Africans remains wide.
                 </p>
-                <Link href="/blog/deaf-awareness-month-2026-law-reality-gap">Read more →</Link>
+                <Link href="/blog/deaf-awareness-month-2026-law-reality-gap">Read more â</Link>
                 <div className="blog-card-meta">
-                  Voice of Disability NPC · 8 September 2026
+                  Voice of Disability NPC Â· 8 September 2026
                 </div>
               </div>
             </article>
@@ -152,9 +171,9 @@ export default function Blog() {
                   Two senior South African government voices delivered powerful messages about disability rights this month.
                   Voice of Disability unpacks what they said, why it matters, and what needs to happen next.
                 </p>
-                <Link href="/blog/charity-not-enough-south-africa-disability-rights-2026">Read more →</Link>
+                <Link href="/blog/charity-not-enough-south-africa-disability-rights-2026">Read more â</Link>
                 <div className="blog-card-meta">
-                  Voice of Disability NPC · 14 September 2026
+                  Voice of Disability NPC Â· 14 September 2026
                 </div>
               </div>
             </article>
@@ -171,9 +190,9 @@ export default function Blog() {
                   Disability, gender, race, age and place do not create barriers one at a time. Voice of Disability examines
                   what intersectional disability rights means in practice for disabled women in South Africa.
                 </p>
-                <Link href="/blog/intersectionality-disability-rights-south-africa">Read more →</Link>
+                <Link href="/blog/intersectionality-disability-rights-south-africa">Read more â</Link>
                 <div className="blog-card-meta">
-                  Voice of Disability NPC · 5 September 2026
+                  Voice of Disability NPC Â· 5 September 2026
                 </div>
               </div>
             </article>
@@ -191,9 +210,9 @@ export default function Blog() {
                   have promised, but what they can demonstrate has changed. Voice of Disability looks at
                   implementation, representation and accountability.
                 </p>
-                <Link href="/blog/uncrpd-global-accountability">Read more →</Link>
+                <Link href="/blog/uncrpd-global-accountability">Read more â</Link>
                 <div className="blog-card-meta">
-                  Voice of Disability NPC · 24 August 2026
+                  Voice of Disability NPC Â· 24 August 2026
                 </div>
               </div>
             </article>
@@ -209,11 +228,11 @@ export default function Blog() {
                 <p style={{fontSize: '0.9rem', marginBottom: '1rem'}}>
                   South Africa and China are exploring deeper cooperation on disability data, Universal Design,
                   accessible communication, AI and assistive technology. Voice of Disability looks at what is
-                  being proposed — and why implementation and accountability will matter.
+                  being proposed â and why implementation and accountability will matter.
                 </p>
-                <Link href="/blog/south-africa-china-disability-inclusion">Read more →</Link>
+                <Link href="/blog/south-africa-china-disability-inclusion">Read more â</Link>
                 <div className="blog-card-meta">
-                  Voice of Disability NPC · August 2026
+                  Voice of Disability NPC Â· August 2026
                 </div>
               </div>
             </article>
@@ -223,17 +242,17 @@ export default function Blog() {
                 <span className="tag">Advocacy</span>
                 <h2 style={{fontSize: '1.1rem', marginBottom: '0.5rem'}}>
                   <Link href="/our-position" style={{color: 'var(--dark)', textDecoration: 'none'}}>
-                    The Door That Would Not Open — Now It Is an Algorithm
+                    The Door That Would Not Open â Now It Is an Algorithm
                   </Link>
                 </h2>
                 <p style={{fontSize: '0.9rem', marginBottom: '1rem'}}>
                   Forty years ago, I was left in a corridor. The exclusion I experienced then is being
-                  rebuilt in digital systems South Africa is deploying right now — at its borders and
+                  rebuilt in digital systems South Africa is deploying right now â at its borders and
                   in its identity infrastructure.
                 </p>
-                <Link href="/our-position">Read more →</Link>
+                <Link href="/our-position">Read more â</Link>
                 <div className="blog-card-meta">
-                  By Fadila Lagadien · Founder, Voice of Disability NPC
+                  By Fadila Lagadien Â· Founder, Voice of Disability NPC
                 </div>
               </div>
             </article>
