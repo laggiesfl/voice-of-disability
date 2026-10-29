@@ -36,29 +36,20 @@ async function saveVerifiedMember(name: string, email: string, phone: string) {
   }
 }
 
-async function notifyMembershipInbox(name: string, email: string, phone: string) {
+async function notifyMemberRegistered() {
   const apiKey = process.env.RESEND_API_KEY;
-  if (!apiKey) throw new Error('Membership fallback email is not configured');
+  if (!apiKey) {
+    console.error('[membership/confirm] Notification not configured');
+    return;
+  }
   const resend = new Resend(apiKey);
   const result = await resend.emails.send({
     from: 'Voice of Disability <hello@voiceofdisability.com>',
     to: 'fadila@voiceofdisability.com',
-    replyTo: email,
-    subject: 'Verified membership application — Voice of Disability',
-    text: [
-      'A visitor has confirmed their membership email address.',
-      'This is the backup membership record because Airtable was unavailable.',
-      '',
-      'Name: ' + name,
-      'Email: ' + email,
-      'Phone: ' + (phone || 'Not provided'),
-      'Confirmed: ' + new Date().toISOString(),
-      'Source: Website — email verified',
-    ].join('\\n'),
+    subject: 'New verified membership registration',
+    text: 'A new membership registration has been verified and saved in the membership register. Open the secure membership register to review it. No personal application details are included in this email.',
   });
-  if (result.error || !result.data?.id) {
-    throw new Error('Membership fallback email could not be accepted by Resend');
-  }
+  if (result.error) console.error('[membership/confirm] Notification delivery failed', result.error);
 }
 
 export async function GET(request: NextRequest) {
@@ -69,12 +60,8 @@ export async function GET(request: NextRequest) {
   }
 
   try {
-    try {
-      await saveVerifiedMember(data.name, data.email, data.phone ?? '');
-    } catch (storageError) {
-      console.error('[membership/confirm] Airtable unavailable; using inbox fallback', storageError);
-      await notifyMembershipInbox(data.name, data.email, data.phone ?? '');
-    }
+    await saveVerifiedMember(data.name, data.email, data.phone ?? '');
+    await notifyMemberRegistered();
     const response = NextResponse.redirect(new URL('/resources?membership=confirmed', request.url));
     response.cookies.set({
       name: 'vod_member_access',
