@@ -1,4 +1,5 @@
 import { NextResponse } from 'next/server';
+import { Resend } from 'resend';
 import type { NextRequest } from 'next/server';
 import { verifyConfirmationToken } from '../../../lib/form-security';
 
@@ -28,11 +29,28 @@ async function saveVerifiedMember(name: string, email: string, phone: string) {
           Phone: phone,
           Joined: new Date().toISOString().split('T')[0],
           Source: 'Website — email verified',
+          Status: 'Active',
         } }],
       }),
     });
     if (!created.ok) throw new Error('Could not save verified member');
   }
+}
+
+async function notifyMemberRegistered() {
+  const apiKey = process.env.RESEND_API_KEY;
+  if (!apiKey) {
+    console.error('[membership/confirm] Notification not configured');
+    return;
+  }
+  const resend = new Resend(apiKey);
+  const result = await resend.emails.send({
+    from: 'Voice of Disability <hello@voiceofdisability.com>',
+    to: 'fadila@voiceofdisability.com',
+    subject: 'New verified membership registration',
+    text: 'A new membership registration has been verified and saved in the membership register. Open the secure membership register to review it. No personal application details are included in this email.',
+  });
+  if (result.error) console.error('[membership/confirm] Notification delivery failed', result.error);
 }
 
 export async function GET(request: NextRequest) {
@@ -44,6 +62,7 @@ export async function GET(request: NextRequest) {
 
   try {
     await saveVerifiedMember(data.name, data.email, data.phone ?? '');
+    await notifyMemberRegistered();
     const response = NextResponse.redirect(new URL('/resources?membership=confirmed', request.url));
     response.cookies.set({
       name: 'vod_member_access',
