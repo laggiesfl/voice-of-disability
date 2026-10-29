@@ -42,7 +42,7 @@ async function notifyMembershipInbox(name: string, email: string, phone: string)
   const resend = new Resend(apiKey);
   const result = await resend.emails.send({
     from: 'Voice of Disability <hello@voiceofdisability.com>',
-    to: 'hello@voiceofdisability.com',
+    to: 'fadila@voiceofdisability.com',
     replyTo: email,
     subject: 'Verified membership application — Voice of Disability',
     text: [
