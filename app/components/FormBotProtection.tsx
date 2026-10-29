@@ -21,14 +21,17 @@ export default function FormBotProtection({ idPrefix }: Props) {
         <label htmlFor={honeypotId}>Leave this field empty</label>
         <input id={honeypotId} name="website" type="text" tabIndex={-1} autoComplete="off" />
       </div>
+      <p id={`${idPrefix}-security-instructions`} style={{ fontSize: "0.9rem", marginTop: "0.5rem" }}>Security verification: if a checkbox appears below, complete it before submitting. If verification does not load, disable browser content blocking for this site or contact us by email.</p>
       {siteKey ? (
         <div
           className="cf-turnstile"
           data-sitekey={siteKey}
           data-theme="light"
           data-size="flexible"
-          data-appearance="interaction-only"
+          data-appearance="always"
           aria-label="Security verification"
+          aria-describedby={`${idPrefix}-security-instructions`}
+
         />
       ) : (
         <p role="status" style={{ fontSize: '0.9rem' }}>
