@@ -29,6 +29,7 @@ async function saveVerifiedMember(name: string, email: string, phone: string) {
           Phone: phone,
           Joined: new Date().toISOString().split('T')[0],
           Source: 'Website — email verified',
+          Status: 'Active',
         } }],
       }),
     });
