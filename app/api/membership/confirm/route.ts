@@ -1,4 +1,5 @@
 import { NextResponse } from 'next/server';
+import { Resend } from 'resend';
 import type { NextRequest } from 'next/server';
 import { verifyConfirmationToken } from '../../../lib/form-security';
 
@@ -35,6 +36,31 @@ async function saveVerifiedMember(name: string, email: string, phone: string) {
   }
 }
 
+async function notifyMembershipInbox(name: string, email: string, phone: string) {
+  const apiKey = process.env.RESEND_API_KEY;
+  if (!apiKey) throw new Error('Membership fallback email is not configured');
+  const resend = new Resend(apiKey);
+  const result = await resend.emails.send({
+    from: 'Voice of Disability <hello@voiceofdisability.com>',
+    to: 'hello@voiceofdisability.com',
+    replyTo: email,
+    subject: 'Verified membership application — Voice of Disability',
+    text: [
+      'A visitor has confirmed their membership email address.',
+      'This is the backup membership record because Airtable was unavailable.',
+      '',
+      'Name: ' + name,
+      'Email: ' + email,
+      'Phone: ' + (phone || 'Not provided'),
+      'Confirmed: ' + new Date().toISOString(),
+      'Source: Website — email verified',
+    ].join('\\n'),
+  });
+  if (result.error || !result.data?.id) {
+    throw new Error('Membership fallback email could not be accepted by Resend');
+  }
+}
+
 export async function GET(request: NextRequest) {
   const token = request.nextUrl.searchParams.get('token') ?? '';
   const data = verifyConfirmationToken(token);
@@ -43,7 +69,12 @@ export async function GET(request: NextRequest) {
   }
 
   try {
-    await saveVerifiedMember(data.name, data.email, data.phone ?? '');
+    try {
+      await saveVerifiedMember(data.name, data.email, data.phone ?? '');
+    } catch (storageError) {
+      console.error('[membership/confirm] Airtable unavailable; using inbox fallback', storageError);
+      await notifyMembershipInbox(data.name, data.email, data.phone ?? '');
+    }
     const response = NextResponse.redirect(new URL('/resources?membership=confirmed', request.url));
     response.cookies.set({
       name: 'vod_member_access',
