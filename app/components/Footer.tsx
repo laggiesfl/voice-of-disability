@@ -7,10 +7,10 @@ export default function Footer() {
         <div className="footer-inner">
           <div className="footer-brand">
             <img
-              src="/brand/vod-concept-a-logo-reversed.svg"
+              src="/brand/vod-concept-a-logo-horizontal.svg"
               alt="Voice of Disability — Nothing About Us Without Us"
               width="330"
-              height="66"
+              height="74"
             />
             <p>Voice of Disability is a South African movement led by disabled women, advancing disability rights, accessibility and equality. Registered non-profit organisation.</p>
           </div>
@@ -56,7 +56,7 @@ export default function Footer() {
         .footer .not-ok-campaign p { color: #fff; margin: 0 0 .5rem; line-height: 1.6; }
         .footer .not-ok-campaign a { color: #fff; text-decoration: underline; text-underline-offset: 3px; }
         .footer .not-ok-campaign a:focus-visible { outline: 3px solid #fff; outline-offset: 4px; border-radius: 4px; }
-        .footer .footer-brand img {
+        .footer .footer-brand img { background: #FFFFFF; padding: .55rem; border-radius: .45rem; box-sizing: border-box; }\n        .footer .footer-brand img {
           width: min(330px, 100%);
           height: auto;
           margin-bottom: 1rem;
