@@ -25,7 +25,7 @@ test('Concept A brand assets exist and are wired into website and app', () => {
   const manifest = read('app/manifest.ts');
 
   assert.match(nav, /\/brand\/vod-concept-a-logo-horizontal\.svg/);
-  assert.match(footer, /\/brand\/vod-concept-a-logo-reversed\.svg/);
+  assert.match(footer, /\/brand\/vod-concept-a-logo-horizontal\.svg/);
   assert.match(appLayout, /\/brand\/vod-concept-a-logo-horizontal\.svg/);
   assert.match(rootLayout, /brand-overrides\.css/);
   assert.match(rootLayout, /\/brand\/vod-concept-a-mark\.svg/);
