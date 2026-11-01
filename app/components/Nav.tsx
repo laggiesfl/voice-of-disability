@@ -16,15 +16,16 @@ export default function Nav() {
         </Link>
 
         <ul className="nav-links" role="list">
-          <li><Link href="/#about">About</Link></li>
-          <li><Link href="/#founder">Our Founder</Link></li>
+          <li><Link href="/">Home</Link></li>
+          <li><Link href="/about">About</Link></li>
+          
           <li><Link href="/our-position">Our Position</Link></li>
-          <li><Link href="/#programmes">Programmes</Link></li>
+          <li><Link href="/programmes">Programmes</Link></li>
           <li><Link href="/resources">Resources</Link></li>
           <li><Link href="/blog">Blog</Link></li>
-          <li><Link href="/#membership">Join</Link></li>
-          <li><Link href="/#donate">Donate</Link></li>
-          <li><Link href="/#contact">Contact</Link></li>
+          <li><Link href="/get-involved">Get involved</Link></li>
+          <li><Link href="/support#donate">Donate</Link></li>
+          <li><Link href="/contact">Contact</Link></li>
         </ul>
 
         <Link href="/app-home" className="btn btn-primary nav-cta">
