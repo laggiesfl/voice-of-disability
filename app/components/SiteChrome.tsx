@@ -2,6 +2,7 @@
 
 import { usePathname } from 'next/navigation';
 import Nav from './Nav';
+import AccessibilityToolbar from './AccessibilityToolbar';
 import Footer from './Footer';
 import AccessibleChatbot from './AccessibleChatbot';
 
@@ -13,6 +14,7 @@ export default function SiteChrome({ children }: { children: React.ReactNode }) 
     <>
       <a href="#main-content" className="skip-link">Skip to main content</a>
       {!isApp && <Nav />}
+      {!isApp && <AccessibilityToolbar />}
       <section aria-labelledby="not-ok-sitewide-title" style={{ background: '#17324D', color: '#FFFFFF', padding: '1.25rem 0' }}>
         <div className="container" style={{ display: 'flex', alignItems: 'center', flexWrap: 'wrap', gap: '1.25rem' }}>
           <a href="https://notokmovement.com/" target="_blank" rel="noopener noreferrer" aria-label="Visit the NOT OK Movement website (opens in a new tab)" style={{ display: 'inline-block', borderRadius: '50%', outlineOffset: '5px' }}>
