@@ -34,6 +34,7 @@ export default function Footer() {
               <li><Link href="/#volunteer">Volunteer with us</Link></li>
               <li><Link href="/#donate">Donate</Link></li>
               <li><Link href="/#contact">Contact us</Link></li>
+              <li><a href="https://www.facebook.com/VoiceofDisability/" target="_blank" rel="noopener noreferrer">Voice of Disability on Facebook (opens in a new tab)</a></li>
               <li><Link href="/accessibility-statement">Accessibility statement</Link></li>
               <li><Link href="/privacy">Privacy policy</Link></li>
               <li><Link href="/terms">Terms of use</Link></li>
