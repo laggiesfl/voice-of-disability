@@ -106,3 +106,25 @@ a:hover { color: var(--voice-navy); }
     animation-iteration-count: 1 !important;
   }
 }
+
+/* V2 multi-page site: compact top toolbar and destination cards */
+.nav{position:sticky;top:0;z-index:80}
+.vod-a11y-toolbar{position:sticky;top:76px;z-index:79;background:#E8EEF3;border-bottom:1px solid #adbfc9;padding:.45rem 0}
+.vod-a11y-row{display:flex;gap:.45rem;align-items:center;flex-wrap:wrap}
+.vod-a11y-toolbar button,.vod-a11y-toolbar summary{min-height:44px;border:2px solid #17324D;background:#fff;color:#17324D;border-radius:6px;padding:.38rem .65rem;font:inherit;font-weight:700;cursor:pointer}
+.vod-a11y-label{font-size:.9rem;margin-right:.3rem}
+.vod-a11y-extra{position:relative}
+.vod-a11y-extra summary{display:list-item;list-style:revert;list-style-position:inside}
+.vod-a11y-extra-controls{display:flex;flex-wrap:wrap;gap:.4rem;padding:.6rem;background:#fff;border:2px solid #17324D;border-radius:8px}
+.vod-a11y-extra[open] .vod-a11y-extra-controls{position:absolute;right:0;top:calc(100% + 5px);width:min(560px,90vw);box-shadow:0 7px 18px #0002;z-index:90}
+.vod-a11y-toolbar button:disabled{opacity:.55;cursor:not-allowed}
+.vod-high-contrast{--voice-navy:#000;--leadership-plum:#000;--warm-canvas:#fff;--cloud-blue:#fff;--charcoal:#000}
+.vod-high-contrast .vod-a11y-toolbar{background:#fff;color:#000}
+.vod-reduced-motion *, .vod-reduced-motion *::before,.vod-reduced-motion *::after{animation:none!important;transition:none!important;scroll-behavior:auto!important}
+.vod-subpage-banner{background:#E8EEF3;border-bottom:4px solid #7A1F5C;padding:2rem 0}
+.vod-subpage-banner h1{color:#17324D;font-size:clamp(1.8rem,4vw,3rem);line-height:1.2;margin:.5rem 0}
+.vod-home-pathways{padding:3rem 0;background:#F7F4EF}
+.vod-pathway-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,260px),1fr));gap:1rem;margin-top:1.5rem}
+.vod-pathway-card{display:block;padding:1.5rem;background:#fff;border:2px solid #c9d3dc;border-radius:12px;color:#17324D;text-decoration:none}
+.vod-pathway-card h3{text-decoration:underline;margin-bottom:.6rem}
+@media(max-width:700px){.nav{position:relative}.vod-a11y-toolbar{position:relative;top:0}.vod-a11y-label{width:100%}.vod-a11y-extra[open] .vod-a11y-extra-controls{right:auto;left:0}}
