@@ -21,6 +21,7 @@ export default function MembershipForm() {
       name: String(form.get('name') ?? '').trim(),
       email: String(form.get('email') ?? '').trim(),
       phone: String(form.get('phone') ?? '').trim(),
+      province: String(form.get('province') ?? '').trim(),
       website: String(form.get('website') ?? ''),
       startedAt: Number(form.get('startedAt')),
       turnstileToken: String(form.get('cf-turnstile-response') ?? ''),
@@ -73,6 +74,31 @@ export default function MembershipForm() {
       <div className="form-group">
         <label htmlFor="m-phone">Phone (optional)</label>
         <input type="tel" id="m-phone" name="phone" autoComplete="tel" maxLength={40} placeholder="+27 …" disabled={status === 'submitting'} />
+      </div>
+
+      <div className="form-group">
+        <label htmlFor="m-province">Province or region (optional)</label>
+        <select
+          id="m-province"
+          name="province"
+          defaultValue=""
+          disabled={status === 'submitting'}
+          style={{ width: '100%', minHeight: '44px', padding: '0.65rem', border: '2px solid #555', borderRadius: '6px', background: '#fff', color: '#222' }}
+        >
+          <option value="">Select a province or region</option>
+          <option>Eastern Cape</option>
+          <option>Free State</option>
+          <option>Gauteng</option>
+          <option>KwaZulu-Natal</option>
+          <option>Limpopo</option>
+          <option>Mpumalanga</option>
+          <option>North West</option>
+          <option>Northern Cape</option>
+          <option>Western Cape</option>
+          <option>Outside South Africa</option>
+          <option>Prefer not to say</option>
+        </select>
+        <p style={{ fontSize: '0.9rem' }}>This helps us understand where members are based. You may leave it blank.</p>
       </div>
 
       <FormBotProtection idPrefix="membership" />
