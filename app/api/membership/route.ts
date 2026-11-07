@@ -3,6 +3,11 @@ import type { NextRequest } from 'next/server';
 import { createConfirmationToken, guardPublicForm, validHumanName } from '../../lib/form-security';
 
 const EMAIL_REGEX = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+const ALLOWED_PROVINCES = new Set([
+  '', 'Eastern Cape', 'Free State', 'Gauteng', 'KwaZulu-Natal',
+  'Limpopo', 'Mpumalanga', 'North West', 'Northern Cape',
+  'Western Cape', 'Outside South Africa', 'Prefer not to say',
+]);
 
 function escapeHtml(value: string) {
   return value.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
@@ -19,6 +24,7 @@ export async function POST(request: NextRequest) {
     const name = String(body.name ?? '').trim();
     const email = String(body.email ?? '').trim().toLowerCase();
     const phone = String(body.phone ?? '').trim();
+    const province = String(body.province ?? '').trim();
 
     const guard = await guardPublicForm(request, 'membership', {
       website: String(body.website ?? ''),
@@ -37,7 +43,11 @@ export async function POST(request: NextRequest) {
       return Response.json({ error: 'Please enter a shorter phone number.' }, { status: 400 });
     }
 
-    const token = createConfirmationToken({ purpose: 'membership', email, name, phone });
+    if (!ALLOWED_PROVINCES.has(province)) {
+      return Response.json({ error: 'Please select a listed province or leave the field blank.' }, { status: 400 });
+    }
+
+    const token = createConfirmationToken({ purpose: 'membership', email, name, phone, province });
     if (!token) return Response.json({ error: 'Membership verification is temporarily unavailable.' }, { status: 503 });
 
     const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || 'https://www.voiceofdisability.com';
