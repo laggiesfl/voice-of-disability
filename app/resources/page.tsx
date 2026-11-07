@@ -3,6 +3,7 @@ import { cookies } from 'next/headers';
 import type { Metadata } from 'next';
 import MembershipForm from '../components/MembershipForm';
 import ContactForm from '../components/ContactForm';
+import { verifyMemberAccessToken } from '../lib/form-security';
 
 export const metadata: Metadata = {
   title: 'Resources — Tools for Your Rights',
@@ -51,7 +52,7 @@ const resources = [
 
 export default async function ResourcesPage() {
   const cookieStore = await cookies();
-  const hasMemberAccess = cookieStore.get('vod_member_access')?.value === '1';
+  const hasMemberAccess = verifyMemberAccessToken(cookieStore.get('vod_member_access')?.value ?? '');
 
   return (
     <>
@@ -141,7 +142,7 @@ export default async function ResourcesPage() {
                 <h2 id="join-resources-h">Join to unlock the resource library</h2>
                 <p>
                   Complete the membership form and confirm the email we send you. After confirmation,
-                  this browser will receive member access and you can open all current and future member resources.
+                  this browser will receive access for 30 days. To access resources on another device, complete the free email verification again.
                 </p>
                 <div className="membership-form-wrap" style={{marginTop: '1.5rem'}}>
                   <MembershipForm />

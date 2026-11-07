@@ -21,6 +21,7 @@ export default function MembershipForm() {
       name: String(form.get('name') ?? '').trim(),
       email: String(form.get('email') ?? '').trim(),
       phone: String(form.get('phone') ?? '').trim(),
+      province: String(form.get('province') ?? '').trim(),
       website: String(form.get('website') ?? ''),
       startedAt: Number(form.get('startedAt')),
       turnstileToken: String(form.get('cf-turnstile-response') ?? ''),
@@ -49,7 +50,7 @@ export default function MembershipForm() {
 
   if (status === 'success') {
     return (
-      <div ref={statusRef} role="status" aria-live="polite" tabIndex={-1} className="membership-success" style={{ outline: 'none' }}>
+      <div ref={statusRef} role="status" aria-live="polite" tabIndex={-1} className="membership-success" style={{ outline: '3px solid #17324D', outlineOffset: '4px' }}>
         <h3 style={{ color: 'var(--purple-deep)', marginBottom: '0.5rem' }}>Check your email to confirm membership</h3>
         <p>Your application has passed the website security check. Open the confirmation link in the email we sent you to activate membership and resource access.</p>
       </div>
@@ -58,7 +59,7 @@ export default function MembershipForm() {
 
   return (
     <form onSubmit={handleSubmit} aria-label="Membership sign-up form" noValidate>
-      <div ref={statusRef} role="alert" aria-live="assertive" aria-atomic="true" tabIndex={-1} style={{ outline: 'none' }}>
+      <div ref={statusRef} role="alert" aria-live="assertive" aria-atomic="true" tabIndex={-1} style={{ outline: '3px solid #17324D', outlineOffset: '4px' }}>
         {status === 'error' && errMsg && <p className="form-error-banner" style={{ background: '#fff0f0', border: '1px solid #c00', borderRadius: '6px', padding: '0.75rem 1rem', marginBottom: '1rem', color: '#900', fontSize: '0.9rem' }}>{errMsg}</p>}
       </div>
 
@@ -73,6 +74,31 @@ export default function MembershipForm() {
       <div className="form-group">
         <label htmlFor="m-phone">Phone (optional)</label>
         <input type="tel" id="m-phone" name="phone" autoComplete="tel" maxLength={40} placeholder="+27 …" disabled={status === 'submitting'} />
+      </div>
+
+      <div className="form-group">
+        <label htmlFor="m-province">Province or region (optional)</label>
+        <select
+          id="m-province"
+          name="province"
+          defaultValue=""
+          disabled={status === 'submitting'}
+          style={{ width: '100%', minHeight: '44px', padding: '0.65rem', border: '2px solid #555', borderRadius: '6px', background: '#fff', color: '#222' }}
+        >
+          <option value="">Select a province or region</option>
+          <option>Eastern Cape</option>
+          <option>Free State</option>
+          <option>Gauteng</option>
+          <option>KwaZulu-Natal</option>
+          <option>Limpopo</option>
+          <option>Mpumalanga</option>
+          <option>North West</option>
+          <option>Northern Cape</option>
+          <option>Western Cape</option>
+          <option>Outside South Africa</option>
+          <option>Prefer not to say</option>
+        </select>
+        <p style={{ fontSize: '0.9rem' }}>This helps us understand where members are based. You may leave it blank.</p>
       </div>
 
       <FormBotProtection idPrefix="membership" />
