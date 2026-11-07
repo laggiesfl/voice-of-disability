@@ -1,7 +1,7 @@
 'use client';
 
 import { useRef, useState } from 'react';
-import FormBotProtection from './FormBotProtection';
+
 
 type Status = 'idle' | 'submitting' | 'success' | 'error';
 
@@ -9,7 +9,7 @@ export default function NewsletterForm() {
   const [status, setStatus] = useState<Status>('idle');
   const [errMsg, setErrMsg] = useState('');
   const statusRef = useRef<HTMLSpanElement>(null);
-  const securityReady = Boolean(process.env.NEXT_PUBLIC_TURNSTILE_SITE_KEY);
+  const [startedAt] = useState(() => Date.now());
 
   async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
@@ -57,8 +57,13 @@ export default function NewsletterForm() {
     <form className="newsletter-form" onSubmit={handleSubmit} aria-label="Newsletter sign-up" noValidate>
       <label htmlFor="nl-email" className="sr-only">Email address</label>
       <input type="email" id="nl-email" name="email" placeholder="your@email.com" autoComplete="email" required aria-required="true" maxLength={254} aria-describedby={errMsg ? 'nl-error' : undefined} disabled={status === 'submitting'} />
-      <FormBotProtection idPrefix="newsletter" />
-      <button type="submit" className="btn btn-primary" disabled={status === 'submitting' || !securityReady} aria-busy={status === 'submitting'}>
+      <input type="hidden" name="startedAt" value={startedAt} />
+      <div aria-hidden="true" style={{ position: 'absolute', left: '-10000px', width: 1, height: 1, overflow: 'hidden' }}>
+        <label htmlFor="newsletter-hp">Leave this field empty</label>
+        <input id="newsletter-hp" name="website" type="text" autoComplete="off" tabIndex={-1} />
+      </div>
+      <p className="newsletter-help">A confirmation link will be sent to your email address. You will not be subscribed until you confirm. For help, email <a href="mailto:fadila@voiceofdisability.com?subject=Newsletter%20enquiry">fadila@voiceofdisability.com</a>.</p>
+      <button type="submit" className="btn btn-primary" disabled={status === 'submitting'} aria-busy={status === 'submitting'}>
         {status === 'submitting' ? 'Subscribing…' : 'Subscribe'}
       </button>
       <span ref={statusRef} id="nl-error" role="alert" aria-live="assertive" tabIndex={-1} style={{ outline: 'none' }}>
