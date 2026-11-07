@@ -90,6 +90,32 @@ export async function guardPublicForm(request: NextRequest, formName: string, pa
   return { ok: true as const };
 }
 
+/**
+ * Lower-friction form entry for email-verified activities only.
+ * Does not confer membership or subscribe the recipient without a separately
+ * signed confirmation link. Maintains origin, honeypot, timing and rate checks.
+ * In-process limits are best-effort on serverless infrastructure.
+ */
+export function guardEmailVerifiedForm(request: NextRequest, formName: string, payload: GuardPayload) {
+  const origin = request.headers.get('origin');
+  if (process.env.NODE_ENV === 'production' && origin &&
+      !['https://www.voiceofdisability.com', 'https://voiceofdisability.com'].includes(origin)) {
+    return { ok: false as const, status: 403, error: 'This submission could not be verified.' };
+  }
+  if ((payload.website ?? '').trim()) {
+    return { ok: false as const, status: 400, error: 'This submission could not be verified.' };
+  }
+  const startedAt = Number(payload.startedAt);
+  const elapsed = Date.now() - startedAt;
+  if (!Number.isFinite(startedAt) || elapsed < MIN_FILL_MS || elapsed > MAX_FILL_MS) {
+    return { ok: false as const, status: 400, error: 'Please reload the form and try again.' };
+  }
+  if (rateLimited(`email-verified:${formName}:${clientIp(request)}`)) {
+    return { ok: false as const, status: 429, error: 'Too many requests. Please try again later or contact us by email.' };
+  }
+  return { ok: true as const };
+}
+
 function confirmationSecret(): string | null {
   return process.env.FORM_CONFIRMATION_SECRET || process.env.TURNSTILE_SECRET_KEY || null;
 }
