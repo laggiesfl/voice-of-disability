@@ -51,7 +51,7 @@ export async function POST(request: NextRequest) {
     const found = (await existing.json()) as { records?: Array<{ id: string }> };
     if (found.records?.length) {
       // Privacy-preserving, idempotent response; do not overwrite earlier interests or create a duplicate.
-      return Response.json({ success: true });
+      return Response.json({ success: true, emailSent: false, alreadyRecorded: true });
     }
 
     const saved = await fetch(endpoint, {
@@ -84,7 +84,7 @@ export async function POST(request: NextRequest) {
     ]);
     if (ack.error) console.error('[volunteer] acknowledgment delivery failed');
     if (notify.error) console.error('[volunteer] notification delivery failed');
-    return Response.json({ success: true });
+    return Response.json({ success: true, emailSent: !ack.error });
   } catch (error) {
     console.error('[volunteer]', error instanceof Error ? error.message : 'Submission error');
     return errorResponse('We could not save your interest right now. Please email hello@voiceofdisability.com.', 503);
