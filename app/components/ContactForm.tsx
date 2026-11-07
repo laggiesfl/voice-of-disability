@@ -1,7 +1,6 @@
 'use client';
 
 import { useEffect, useRef, useState } from 'react';
-import FormBotProtection from './FormBotProtection';
 
 type Status = 'idle' | 'submitting' | 'success' | 'error';
 
@@ -12,7 +11,6 @@ export default function ContactForm({ resourceRequest = false, volunteerInterest
   const [alreadyRecorded, setAlreadyRecorded] = useState(false);
   const [startedAt] = useState(() => Date.now());
   const statusRef = useRef<HTMLDivElement>(null);
-  const securityReady = Boolean(process.env.NEXT_PUBLIC_TURNSTILE_SITE_KEY);
 
   useEffect(() => {
     if (status === 'success' || (status === 'error' && errMsg)) {
@@ -94,18 +92,18 @@ export default function ContactForm({ resourceRequest = false, volunteerInterest
         <textarea id="c-message" name="message" rows={5} required aria-required="true" maxLength={5000} placeholder={volunteerInterest ? "Tell us which activities interest you (rights clinics, advocacy, training, resources or other support), relevant experience, preferred way to contribute and any access arrangements you would like us to discuss. Please avoid sensitive details." : resourceRequest ? "Describe the guide, template or information you would like, and any accessible format you prefer. Please do not include sensitive personal details." : "Your message…"} disabled={status === 'submitting'} />
       </div>
 
-      {volunteerInterest ? (
-        <>
-          <input type="hidden" name="startedAt" value={startedAt} />
-          <div aria-hidden="true" style={{ position: 'absolute', left: '-10000px', width: '1px', height: '1px', overflow: 'hidden' }}>
-            <label htmlFor="volunteer-website">Leave this field empty</label>
-            <input type="text" id="volunteer-website" name="website" tabIndex={-1} autoComplete="off" />
-          </div>
-          <p style={{ fontSize: '0.9rem' }}>Your volunteer interest is protected by automated spam checks. We will acknowledge your message by email where possible.</p>
-        </>
-      ) : <FormBotProtection idPrefix="contact" />}
+      <input type="hidden" name="startedAt" value={startedAt} />
+      <div aria-hidden="true" style={{ position: 'absolute', left: '-10000px', width: '1px', height: '1px', overflow: 'hidden' }}>
+        <label htmlFor="contact-website-check">Leave this field empty</label>
+        <input type="text" id="contact-website-check" name="website" tabIndex={-1} autoComplete="off" />
+      </div>
+      <p style={{ fontSize: '0.9rem' }}>
+        {volunteerInterest
+          ? 'Your volunteer interest is protected by automated spam checks. We will acknowledge your message by email where possible.'
+          : 'This form uses automated spam checks. You will see a confirmation after your message has been accepted.'}
+      </p>
 
-      <button type="submit" className="btn btn-primary" style={{ width: '100%', justifyContent: 'center' }} disabled={status === 'submitting' || (!volunteerInterest && !securityReady)} aria-busy={status === 'submitting'}>
+      <button type="submit" className="btn btn-primary" style={{ width: '100%', justifyContent: 'center' }} disabled={status === 'submitting'} aria-busy={status === 'submitting'}>
         {status === 'submitting' ? 'Sending…' : volunteerInterest ? 'Send volunteer interest' : resourceRequest ? 'Send resource suggestion' : 'Send message'}
       </button>
     </form>
