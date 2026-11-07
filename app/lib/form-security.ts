@@ -1,4 +1,4 @@
-import { createHmac, timingSafeEqual } from 'crypto';
+import { createHash, createHmac, timingSafeEqual } from 'crypto';
 import type { NextRequest } from 'next/server';
 
 const RATE_WINDOW_MS = 15 * 60 * 1000;
@@ -116,5 +116,49 @@ export function verifyConfirmationToken(token: string): (ConfirmationPayload & {
     return parsed as ConfirmationPayload & { exp: number };
   } catch {
     return null;
+  }
+}
+
+
+// Signed, time-limited access for public member resources.
+// The cookie stores only a one-way email digest, not the member's name or email.
+const MEMBER_ACCESS_DURATION_MS = 30 * 24 * 60 * 60 * 1000;
+
+export function createMemberAccessToken(email: string): string | null {
+  const secret = confirmationSecret();
+  if (!secret || !email.trim()) return null;
+  const digest = createHash('sha256').update(email.trim().toLowerCase()).digest('hex');
+  const payload = Buffer.from(JSON.stringify({
+    v: 1,
+    sub: digest,
+    exp: Date.now() + MEMBER_ACCESS_DURATION_MS,
+  })).toString('base64url');
+  const signature = createHmac('sha256', secret).update(payload).digest('base64url');
+  return `${payload}.${signature}`;
+}
+
+export function verifyMemberAccessToken(token: string): boolean {
+  const secret = confirmationSecret();
+  if (!secret || !token || token.length > 2048) return false;
+  const parts = token.split('.');
+  if (parts.length !== 2 || !parts[0] || !parts[1]) return false;
+  const [payload, signature] = parts;
+  const expected = createHmac('sha256', secret).update(payload).digest('base64url');
+  const actualBytes = Buffer.from(signature);
+  const expectedBytes = Buffer.from(expected);
+  if (actualBytes.length !== expectedBytes.length || !timingSafeEqual(actualBytes, expectedBytes)) return false;
+  try {
+    const parsed = JSON.parse(Buffer.from(payload, 'base64url').toString('utf8')) as {
+      v?: unknown; sub?: unknown; exp?: unknown;
+    };
+    return parsed.v === 1 &&
+      typeof parsed.sub === 'string' &&
+      /^[a-f0-9]{64}$/.test(parsed.sub) &&
+      typeof parsed.exp === 'number' &&
+      Number.isFinite(parsed.exp) &&
+      parsed.exp > Date.now() &&
+      parsed.exp <= Date.now() + MEMBER_ACCESS_DURATION_MS;
+  } catch {
+    return false;
   }
 }
