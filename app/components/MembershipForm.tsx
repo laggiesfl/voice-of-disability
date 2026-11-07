@@ -50,7 +50,7 @@ export default function MembershipForm() {
 
   if (status === 'success') {
     return (
-      <div ref={statusRef} role="status" aria-live="polite" tabIndex={-1} className="membership-success" style={{ outline: 'none' }}>
+      <div ref={statusRef} role="status" aria-live="polite" tabIndex={-1} className="membership-success" style={{ outline: '3px solid #17324D', outlineOffset: '4px' }}>
         <h3 style={{ color: 'var(--purple-deep)', marginBottom: '0.5rem' }}>Check your email to confirm membership</h3>
         <p>Your application has passed the website security check. Open the confirmation link in the email we sent you to activate membership and resource access.</p>
       </div>
@@ -59,7 +59,7 @@ export default function MembershipForm() {
 
   return (
     <form onSubmit={handleSubmit} aria-label="Membership sign-up form" noValidate>
-      <div ref={statusRef} role="alert" aria-live="assertive" aria-atomic="true" tabIndex={-1} style={{ outline: 'none' }}>
+      <div ref={statusRef} role="alert" aria-live="assertive" aria-atomic="true" tabIndex={-1} style={{ outline: '3px solid #17324D', outlineOffset: '4px' }}>
         {status === 'error' && errMsg && <p className="form-error-banner" style={{ background: '#fff0f0', border: '1px solid #c00', borderRadius: '6px', padding: '0.75rem 1rem', marginBottom: '1rem', color: '#900', fontSize: '0.9rem' }}>{errMsg}</p>}
       </div>
 
