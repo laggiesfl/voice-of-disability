@@ -128,3 +128,46 @@ a:hover { color: var(--voice-navy); }
 .vod-pathway-card{display:block;padding:1.5rem;background:#fff;border:2px solid #c9d3dc;border-radius:12px;color:#17324D;text-decoration:none}
 .vod-pathway-card h3{text-decoration:underline;margin-bottom:.6rem}
 @media(max-width:700px){.nav{position:relative}.vod-a11y-toolbar{position:relative;top:0}.vod-a11y-label{width:100%}.vod-a11y-extra[open] .vod-a11y-extra-controls{right:auto;left:0}}
+
+
+/* Avoid sticky navigation masking content, headings and focused form controls.
+   Navigation remains present on every page, without covering scrolled content. */
+.nav { position: relative; top: auto; z-index: 10; }
+.vod-a11y-toolbar { position: relative; top: auto; z-index: 9; }
+html { scroll-behavior: auto; }
+[id] { scroll-margin-top: 1.5rem; }
+:focus-visible { scroll-margin-top: 1.5rem; }
+
+/* Keep newsletter instructions readable, including at 200% zoom and on mobile. */
+.newsletter-inner { align-items: flex-start; }
+.newsletter-form {
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  flex: 1 1 320px;
+  min-width: 0;
+  max-width: 540px;
+  gap: 0.75rem;
+}
+.newsletter-form input[type="email"] {
+  flex: initial;
+  min-width: 0;
+  width: 100%;
+  min-height: 48px;
+}
+.newsletter-form .newsletter-help {
+  max-width: 65ch;
+  margin: 0;
+  line-height: 1.6;
+  overflow-wrap: anywhere;
+}
+.newsletter-form button[type="submit"] {
+  align-self: flex-start;
+  min-height: 48px;
+  border-radius: 10px;
+  padding-inline: 1.5rem;
+}
+@media (max-width: 760px) {
+  .newsletter-inner { flex-direction: column; }
+  .newsletter-text, .newsletter-form { width: 100%; }
+}
