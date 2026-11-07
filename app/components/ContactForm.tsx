@@ -8,6 +8,8 @@ type Status = 'idle' | 'submitting' | 'success' | 'error';
 export default function ContactForm({ resourceRequest = false, volunteerInterest = false }: { resourceRequest?: boolean; volunteerInterest?: boolean }) {
   const [status, setStatus] = useState<Status>('idle');
   const [errMsg, setErrMsg] = useState('');
+  const [ackSent, setAckSent] = useState(false);
+  const [startedAt] = useState(() => Date.now());
   const statusRef = useRef<HTMLDivElement>(null);
   const securityReady = Boolean(process.env.NEXT_PUBLIC_TURNSTILE_SITE_KEY);
 
@@ -36,7 +38,7 @@ export default function ContactForm({ resourceRequest = false, volunteerInterest
     };
 
     try {
-      const res = await fetch('/api/contact', {
+      const res = await fetch(volunteerInterest ? '/api/volunteer' : '/api/contact', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(payload),
@@ -46,6 +48,7 @@ export default function ContactForm({ resourceRequest = false, volunteerInterest
         setErrMsg(json.error ?? 'Something went wrong. Please try again.');
         setStatus('error');
       } else {
+        setAckSent(Boolean(json.emailSent));
         setStatus('success');
       }
     } catch {
@@ -58,7 +61,7 @@ export default function ContactForm({ resourceRequest = false, volunteerInterest
     return (
       <div ref={statusRef} role="status" aria-live="polite" aria-atomic="true" tabIndex={-1} style={{ padding: '2rem', background: '#E8EEF3', color: '#17324D', border: '3px solid #17324D', borderRadius: '12px', textAlign: 'left', scrollMarginTop: '7rem' }}>
         <h3 style={{ color: '#17324D', marginBottom: '0.5rem' }}>{volunteerInterest ? 'Volunteer interest sent successfully' : 'Message sent successfully'}</h3>
-        <p style={{ margin: 0 }}>{volunteerInterest ? 'Thank you. Your volunteer enquiry has been sent to Voice of Disability. You do not need to send it again. We will contact you when suitable opportunities become available.' : 'Thank you. Your message was sent successfully. You do not need to submit it again.'}</p>
+        <p style={{ margin: 0 }}>{volunteerInterest ? (ackSent ? 'Thank you. Your volunteer interest was recorded and an acknowledgement email was requested. You do not need to submit again. An assignment is not guaranteed.' : 'Thank you. Your volunteer interest was recorded, but an acknowledgement email could not be confirmed. Please do not submit again. An assignment is not guaranteed.') : 'Thank you. Your message was sent successfully. You do not need to submit it again.'}</p>
       </div>
     );
   }
@@ -86,9 +89,18 @@ export default function ContactForm({ resourceRequest = false, volunteerInterest
         <textarea id="c-message" name="message" rows={5} required aria-required="true" maxLength={5000} placeholder={volunteerInterest ? "Tell us which activities interest you (rights clinics, advocacy, training, resources or other support), relevant experience, preferred way to contribute and any access arrangements you would like us to discuss. Please avoid sensitive details." : resourceRequest ? "Describe the guide, template or information you would like, and any accessible format you prefer. Please do not include sensitive personal details." : "Your message…"} disabled={status === 'submitting'} />
       </div>
 
-      <FormBotProtection idPrefix="contact" />
+      {volunteerInterest ? (
+        <>
+          <input type="hidden" name="startedAt" value={startedAt} />
+          <div aria-hidden="true" style={{ position: 'absolute', left: '-10000px', width: '1px', height: '1px', overflow: 'hidden' }}>
+            <label htmlFor="volunteer-website">Leave this field empty</label>
+            <input type="text" id="volunteer-website" name="website" tabIndex={-1} autoComplete="off" />
+          </div>
+          <p style={{ fontSize: '0.9rem' }}>Your volunteer interest is protected by automated spam checks. We will acknowledge your message by email where possible.</p>
+        </>
+      ) : <FormBotProtection idPrefix="contact" />}
 
-      <button type="submit" className="btn btn-primary" style={{ width: '100%', justifyContent: 'center' }} disabled={status === 'submitting' || !securityReady} aria-busy={status === 'submitting'}>
+      <button type="submit" className="btn btn-primary" style={{ width: '100%', justifyContent: 'center' }} disabled={status === 'submitting' || (!volunteerInterest && !securityReady)} aria-busy={status === 'submitting'}>
         {status === 'submitting' ? 'Sending…' : volunteerInterest ? 'Send volunteer interest' : resourceRequest ? 'Send resource suggestion' : 'Send message'}
       </button>
     </form>
