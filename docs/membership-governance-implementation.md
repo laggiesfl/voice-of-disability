@@ -81,3 +81,21 @@
 ## 6. Deployment gate
 
 Do not merge into production until automated checks pass and the membership flow has been tested with a controlled account. A code review alone cannot prove that the live email, anti-bot and Airtable integrations work.
+
+
+## 7. Airtable governance workspace — created 7 November 2026
+
+The existing Voice of Disability Organisational Platform base now has **three new empty tables**, alongside its pre-existing Governance Register:
+
+- **Policy Register** — `tblzqKRfKzBbG3pNH`: policy reference/title, version, status, audience, owner, Board approval reference/date, effective/review dates and controlled document links.
+- **Board Policy Decisions** — `tblTwcI5K7ziKemy6`: decision reference, exact policy version, decision, date, approving body, official resolution link and recording details.
+- **Policy Acknowledgements** — `tblIV9RN1bTtGIH8L`: personnel reference, role, policy version, acknowledgement status/date/method and evidence reference.
+
+A **VoD Policy Administration — Draft** Airtable interface (`pbd8vWHLeGE66g1jk`) has three unpublished list pages:
+- [Policies and Versions](https://airtable.com/app4DKxLXIhLaA3df/pagXJqmIk55ChMAZD/edit)
+- [Board Approval Decisions](https://airtable.com/app4DKxLXIhLaA3df/pagBBCLe5rxqkF0zJ/edit)
+- [Acknowledgement Tracking](https://airtable.com/app4DKxLXIhLaA3df/pagnNc5MlFz4iKDcH/edit)
+
+**Release conditions:** Before publishing the Airtable interface or entering identifiable staff information, review who has access to the Airtable base and each interface. Airtable interfaces are not automatically an isolated security boundary for people who have full base access. Only authorised people may see acknowledgement metadata. Avoid storing confidential safeguarding case records here. Do not create fictional approval decisions or mark drafts as Board-approved.
+
+**Status:** Empty governance tables and unpublished Airtable interface pages exist. No Board approvals, staff acknowledgements or signed policies have been created or inferred. The public VoD website has not been modified by this stage.
