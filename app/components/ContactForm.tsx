@@ -84,7 +84,10 @@ export default function ContactForm({ resourceRequest = false, volunteerInterest
       </div>
       <div className="form-group">
         <label htmlFor="c-subject">Subject</label>
-        <input type="text" id="c-subject" name="subject" maxLength={140} defaultValue={volunteerInterest ? "Volunteer interest" : resourceRequest ? "Resource request or suggestion" : ""} placeholder="What is this about?" disabled={status === 'submitting'} />
+        <input type="text" id="c-subject" name="subject" maxLength={140} defaultValue={volunteerInterest ? "Volunteer interest" : resourceRequest ? "Resource request or suggestion" : ""} onFocus={(event) => {
+          const suggestedSubject = volunteerInterest ? 'Volunteer interest' : resourceRequest ? 'Resource request or suggestion' : '';
+          if (suggestedSubject && event.currentTarget.value === suggestedSubject) event.currentTarget.value = '';
+        }} placeholder={volunteerInterest ? "Enter your subject (optional)" : "What is this about?"} disabled={status === 'submitting'} />
       </div>
       <div className="form-group">
         <label htmlFor="c-message">{volunteerInterest ? "How would you like to volunteer?" : resourceRequest ? "What resource would help you?" : "Message"} <span aria-hidden="true">*</span></label>
