@@ -20,6 +20,7 @@ export type ConfirmationPayload = {
   email: string;
   name?: string;
   phone?: string;
+  province?: string;
 };
 
 function clientIp(request: NextRequest): string {
