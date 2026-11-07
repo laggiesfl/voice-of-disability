@@ -16,10 +16,11 @@ export type GuardPayload = {
 };
 
 export type ConfirmationPayload = {
-  purpose: 'membership' | 'newsletter';
+  purpose: 'membership' | 'newsletter' | 'volunteer';
   email: string;
   name?: string;
   phone?: string;
+  recordId?: string;
 };
 
 function clientIp(request: NextRequest): string {
