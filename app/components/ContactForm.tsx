@@ -27,7 +27,7 @@ export default function ContactForm({ resourceRequest = false, volunteerInterest
     };
 
     try {
-      const res = await fetch('/api/contact', {
+      const res = await fetch(volunteerInterest ? '/api/volunteer' : '/api/contact', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(payload),
@@ -50,7 +50,7 @@ export default function ContactForm({ resourceRequest = false, volunteerInterest
     return (
       <div ref={statusRef} role="status" aria-live="polite" tabIndex={-1} style={{ outline: 'none', padding: '2rem', background: '#f8f4ff', border: '2px solid var(--purple-deep)', borderRadius: '12px', textAlign: 'center' }}>
         <h3 style={{ color: 'var(--purple-deep)', marginBottom: '0.5rem' }}>Message sent</h3>
-        <p style={{ margin: 0 }}>Thank you for getting in touch. We will get back to you as soon as we can.</p>
+        <p style={{ margin: 0 }}>{volunteerInterest ? 'Your interest has been recorded. Please check your email for an acknowledgement. Sending an expression of interest does not guarantee an assignment.' : 'Thank you for getting in touch. We will get back to you as soon as we can.'}</p>
       </div>
     );
   }
