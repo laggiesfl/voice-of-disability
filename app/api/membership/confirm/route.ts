@@ -1,9 +1,9 @@
 import { NextResponse } from 'next/server';
 import { Resend } from 'resend';
 import type { NextRequest } from 'next/server';
-import { verifyConfirmationToken } from '../../../lib/form-security';
+import { createMemberAccessToken, verifyConfirmationToken } from '../../../lib/form-security';
 
-async function saveVerifiedMember(name: string, email: string, phone: string) {
+async function saveVerifiedMember(name: string, email: string, phone: string, province: string) {
   const apiKey = process.env.AIRTABLE_API_KEY;
   const baseId = process.env.AIRTABLE_BASE_ID;
   const table = process.env.AIRTABLE_MEMBERS_TABLE ?? 'Members';
@@ -27,6 +27,7 @@ async function saveVerifiedMember(name: string, email: string, phone: string) {
           'Member Name': name,
           Email: email,
           Phone: phone,
+          'Province or Region': province,
           Joined: new Date().toISOString().split('T')[0],
           Source: 'Website — email verified',
           Status: 'Active',
@@ -61,17 +62,19 @@ export async function GET(request: NextRequest) {
   }
 
   try {
-    await saveVerifiedMember(data.name, data.email, data.phone ?? '');
+    await saveVerifiedMember(data.name, data.email, data.phone ?? '', data.province ?? '');
     await notifyMemberRegistered();
+    const accessToken = createMemberAccessToken(data.email);
+    if (!accessToken) throw new Error('Member access token is not configured');
     const response = NextResponse.redirect(new URL('/resources?membership=confirmed', request.url));
     response.cookies.set({
       name: 'vod_member_access',
-      value: '1',
+      value: accessToken,
       httpOnly: true,
       secure: process.env.NODE_ENV === 'production',
       sameSite: 'lax',
       path: '/',
-      maxAge: 60 * 60 * 24 * 180,
+      maxAge: 60 * 60 * 24 * 30,
     });
     return response;
   } catch (error) {
