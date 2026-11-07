@@ -22,7 +22,7 @@ export async function POST(request: NextRequest) {
   const resendKey = process.env.RESEND_API_KEY;
   // Never silently accept a submission without a persistent record.
   if (!airtableKey || !baseId || !resendKey) {
-    return errorResponse('Volunteer applications are temporarily unavailable. Please email hello@voiceofdisability.com.', 503);
+    return errorResponse('Volunteer applications are temporarily unavailable. Please email fadila@voiceofdisability.com.', 503);
   }
 
   try {
@@ -69,24 +69,16 @@ export async function POST(request: NextRequest) {
 
     const resend = new Resend(resendKey);
     // Do not include interest details in operational notification emails.
-    const [ack, notify] = await Promise.all([
-      resend.emails.send({
-        from: 'Voice of Disability <hello@voiceofdisability.com>', to: email,
-        subject: 'Your interest in contributing to Voice of Disability',
-        text: `Dear ${name},\n\nThank you for offering to contribute to Voice of Disability. We received your expression of interest.\n\nWe are developing low-risk, independent contribution opportunities that volunteers can choose according to their expertise and availability. Sending an expression of interest does not guarantee an assignment. We will share any suitable next steps when available.\n\nPlease do not send sensitive personal or medical information in reply. If you need an accessible communication alternative, please contact hello@voiceofdisability.com.\n\nYou may request correction or withdrawal of your volunteer details through this address.\n\nVoice of Disability NPC\nhttps://www.voiceofdisability.com/get-involved`,
-      }),
-      resend.emails.send({
-        from: 'Voice of Disability <hello@voiceofdisability.com>',
-        to: 'fadila@voiceofdisability.com',
-        subject: 'Volunteer interest recorded',
-        text: 'A volunteer interest submission was saved in the restricted VoD volunteer register. No applicant details are included here. No immediate action is required for routine enquiries.',
-      }),
-    ]);
+    const ack = await resend.emails.send({
+      from: 'Voice of Disability <fadila@voiceofdisability.com>', to: email,
+      replyTo: 'fadila@voiceofdisability.com',
+      subject: 'Your interest in contributing to Voice of Disability',
+      text: `Dear ${name},\n\nThank you for offering to contribute to Voice of Disability. We received your expression of interest.\n\nWe are developing low-risk, independent contribution opportunities that volunteers can choose according to their expertise and availability. Sending an expression of interest does not guarantee an assignment. We will share suitable next steps when available.\n\nPlease do not send sensitive personal or medical information in reply. For accessible alternatives, corrections or withdrawal of your details, reply to this email.\n\nVoice of Disability NPC\nhttps://www.voiceofdisability.com/get-involved`,
+    });
     if (ack.error) console.error('[volunteer] acknowledgment delivery failed');
-    if (notify.error) console.error('[volunteer] notification delivery failed');
     return Response.json({ success: true, emailSent: !ack.error });
   } catch (error) {
     console.error('[volunteer]', error instanceof Error ? error.message : 'Submission error');
-    return errorResponse('We could not save your interest right now. Please email hello@voiceofdisability.com.', 503);
+    return errorResponse('We could not save your interest right now. Please email fadila@voiceofdisability.com.', 503);
   }
 }
