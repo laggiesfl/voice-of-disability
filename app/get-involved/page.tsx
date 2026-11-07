@@ -26,9 +26,9 @@ export default function Page(){return <><div className="vod-subpage-banner"><div
               We will discuss suitable opportunities, accessibility and reasonable accommodation with you.
               Sending the form does not guarantee a placement.</p>
             <p>Please do not include sensitive personal or medical information.
-              We use your details to respond to your enquiry. See our <Link href="/privacy">privacy policy</Link>.</p>
+              We use your details to acknowledge your interest and keep a restricted volunteer enquiry record. No assignment is guaranteed, and no confidential membership information is shared with volunteers. You may request correction or withdrawal through fadila@voiceofdisability.com. See our <Link href="/privacy">privacy policy</Link>.</p>
             <ContactForm volunteerInterest />
-            <p style={{marginTop: '1rem'}}>Prefer email? Write to <a href="mailto:hello@voiceofdisability.com?subject=Volunteer%20interest">hello@voiceofdisability.com</a>.</p>
+            <p style={{marginTop: '1rem'}}>Prefer email? Write to <a href="mailto:fadila@voiceofdisability.com?subject=Volunteer%20interest">fadila@voiceofdisability.com</a>.</p>
           </div>
         </div>
       </section>
