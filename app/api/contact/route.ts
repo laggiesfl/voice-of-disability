@@ -1,6 +1,6 @@
 import { Resend } from 'resend';
 import type { NextRequest } from 'next/server';
-import { guardPublicForm, validHumanName } from '../../lib/form-security';
+import { guardEmailVerifiedForm, validHumanName } from '../../lib/form-security';
 
 const EMAIL_REGEX = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
@@ -19,7 +19,7 @@ export async function POST(request: NextRequest) {
     const subject = String(body.subject ?? '').trim();
     const message = String(body.message ?? '').trim();
 
-    const guard = await guardPublicForm(request, 'contact', {
+    const guard = guardEmailVerifiedForm(request, 'contact', {
       website: String(body.website ?? ''),
       startedAt: Number(body.startedAt),
       turnstileToken: String(body.turnstileToken ?? ''),
@@ -43,7 +43,7 @@ export async function POST(request: NextRequest) {
     const safeMessage = escapeHtml(message).replace(/\n/g, '<br>');
 
     const result = await resend.emails.send({
-      from: 'Voice of Disability <hello@voiceofdisability.com>',
+      from: 'Voice of Disability <fadila@voiceofdisability.com>',
       to: 'fadila@voiceofdisability.com',
       replyTo: email,
       subject: safeSubject ? `Contact form: ${safeSubject}` : `Contact form message from ${safeName}`,
