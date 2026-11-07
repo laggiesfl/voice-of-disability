@@ -1,6 +1,6 @@
 'use client';
 
-import { useRef, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import FormBotProtection from './FormBotProtection';
 
 type Status = 'idle' | 'submitting' | 'success' | 'error';
@@ -10,6 +10,15 @@ export default function ContactForm({ resourceRequest = false, volunteerInterest
   const [errMsg, setErrMsg] = useState('');
   const statusRef = useRef<HTMLDivElement>(null);
   const securityReady = Boolean(process.env.NEXT_PUBLIC_TURNSTILE_SITE_KEY);
+
+  useEffect(() => {
+    if (status === 'success' || (status === 'error' && errMsg)) {
+      const announcement = statusRef.current;
+      if (!announcement) return;
+      announcement.scrollIntoView({ block: 'center', behavior: 'auto' });
+      announcement.focus({ preventScroll: true });
+    }
+  }, [status, errMsg]);
 
   async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
@@ -43,14 +52,13 @@ export default function ContactForm({ resourceRequest = false, volunteerInterest
       setErrMsg('Could not connect. Please check your internet connection and try again.');
       setStatus('error');
     }
-    setTimeout(() => statusRef.current?.focus(), 100);
   }
 
   if (status === 'success') {
     return (
-      <div ref={statusRef} role="status" aria-live="polite" tabIndex={-1} style={{ outline: 'none', padding: '2rem', background: '#f8f4ff', border: '2px solid var(--purple-deep)', borderRadius: '12px', textAlign: 'center' }}>
-        <h3 style={{ color: 'var(--purple-deep)', marginBottom: '0.5rem' }}>Message sent</h3>
-        <p style={{ margin: 0 }}>Thank you for getting in touch. We will get back to you as soon as we can.</p>
+      <div ref={statusRef} role="status" aria-live="polite" aria-atomic="true" tabIndex={-1} style={{ padding: '2rem', background: '#E8EEF3', color: '#17324D', border: '3px solid #17324D', borderRadius: '12px', textAlign: 'left', scrollMarginTop: '7rem' }}>
+        <h3 style={{ color: '#17324D', marginBottom: '0.5rem' }}>{volunteerInterest ? 'Volunteer interest sent successfully' : 'Message sent successfully'}</h3>
+        <p style={{ margin: 0 }}>{volunteerInterest ? 'Thank you. Your volunteer enquiry has been sent to Voice of Disability. You do not need to send it again. We will contact you when suitable opportunities become available.' : 'Thank you. Your message was sent successfully. You do not need to submit it again.'}</p>
       </div>
     );
   }
