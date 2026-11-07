@@ -9,6 +9,7 @@ export default function ContactForm({ resourceRequest = false, volunteerInterest
   const [status, setStatus] = useState<Status>('idle');
   const [errMsg, setErrMsg] = useState('');
   const [ackSent, setAckSent] = useState(false);
+  const [alreadyRecorded, setAlreadyRecorded] = useState(false);
   const [startedAt] = useState(() => Date.now());
   const statusRef = useRef<HTMLDivElement>(null);
   const securityReady = Boolean(process.env.NEXT_PUBLIC_TURNSTILE_SITE_KEY);
@@ -49,6 +50,7 @@ export default function ContactForm({ resourceRequest = false, volunteerInterest
         setStatus('error');
       } else {
         setAckSent(Boolean(json.emailSent));
+        setAlreadyRecorded(Boolean(json.alreadyRecorded));
         setStatus('success');
       }
     } catch {
@@ -60,8 +62,8 @@ export default function ContactForm({ resourceRequest = false, volunteerInterest
   if (status === 'success') {
     return (
       <div ref={statusRef} role="status" aria-live="polite" aria-atomic="true" tabIndex={-1} style={{ padding: '2rem', background: '#E8EEF3', color: '#17324D', border: '3px solid #17324D', borderRadius: '12px', textAlign: 'left', scrollMarginTop: '7rem' }}>
-        <h3 style={{ color: '#17324D', marginBottom: '0.5rem' }}>{volunteerInterest ? 'Volunteer interest sent successfully' : 'Message sent successfully'}</h3>
-        <p style={{ margin: 0 }}>{volunteerInterest ? (ackSent ? 'Thank you. Your volunteer interest was recorded and an acknowledgement email was requested. You do not need to submit again. An assignment is not guaranteed.' : 'Thank you. Your volunteer interest was recorded, but an acknowledgement email could not be confirmed. Please do not submit again. An assignment is not guaranteed.') : 'Thank you. Your message was sent successfully. You do not need to submit it again.'}</p>
+        <h3 style={{ color: '#17324D', marginBottom: '0.5rem' }}>{volunteerInterest ? (alreadyRecorded ? 'Volunteer interest already recorded' : 'Volunteer interest sent successfully') : 'Message sent successfully'}</h3>
+        <p style={{ margin: 0 }}>{volunteerInterest ? (alreadyRecorded ? 'We already have an application associated with this email address. No new application or acknowledgement email was sent. Please contact fadila@voiceofdisability.com if you need to update your information.' : ackSent ? 'Thank you. Your new volunteer interest was recorded and an acknowledgement email was requested. You do not need to submit again. An assignment is not guaranteed.' : 'Thank you. Your new volunteer interest was recorded, but an acknowledgement email could not be confirmed. Please do not submit again. An assignment is not guaranteed.') : 'Thank you. Your message was sent successfully. You do not need to submit it again.'}</p>
       </div>
     );
   }
