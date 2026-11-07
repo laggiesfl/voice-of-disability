@@ -94,6 +94,14 @@ export async function POST(request: NextRequest) {
       text: `Dear ${name},\n\nThank you for offering to contribute to Voice of Disability. We received your expression of interest.\n\nWe are developing low-risk, independent contribution opportunities that volunteers can choose according to their expertise and availability. Sending an expression of interest does not guarantee an assignment. We will share suitable next steps when available.\n\nPlease do not send sensitive personal or medical information in reply. For accessible alternatives, corrections or withdrawal of your details, reply to this email.\n\nVoice of Disability NPC\nhttps://www.voiceofdisability.com/get-involved`,
     });
     if (ack.error) console.error('[volunteer] acknowledgment delivery failed');
+    // Operational notification contains no personal application data. Review securely in Airtable.
+    const adminNotice = await resend.emails.send({
+      from: 'Voice of Disability <fadila@voiceofdisability.com>',
+      to: 'fadila@voiceofdisability.com',
+      subject: 'New Voice of Disability volunteer application recorded',
+      text: 'A new volunteer interest application was saved in the restricted Voice of Disability Volunteer Contributors register. No immediate action is required. Review the application in Airtable when convenient. For privacy, personal application details are not included in this email.',
+    });
+    if (adminNotice.error) console.error('[volunteer] administrator notification delivery failed');
     return Response.json({ success: true, emailSent: !ack.error });
   } catch (error) {
     console.error('[volunteer]', error instanceof Error ? error.message : 'Submission error');
