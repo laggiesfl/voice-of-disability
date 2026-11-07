@@ -1,6 +1,6 @@
 import { Resend } from 'resend';
 import type { NextRequest } from 'next/server';
-import { createConfirmationToken, guardPublicForm } from '../../lib/form-security';
+import { createConfirmationToken, guardEmailVerifiedForm } from '../../lib/form-security';
 
 const EMAIL_REGEX = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
@@ -11,7 +11,7 @@ export async function POST(request: NextRequest) {
   try {
     const body = (await request.json()) as Record<string, unknown>;
     const email = String(body.email ?? '').trim().toLowerCase();
-    const guard = await guardPublicForm(request, 'newsletter', {
+    const guard = await guardEmailVerifiedForm(request, 'newsletter', {
       website: String(body.website ?? ''),
       startedAt: Number(body.startedAt),
       turnstileToken: String(body.turnstileToken ?? ''),
@@ -30,9 +30,9 @@ export async function POST(request: NextRequest) {
     const resend = new Resend(apiKey);
 
     const result = await resend.emails.send({
-      from: 'Voice of Disability <hello@voiceofdisability.com>',
+      from: 'Voice of Disability <fadila@voiceofdisability.com>',
       to: email,
-      replyTo: 'hello@voiceofdisability.com',
+      replyTo: 'fadila@voiceofdisability.com',
       subject: 'Confirm your Voice of Disability subscription',
       html: `<!doctype html><html><body style="font-family:Arial,Helvetica,sans-serif;color:#222;line-height:1.6"><h1 style="font-size:24px;color:#5B2A86">Confirm your subscription</h1><p>Please confirm that you want to receive Voice of Disability updates.</p><p><a href="${confirmUrl}" style="display:inline-block;padding:12px 18px;background:#5B2A86;color:#fff;text-decoration:none;border-radius:6px">Confirm subscription</a></p><p>This link expires in 24 hours. If you did not request this, you can ignore this email.</p></body></html>`,
     });
