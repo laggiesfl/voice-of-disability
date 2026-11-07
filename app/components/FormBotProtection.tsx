@@ -45,16 +45,17 @@ export default function FormBotProtection({ idPrefix }: Props) {
           setVerified(false);
           setVerificationProblem('The security check has expired. Please complete it again before submitting.');
         },
-        'error-callback': () => {
+        'error-callback': (errorCode: string | number) => {
           const input = containerRef.current?.closest('form')?.querySelector<HTMLInputElement>('input[name="cf-turnstile-response"]');
           if (input) input.value = '';
           setVerified(false);
-          setVerificationProblem('The security check could not be completed. Please use the email option below if it remains unavailable.');
+          setVerificationProblem(`Security verification failed (Cloudflare code ${String(errorCode)}). Your information has not been sent. Please use the email option below.`);
           return true;
         },
       });
-    } catch {
-      setVerificationProblem('Security verification could not load. Please use the email option below.');
+    } catch (error) {
+      console.error('[turnstile/render]', error instanceof Error ? error.message : 'Widget rendering error');
+      setVerificationProblem('The security verification could not start. This is a site configuration problem, not a form submission. Please use the email option below.');
     }
   }, [siteKey]);
 
