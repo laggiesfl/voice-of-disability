@@ -61,6 +61,31 @@ export default function Page(){return <><div className="vod-subpage-banner"><div
         </div>
       </section>
 
+      <section className="about" id="mission" aria-labelledby="mission-title">
+        <div className="container">
+          <h2 id="mission-title">Our vision and mission</h2>
+          <h3>Vision</h3>
+          <p>A society in which disabled women have the voice, access, independence and opportunities to participate equally in every aspect of life, influence decisions that affect them, and shape their own futures.</p>
+          <h3>Mission</h3>
+          <p>Voice of Disability amplifies disabled women’s voices, advances their rights and works to remove barriers to full participation in society. Through accessible digital platforms, advocacy, Universal Design, independent living initiatives and inclusive education and economic opportunity, we enable disabled women to speak up, speak out and participate meaningfully in mainstream society.</p>
+          <h2>Our strategic priorities</h2>
+          <div className="about-grid">
+            <div className="about-card"><h3>Voice and advocacy</h3><p>Support disabled women to express their experiences, engage decision-makers and advocate for changes to policies, services and society.</p></div>
+            <div className="about-card"><h3>Access and independent living</h3><p>Advance Personal Assistance Services, accessibility, Universal Design and the removal of barriers to community participation.</p></div>
+            <div className="about-card"><h3>Digital skills and economic opportunity</h3><p>Develop inclusive pathways to digital and AI literacy, employment and entrepreneurship, giving priority to disabled women without segregated training or employment.</p></div>
+          </div>
+          <p>These priorities describe our direction. Specific training programmes and partnerships depend on resources and implementation arrangements; not every proposed service is currently available.</p>
+          <h2>Our history</h2>
+          <p>Fadila Lagadien started Voice of Disability independently in 2010, undertaking member mobilisation and building a platform through which disabled women could speak up and speak out about the socio-economic issues affecting their lives.</p>
+          <p>After six years of foundational work, Voice of Disability was formally registered with the Companies and Intellectual Property Commission on <strong>20 April 2016</strong> as <strong>Voice of Disability NPC</strong>. CIPC registration number: <strong>2016/149549/08</strong>.</p>
+          <h2>Mainstream inclusion, not segregation</h2>
+          <p>We prioritise disabled women and promote inclusion in mainstream society. We do not seek to create sheltered workshops, segregated training or sheltered employment as substitutes for equal opportunities.</p>
+          <h2>From awareness to action</h2>
+          <p>Our founder’s 2004 MBA dissertation examined barriers to employment and identified ignorance, perceptions of disability and commitment to change as critical concerns. This research informs how we think about learning and accountability.</p>
+          <p><Link href="/research-foundations">Read our research foundations and proposed training framework</Link>.</p>
+        </div>
+      </section>
+
       <section className="founder" id="founder" aria-labelledby="founder-h">
         <div className="container">
           <p className="section-label">Why we exist</p>
