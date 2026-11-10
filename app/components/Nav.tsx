@@ -16,7 +16,7 @@ export default function Nav() {
         </Link>
 
         <ul className="nav-links" role="list">
-          <li><Link href="/#about">About</Link></li>
+          <li><Link href="/about">About</Link></li>
           <li><Link href="/#founder">Our Founder</Link></li>
           <li><Link href="/our-position">Our Position</Link></li>
           <li><Link href="/#programmes">Programmes</Link></li>
