@@ -19,7 +19,9 @@ export default function Privacy() {
         <h2>What we collect</h2>
         <p>We collect information you give us directly — such as your name, email address and phone
           number when you become a member, make a donation, or contact us. We may also collect
-          information about how you use our website.</p>
+          information about how you use our website. We use Vercel Web Analytics to count visits and
+          to see which pages and websites bring people to us. It is designed to collect anonymous,
+          combined visit data without using cookies, and we do not use it to identify you.</p>
         <h2>How we use your information</h2>
         <p>We use your information to: send you updates and newsletters you have opted into; process
           donations; invite you to programmes and events; respond to your enquiries; and improve
@@ -37,7 +39,7 @@ export default function Privacy() {
           internet transmission is 100% secure.</p>
         <h2>Contact</h2>
         <p>Questions about this policy? Email <a href="mailto:fadila@voiceofdisability.com">fadila@voiceofdisability.com</a>.</p>
-        <p><em>Last updated: August 2026</em></p>
+        <p><em>Last updated: November 2026</em></p>
       </div>
     </>
   );

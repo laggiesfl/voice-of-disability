@@ -2,6 +2,7 @@ import './globals.css';
 import './brand-overrides.css';
 import SiteChrome from './components/SiteChrome';
 import PwaRegister from './components/PwaRegister';
+import { Analytics } from '@vercel/analytics/next';
 import type { Metadata, Viewport } from 'next';
 
 const description =
@@ -51,6 +52,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
       <body>
         <SiteChrome>{children}</SiteChrome>
         <PwaRegister />
+        <Analytics />
       </body>
     </html>
   );
