@@ -18,10 +18,10 @@ export default function Footer() {
           <div className="footer-col">
             <h4>Explore</h4>
             <ul role="list">
-              <li><Link href="/#about">Who we are</Link></li>
-              <li><Link href="/#founder">Our Founder</Link></li>
+              <li><Link href="/about">Who we are</Link></li>
+              <li><Link href="/about#founder">Our Founder</Link></li>
               <li><Link href="/our-position">Our Position</Link></li>
-              <li><Link href="/#programmes">Programmes</Link></li>
+              <li><Link href="/programmes">Programmes</Link></li>
               <li><Link href="/resources">Resources</Link></li>
               <li><Link href="/blog">Blog</Link></li>
             </ul>
@@ -30,10 +30,10 @@ export default function Footer() {
           <div className="footer-col">
             <h4>Take action</h4>
             <ul role="list">
-              <li><Link href="/#membership">Become a member</Link></li>
-              <li><Link href="/#volunteer">Volunteer with us</Link></li>
-              <li><Link href="/#donate">Donate</Link></li>
-              <li><Link href="/#contact">Contact us</Link></li>
+              <li><Link href="/get-involved#membership">Become a member</Link></li>
+              <li><Link href="/get-involved#volunteer">Volunteer with us</Link></li>
+              <li><Link href="/support#donate">Donate</Link></li>
+              <li><Link href="/contact">Contact us</Link></li>
               <li><a href="https://www.facebook.com/VoiceofDisability/" target="_blank" rel="noopener noreferrer">Voice of Disability on Facebook (opens in a new tab)</a></li>
               <li><Link href="/accessibility-statement">Accessibility statement</Link></li>
               <li><Link href="/privacy">Privacy policy</Link></li>

@@ -1,9 +1,7 @@
 import Link from 'next/link';
 import type { Metadata } from 'next';
 import MembershipForm from '../components/MembershipForm';
-import NewsletterForm from '../components/NewsletterForm';
 import ContactForm from '../components/ContactForm';
-import DonateSection from '../components/DonateSection';
 export const metadata: Metadata = {title: 'Get involved',description: 'Volunteer and join the Voice of Disability movement'};
 export default function Page(){return <><div className="vod-subpage-banner"><div className="container"><p className="section-label">Voice of Disability · Creating access for all</p><h1>Get involved</h1><p>Volunteer and join the Voice of Disability movement.</p></div></div>
       <section className="about" id="volunteer" aria-labelledby="volunteer-h">
@@ -57,13 +55,13 @@ export default function Page(){return <><div className="vod-subpage-banner"><div
         </div>
       </section>
 
-      <section className="newsletter" aria-labelledby="nl-h">
+      <section className="newsletter" aria-labelledby="news-h">
         <div className="container newsletter-inner">
           <div className="newsletter-text">
-            <h2 id="nl-h" style={{fontSize: '1.4rem'}}>Get updates from Voice of Disability</h2>
-            <p style={{margin: 0}}>News, events, and resources — straight to your inbox. No spam, ever.</p>
+            <h2 id="news-h" style={{fontSize: '1.4rem'}}>Read our latest news and articles</h2>
+            <p style={{margin: 0}}>Follow Voice of Disability’s advocacy, rights information and community updates on our blog.</p>
           </div>
-          <NewsletterForm />
+          <Link href="/blog" className="btn btn-primary">Read the blog</Link>
         </div>
       </section>
 </>}

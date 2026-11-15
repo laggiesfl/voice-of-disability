@@ -1,9 +1,5 @@
 import Link from 'next/link';
 import type { Metadata } from 'next';
-import MembershipForm from './components/MembershipForm';
-import NewsletterForm from './components/NewsletterForm';
-import ContactForm    from './components/ContactForm';
-import DonateSection  from './components/DonateSection';
 
 export const metadata: Metadata = {
   title: 'Voice of Disability | Your voice. Your rights. Your community.',
@@ -24,7 +20,7 @@ export default function Home(){return <>
               exclude disabled people through rights advocacy, education and Universal Design.
             </p>
             <div className="hero-btns">
-              <Link href="/get-involved" className="btn btn-primary">Join the movement</Link>
+              <Link href="/get-involved#membership" className="btn btn-primary">Join the movement</Link>
               <Link href="/programmes" className="btn btn-outline">See our programmes</Link>
             </div>
           </div>
