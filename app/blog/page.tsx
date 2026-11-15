@@ -297,7 +297,7 @@ export default function Blog() {
           </div>
 
           <p style={{marginTop: '3rem', color: 'var(--text-muted)', fontSize: '0.95rem'}}>
-            <Link href="/#membership">Become a member</Link> to get notified when new posts are published.
+            Have a response or suggestion about an article? <a href="mailto:fadila@voiceofdisability.com?subject=Voice%20of%20Disability%20blog%20response">Email Voice of Disability</a>. You can also comment on our posts when they are shared on LinkedIn or Facebook.
           </p>
         </div>
       </div>
