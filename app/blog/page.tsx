@@ -297,7 +297,7 @@ export default function Blog() {
           </div>
 
           <p style={{marginTop: '3rem', color: 'var(--text-muted)', fontSize: '0.95rem'}}>
-            Have a response or suggestion about an article? <a href="mailto:fadila@voiceofdisability.com?subject=Voice%20of%20Disability%20blog%20response">Email Voice of Disability</a>. You can also comment on our posts when they are shared on LinkedIn or Facebook.
+            Join the discussion on our LinkedIn and <a href="https://www.facebook.com/VoiceofDisability/" target="_blank" rel="noopener noreferrer">Facebook (opens in a new tab)</a> posts when we share our articles there. Comments are managed on those platforms, not this website.
           </p>
         </div>
       </div>
