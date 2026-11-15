@@ -70,7 +70,7 @@ export default async function ResourcesPage() {
         <div className="container">
           <nav aria-label="Resource page navigation" style={{marginBottom:'2rem',display:'flex',flexWrap:'wrap',gap:'1rem'}}>
             <Link href="/" className="btn btn-outline">← Previous: Homepage</Link>
-            <Link href="/#resources" className="btn btn-outline">Return to homepage resources</Link>
+            <Link href="/get-involved#membership" className="btn btn-outline">Membership and volunteering</Link>
           </nav>
 
           <h2 id="library-h" style={{marginBottom: '0.75rem'}}>Resource library</h2>
