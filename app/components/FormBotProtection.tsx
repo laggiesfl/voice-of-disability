@@ -60,8 +60,10 @@ export default function FormBotProtection({ idPrefix }: Props) {
   }, [siteKey]);
 
   useEffect(() => {
-    renderWidget();
+    // Initialize after the effect's synchronous phase; keep the onReady fallback.
+    const frame = window.requestAnimationFrame(() => renderWidget());
     return () => {
+      window.cancelAnimationFrame(frame);
       if (widgetId.current && window.turnstile) {
         try { window.turnstile.remove(widgetId.current); } catch { /* Widget may already be removed. */ }
         widgetId.current = null;
