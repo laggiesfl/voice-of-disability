@@ -26,6 +26,25 @@ export default function Blog() {
           <Link href="/" className="back-link" style={{marginBottom: '2rem', display: 'inline-flex'}}>â Back to homepage</Link>
 
           <div className="blog-grid">
+
+            <article className="blog-card">
+              <div className="blog-card-body">
+                <span className="tag">Disability rights &amp; AI</span>
+                <h2 style={{fontSize: '1.1rem', marginBottom: '0.5rem'}}>
+                  <Link href="/blog/human-rights-in-the-age-of-ai" style={{color: 'var(--dark)', textDecoration: 'underline'}}>
+                    Human Rights in the Age of AI: Nothing About Us Without Us
+                  </Link>
+                </h2>
+                <p style={{fontSize: '0.9rem', marginBottom: '1rem'}}>
+                  Our joint contribution to South African AI standards calls for accessible consultations, meaningful representation and protection against algorithmic discrimination.
+                </p>
+                <Link href="/blog/human-rights-in-the-age-of-ai">Read the article on human rights and AI</Link>
+                <div className="blog-card-meta">
+                  Voice of Disability NPC · <time dateTime="2026-11-26">26 November 2026</time>
+                </div>
+              </div>
+            </article>
+
             <article className="blog-card">
               <div className="blog-card-body">
                 <span className="tag">Disability rights</span>
